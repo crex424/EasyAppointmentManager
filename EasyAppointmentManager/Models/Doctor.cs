@@ -48,6 +48,7 @@ namespace EasyAppointmentManager.Models
         /// <summary>
         /// The Doctor's email address
         /// </summary>
+        [Required]
         public string Email { get; set; }
 
         /// <summary>
