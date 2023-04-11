@@ -46,6 +46,11 @@ namespace EasyAppointmentManager.Models
         public int SpecializationID { get; private set; }
 
         /// <summary>
+        /// The Doctor's email address
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
         /// The address of the location/building the doctors works for/in
         /// </summary>
         [Required]
