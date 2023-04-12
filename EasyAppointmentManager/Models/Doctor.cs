@@ -54,7 +54,6 @@ namespace EasyAppointmentManager.Models
         /// <summary>
         /// The address of the location/building the doctors works for/in
         /// </summary>
-        [Required]
         public string? PlaceOfWork { get; set; }
     }
 }
