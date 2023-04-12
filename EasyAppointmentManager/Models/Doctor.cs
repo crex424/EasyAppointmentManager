@@ -65,6 +65,7 @@ namespace EasyAppointmentManager.Models
         /// <summary>
         /// The Doctor's email address
         /// </summary>
+        [Display(Name = "Email")]
         [Required(ErrorMessage = "{0} is required.")]
         [StringLength(100)]
         [EmailAddress(ErrorMessage = "Invalid email address.")]
