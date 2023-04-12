@@ -69,19 +69,20 @@ namespace EasyAppointmentManager.Models
         [Required(ErrorMessage = "{0} is required.")]
         [StringLength(100)]
         [EmailAddress(ErrorMessage = "Invalid email address.")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         /// <summary>
         /// The Doctors Phone Number
         /// </summary>
-        [Required]
         [Display(Name = "Phone Number")]
+        [Required]
         [DataType(DataType.PhoneNumber)]
         public string? PhoneNumber { get; set; }
 
         /// <summary>
         /// The address of the location/building the doctors works for/in
         /// </summary>
+        [Display(Name = "Place Of Work")]
         public string? PlaceOfWork { get; set; }
     }
 }
