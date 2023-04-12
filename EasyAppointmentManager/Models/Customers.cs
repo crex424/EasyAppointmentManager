@@ -14,7 +14,7 @@ namespace EasyAppointmentManager.Models
         public int CustomerId { get; set; }
 
         /// <summary>
-		/// The legal first name
+		/// The Customer's legal first name
 		/// </summary>
         [Display(Name = "First Name")]
         [Required(ErrorMessage = "{0} is required.")]
@@ -22,7 +22,13 @@ namespace EasyAppointmentManager.Models
         public string FirstName { get; set; }
 
         /// <summary>
-		/// The legal last name
+        /// The Customer's legal middle name (Optional) 
+        /// </summary>
+        [StringLength(55)]
+        public string? MiddleName { get; set; }
+
+        /// <summary>
+		/// The Customer's legal last name
 		/// </summary>
 		[Display(Name = "Last Name")]
         [Required(ErrorMessage = "{0} is required.")]
@@ -38,7 +44,7 @@ namespace EasyAppointmentManager.Models
         public DateTime DateOfBirth { get; set; }
 
         /// <summary>
-        /// Gender of the customer
+        /// The Customer's gender
         /// Female is True, of course :)
         /// Male is False
         /// Null is for Prefer not to answer
@@ -57,7 +63,7 @@ namespace EasyAppointmentManager.Models
         /// The customer's email address
         /// </summary>
         [StringLength(100)]
-        [Display(Name = "Student Email")]
+        [Display(Name = "Customer's Email")]
         // [DataType(DataType.EmailAddress)]
         [EmailAddress(ErrorMessage = "Invalid email address.")]
         public string? Email { get; set; }
