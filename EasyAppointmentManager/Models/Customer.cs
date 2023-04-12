@@ -5,7 +5,7 @@ namespace EasyAppointmentManager.Models
     /// <summary>
     /// Represents a single Customer/Patient
     /// </summary>
-    public class Customers
+    public class Customer
     {
         /// <summary> 
         /// The unique identifier for the customer
