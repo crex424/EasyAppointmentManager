@@ -22,6 +22,13 @@ namespace EasyAppointmentManager.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// The code of the Specialty
+        /// </summary>
+        [Display(Name = "Code of Specialty")]
+        [StringLength(100)]
+        public string? Code { get; set; }
+
+        /// <summary>
         /// The description of the Specialty
         /// </summary>
         public string? Description { get; set; }
