@@ -144,6 +144,7 @@ namespace EasyAppointmentManager.Controllers
             {
                 _context.Customer.Remove(customer);
                 await _context.SaveChangesAsync();
+
                 TempData["Message"] = $"{customer.LastName}, {customer.FirstName} was deleted successfully!";
             }
 
