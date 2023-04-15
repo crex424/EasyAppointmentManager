@@ -25,6 +25,7 @@ namespace EasyAppointmentManager.Models
         /// The Customer's legal middle name (Optional) 
         /// </summary>
         [StringLength(55)]
+        [Display(Name = "Middle Name")]
         public string? MiddleName { get; set; }
 
         /// <summary>
