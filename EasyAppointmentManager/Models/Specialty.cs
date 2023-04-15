@@ -16,7 +16,7 @@ namespace EasyAppointmentManager.Models
         /// <summary>
         /// The name of the Specialty
         /// </summary>
-        [Display(Name = "Name of Specialty")]
+        [Display(Name = "Specialty")]
         [Required(ErrorMessage = "{0} is required.")]
         [StringLength(100)]
         public string Name { get; set; }
@@ -24,7 +24,7 @@ namespace EasyAppointmentManager.Models
         /// <summary>
         /// The code of the Specialty
         /// </summary>
-        [Display(Name = "Code of Specialty")]
+        [Display(Name = "Specialty Code")]
         [StringLength(100)]
         public string? Code { get; set; }
 
