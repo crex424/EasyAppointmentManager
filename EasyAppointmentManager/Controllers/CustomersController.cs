@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EasyAppointmentManager.Data;
 using EasyAppointmentManager.Models;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EasyAppointmentManager.Controllers
 {
@@ -62,7 +63,11 @@ namespace EasyAppointmentManager.Controllers
             {
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                // Show success message on page
+                ViewData["Message"] = $"{customer.LastName}, {customer.FirstName} was added successfully!";
+
+                return View();
             }
             return View(customer);
         }
@@ -75,7 +80,7 @@ namespace EasyAppointmentManager.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customer.FindAsync(id);
+            Customer? customer = await _context.Customer.FindAsync(id);
             if (customer == null)
             {
                 return NotFound();
@@ -97,22 +102,10 @@ namespace EasyAppointmentManager.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(customer);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CustomerExists(customer.CustomerId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _context.Update(customer);
+                await _context.SaveChangesAsync();
+
+                TempData["Message"] = $"{customer.LastName}, {customer.FirstName} was updated successfully!";
                 return RedirectToAction(nameof(Index));
             }
             return View(customer);
@@ -143,15 +136,18 @@ namespace EasyAppointmentManager.Controllers
         {
             if (_context.Customer == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Customer'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Customer' is null.");
             }
-            var customer = await _context.Customer.FindAsync(id);
+
+            Customer? customer = await _context.Customer.FindAsync(id);
             if (customer != null)
             {
                 _context.Customer.Remove(customer);
+                await _context.SaveChangesAsync();
+                TempData["Message"] = $"{customer.LastName}, {customer.FirstName} was deleted successfully!";
             }
-            
-            await _context.SaveChangesAsync();
+
+            TempData["Message"] = $"This customer was already deleted!";
             return RedirectToAction(nameof(Index));
         }
 
