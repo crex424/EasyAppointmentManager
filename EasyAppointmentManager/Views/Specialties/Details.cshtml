@@ -1,7 +1,7 @@
-﻿@model EasyAppointmentManager.Models.Specialty
+﻿@model Specialty
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Details of " + Model.Name;
 }
 
 <h1>Details</h1>
@@ -32,5 +32,6 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.SpecialtyId">Edit</a> |
+    <a asp-action="Delete" asp-route-id="@Model?.SpecialtyId">Delete</a> |
     <a asp-action="Index">Back to List</a>
 </div>
