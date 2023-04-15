@@ -24,7 +24,7 @@ namespace EasyAppointmentManager.Controllers
         {
               return _context.Specialty != null ? 
                           View(await _context.Specialty.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Specialty'  is null.");
+                          Problem("Entity set 'ApplicationDbContext.Specialty' is null.");
         }
 
         // GET: Specialties/Details/5
@@ -35,8 +35,7 @@ namespace EasyAppointmentManager.Controllers
                 return NotFound();
             }
 
-            var specialty = await _context.Specialty
-                .FirstOrDefaultAsync(m => m.SpecialtyId == id);
+            Specialty? specialty = await _context.Specialty.FirstOrDefaultAsync(m => m.SpecialtyId == id);
             if (specialty == null)
             {
                 return NotFound();
@@ -62,7 +61,11 @@ namespace EasyAppointmentManager.Controllers
             {
                 _context.Add(specialty);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                // Show success message on page
+                ViewData["Message"] = $"{specialty.Name} was added successfully!";
+
+                return View();
             }
             return View(specialty);
         }
@@ -75,7 +78,7 @@ namespace EasyAppointmentManager.Controllers
                 return NotFound();
             }
 
-            var specialty = await _context.Specialty.FindAsync(id);
+            Specialty? specialty = await _context.Specialty.FindAsync(id);
             if (specialty == null)
             {
                 return NotFound();
@@ -97,22 +100,10 @@ namespace EasyAppointmentManager.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(specialty);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SpecialtyExists(specialty.SpecialtyId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _context.Update(specialty);
+                await _context.SaveChangesAsync();
+
+                TempData["Message"] = $"{specialty.Name} was updated successfully!";
                 return RedirectToAction(nameof(Index));
             }
             return View(specialty);
@@ -126,8 +117,7 @@ namespace EasyAppointmentManager.Controllers
                 return NotFound();
             }
 
-            var specialty = await _context.Specialty
-                .FirstOrDefaultAsync(m => m.SpecialtyId == id);
+            Specialty? specialty = await _context.Specialty.FirstOrDefaultAsync(m => m.SpecialtyId == id);
             if (specialty == null)
             {
                 return NotFound();
@@ -145,13 +135,17 @@ namespace EasyAppointmentManager.Controllers
             {
                 return Problem("Entity set 'ApplicationDbContext.Specialty'  is null.");
             }
-            var specialty = await _context.Specialty.FindAsync(id);
+
+            Specialty? specialty = await _context.Specialty.FindAsync(id);
             if (specialty != null)
             {
                 _context.Specialty.Remove(specialty);
+                await _context.SaveChangesAsync();
+
+                TempData["Message"] = $"{specialty.Name} was deleted successfully!";
             }
-            
-            await _context.SaveChangesAsync();
+
+            TempData["Message"] = $"This specialty was already deleted!";
             return RedirectToAction(nameof(Index));
         }
 
