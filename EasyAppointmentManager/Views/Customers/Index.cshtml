@@ -1,13 +1,23 @@
 ﻿@model IEnumerable<EasyAppointmentManager.Models.Customer>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Customer Database";
 }
 
-<h1>Index</h1>
+<h1>Customer Database</h1>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+else
+{
 
+}
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create a new customer</a>
 </p>
 <table class="table">
     <thead>
