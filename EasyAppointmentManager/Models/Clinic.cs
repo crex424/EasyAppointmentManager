@@ -25,7 +25,7 @@ namespace EasyAppointmentManager.Models
         /// <summary>
         /// The Clinic's code
         /// </summary>
-        [Display(Name = "Code of Specialty")]
+        [Display(Name = "Clinic Code")]
         [StringLength(100)]
         public string? Code { get; set; }
 
@@ -53,9 +53,9 @@ namespace EasyAppointmentManager.Models
 
         // Foreign key   
         [Display(Name = "Location")]
-        public virtual int LocationId { get; set; }
+        public virtual int? LocationId { get; set; }
 
         [ForeignKey("LocationId")]
-        public virtual Location Location { get; set; }
+        public virtual Location? Location { get; set; }
     }
 }
