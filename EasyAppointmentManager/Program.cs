@@ -1,4 +1,5 @@
 using EasyAppointmentManager.Data;
+using EasyAppointmentManager.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +11,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
@@ -63,5 +65,12 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
+IServiceScope serviceProvider = app.Services.GetService<IServiceProvider>().CreateScope();
+
+// Create default roles
+await IdentityHelper.CreateRoles(serviceProvider.ServiceProvider, IdentityHelper.Employee, IdentityHelper.Customer); 
+
+// Create default employee
 
 app.Run();
