@@ -21,8 +21,25 @@ namespace EasyAppointmentManager.Models
                     await roleManager.CreateAsync(new IdentityRole(role));
                 }
             }
+        }
 
+        public static async Task CreateDefaultUser(IServiceProvider provider, string role)
+        {
+            var userManager = provider.GetService<UserManager<IdentityUser>>();
 
+            int numUsers = (await userManager.GetUsersInRoleAsync(role)).Count;
+            // If no users are present, make the default user
+            if (numUsers == 0) { // If no users are in the specified role
+                var defaultUser = new IdentityUser()
+                {
+                    Email = "employee@medclinic.com",
+                    UserName = "Admin"
+                };
+
+                await userManager.CreateAsync(defaultUser, "Cpw22!");
+
+                await userManager.AddToRoleAsync(defaultUser, role);
+            }
         }
     }
 }

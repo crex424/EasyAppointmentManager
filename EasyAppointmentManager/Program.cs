@@ -72,5 +72,6 @@ IServiceScope serviceProvider = app.Services.GetService<IServiceProvider>().Crea
 await IdentityHelper.CreateRoles(serviceProvider.ServiceProvider, IdentityHelper.Employee, IdentityHelper.Customer); 
 
 // Create default employee
+await IdentityHelper.CreateDefaultUser(serviceProvider.ServiceProvider, IdentityHelper.Employee);
 
 app.Run();
