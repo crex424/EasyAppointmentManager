@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EasyAppointmentManager.Data;
 using EasyAppointmentManager.Models;
+using Microsoft.CodeAnalysis;
 
 namespace EasyAppointmentManager.Controllers
 {
@@ -48,7 +49,7 @@ namespace EasyAppointmentManager.Controllers
         // GET: Clinics/Create
         public IActionResult Create()
         {
-            ViewData["LocationId"] = new SelectList(_context.Set<Location>(), "LocationID", "Address");
+            ViewData["LocationId"] = new SelectList(_context.Set<Models.Location>(), "LocationID", "Address");
             return View();
         }
 
@@ -63,9 +64,13 @@ namespace EasyAppointmentManager.Controllers
             {
                 _context.Add(clinic);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                // Show success message on page
+                ViewData["Message"] = $"{clinic.ClinicName} was added successfully!";
+
+                return View();
             }
-            ViewData["LocationId"] = new SelectList(_context.Set<Location>(), "LocationID", "Address", clinic.LocationId);
+            ViewData["LocationId"] = new SelectList(_context.Set<Models.Location>(), "LocationID", "Address", clinic.LocationId);
             return View(clinic);
         }
 
@@ -82,7 +87,7 @@ namespace EasyAppointmentManager.Controllers
             {
                 return NotFound();
             }
-            ViewData["LocationId"] = new SelectList(_context.Set<Location>(), "LocationID", "Address", clinic.LocationId);
+            ViewData["LocationId"] = new SelectList(_context.Set<Models.Location>(), "LocationID", "Address", clinic.LocationId);
             return View(clinic);
         }
 
@@ -100,25 +105,13 @@ namespace EasyAppointmentManager.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(clinic);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ClinicExists(clinic.ClinicId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _context.Update(clinic);
+                await _context.SaveChangesAsync();
+
+                TempData["Message"] = $"{clinic.ClinicName} was updated successfully!";
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LocationId"] = new SelectList(_context.Set<Location>(), "LocationID", "Address", clinic.LocationId);
+            ViewData["LocationId"] = new SelectList(_context.Set<Models.Location>(), "LocationID", "Address", clinic.LocationId);
             return View(clinic);
         }
 
@@ -154,9 +147,11 @@ namespace EasyAppointmentManager.Controllers
             if (clinic != null)
             {
                 _context.Clinic.Remove(clinic);
+                await _context.SaveChangesAsync();
+
+                TempData["Message"] = $"{clinic.ClinicName} was deleted successfully!";
             }
             
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
