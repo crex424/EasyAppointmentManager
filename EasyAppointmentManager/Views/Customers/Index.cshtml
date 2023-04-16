@@ -64,7 +64,7 @@ else
                     @Html.DisplayFor(modelItem => item.DateOfBirth)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Gender)
+                    @Html.Encode(item.Gender==true?"Male":"Female")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.PhoneNumber)
