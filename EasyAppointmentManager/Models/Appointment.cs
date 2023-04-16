@@ -28,7 +28,7 @@ namespace EasyAppointmentManager.Models
         /// </summary>
         public int Timeslot { get; set; }
 
-        // public AppointmentStatus  { get; set; }
+        public AppointmentStatus AppointmentStatus { get; set; }
 
         public Customer Customer { get; set; }
 
@@ -39,5 +39,14 @@ namespace EasyAppointmentManager.Models
         public Doctor Doctor { get; set; }
 
 
+    }
+
+    public enum AppointmentStatus
+    {
+        None, 
+        Confirmed,
+        Cancelled,
+        Missed,
+        Rescheduled
     }
 }
