@@ -1,7 +1,7 @@
-﻿@model EasyAppointmentManager.Models.Clinic
+﻿@model Clinic
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Details " + Model.Name;
 }
 
 <h1>Details</h1>
@@ -11,10 +11,10 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ClinicName)
+            @Html.DisplayNameFor(model => model.Name)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ClinicName)
+            @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Code)
@@ -50,5 +50,6 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.ClinicId">Edit</a> |
+    <a asp-action="Delete" asp-route-id="@Model?.ClinicId">Delete</a> |
     <a asp-action="Index">Back to List</a>
 </div>

@@ -58,7 +58,7 @@ namespace EasyAppointmentManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ClinicId,ClinicName,Code,Description,PhoneNumber,Email,LocationId")] Clinic clinic)
+        public async Task<IActionResult> Create([Bind("ClinicId,Name,Code,Description,PhoneNumber,Email,LocationId")] Clinic clinic)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +66,7 @@ namespace EasyAppointmentManager.Controllers
                 await _context.SaveChangesAsync();
 
                 // Show success message on page
-                ViewData["Message"] = $"{clinic.ClinicName} was added successfully!";
+                ViewData["Message"] = $"{clinic.Name} was added successfully!";
 
                 return View();
             }
@@ -96,7 +96,7 @@ namespace EasyAppointmentManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ClinicId,ClinicName,Code,Description,PhoneNumber,Email,LocationId")] Clinic clinic)
+        public async Task<IActionResult> Edit(int id, [Bind("ClinicId,Name,Code,Description,PhoneNumber,Email,LocationId")] Clinic clinic)
         {
             if (id != clinic.ClinicId)
             {
@@ -108,7 +108,7 @@ namespace EasyAppointmentManager.Controllers
                 _context.Update(clinic);
                 await _context.SaveChangesAsync();
 
-                TempData["Message"] = $"{clinic.ClinicName} was updated successfully!";
+                TempData["Message"] = $"{clinic.Name} was updated successfully!";
                 return RedirectToAction(nameof(Index));
             }
             ViewData["LocationId"] = new SelectList(_context.Set<Models.Location>(), "LocationID", "Address", clinic.LocationId);
@@ -149,7 +149,7 @@ namespace EasyAppointmentManager.Controllers
                 _context.Clinic.Remove(clinic);
                 await _context.SaveChangesAsync();
 
-                TempData["Message"] = $"{clinic.ClinicName} was deleted successfully!";
+                TempData["Message"] = $"{clinic.Name} was deleted successfully!";
             }
             
             return RedirectToAction(nameof(Index));

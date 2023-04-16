@@ -20,7 +20,7 @@ namespace EasyAppointmentManager.Models
         [Display(Name = "Clinic Name")]
         [Required(ErrorMessage = "{0} is required.")]
         [StringLength(100)]
-        public string ClinicName { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// The Clinic's code
