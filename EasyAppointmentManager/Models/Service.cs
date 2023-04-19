@@ -28,5 +28,10 @@ namespace EasyAppointmentManager.Models
         [Required(ErrorMessage = "{0} is requried.")]
         [StringLength(100)]
         public string? ServiceName { get; set; }
+
+        [Display(Name = "The Service's Time to completion")]
+        [Required(ErrorMessage = "{0} is requried.")]
+        [DataType(DataType.Time)]
+        public TimeSpan ServiceTime { get; set; }
     }
 }
