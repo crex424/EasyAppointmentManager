@@ -3,18 +3,18 @@
 namespace EasyAppointmentManager.Models
 {
     /// <summary>
-    /// Represents a Fee
+    /// Represents a Service
     /// </summary>
-    public class Fee
+    public class Service
     {
         /// <summary>
-        /// The Fee's unique Identity
+        /// The Service's unique Identity
         /// </summary>
         [Key]
         public int FeeID { get; private set; }
 
         /// <summary>
-        /// The Fee's price
+        /// The Service's price
         /// </summary>
         [Display(Name = "Price")]
         [Required(ErrorMessage = "{0} is requried.")]
@@ -22,9 +22,9 @@ namespace EasyAppointmentManager.Models
         public double Price { get; set; }
 
         /// <summary>
-        ///  The Fee's Name
+        ///  The Service's Name
         /// </summary>
-        [Display(Name = "The Fee's Name")]
+        [Display(Name = "The Service's Name")]
         [Required(ErrorMessage = "{0} is requried.")]
         [StringLength(100)]
         public string? FeeName { get; set; }
