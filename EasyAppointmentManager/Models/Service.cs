@@ -14,7 +14,7 @@ namespace EasyAppointmentManager.Models
         public int ServiceID { get; private set; }
 
         /// <summary>
-        /// The Service's price
+        /// The Fee of the Service provided
         /// </summary>
         [Display(Name = "Fee")]
         [Required(ErrorMessage = "{0} is requried.")]
