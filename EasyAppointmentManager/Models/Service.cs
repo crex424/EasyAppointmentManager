@@ -11,15 +11,15 @@ namespace EasyAppointmentManager.Models
         /// The Service's unique Identity
         /// </summary>
         [Key]
-        public int FeeID { get; private set; }
+        public int ServiceID { get; private set; }
 
         /// <summary>
         /// The Service's price
         /// </summary>
-        [Display(Name = "Price")]
+        [Display(Name = "Fee")]
         [Required(ErrorMessage = "{0} is requried.")]
         [DataType(DataType.Currency)]
-        public double Price { get; set; }
+        public double Fee { get; set; }
 
         /// <summary>
         ///  The Service's Name
@@ -27,6 +27,6 @@ namespace EasyAppointmentManager.Models
         [Display(Name = "The Service's Name")]
         [Required(ErrorMessage = "{0} is requried.")]
         [StringLength(100)]
-        public string? FeeName { get; set; }
+        public string? ServiceName { get; set; }
     }
 }
