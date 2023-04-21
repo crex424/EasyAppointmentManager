@@ -34,7 +34,7 @@ namespace EasyAppointmentManager.Models
 
         public Location Location { get; set; }
 
-        // public Service Service { get; set; }
+        public Service Service { get; set; }
 
         public Doctor Doctor { get; set; }
 
