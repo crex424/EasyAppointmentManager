@@ -1,4 +1,5 @@
 ﻿using EasyAppointmentManager.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -18,6 +19,9 @@ namespace EasyAppointmentManager.Controllers
             return View();
         }
 
+        // [Authorize]
+        // [Authorize(Roles = IdentityHelper.Employee)]
+        // [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();
