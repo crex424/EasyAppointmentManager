@@ -73,5 +73,48 @@ namespace EasyAppointmentManager.Controllers
             return View(doctor);
         }
 
+        /// <summary>
+        /// Checks whether a selected Doctor exists.
+        /// If not, return a NotFound page. 
+        /// If the doctor exists return to doctor page
+        /// </summary>
+        /// <param name="id">The Doctor's unique identifier</param>
+        /// <returns>A edited Doctor Object</returns>
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null || _context.Doctor == null)
+            {
+                return NotFound();
+            }
+
+            Doctor? doctor = await _context.Doctor.FindAsync(id);
+            if (doctor == null)
+            {
+                return NotFound();
+            }
+            return View(doctor);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("DoctorID,FirstName,MiddleName,LastName,DateOfBirth" +
+                                                      ",Gender,SpecializationID,Email,PhoneNumber,PlaceOfWork")] Doctor doctor)
+        {
+            if (id != doctor.DoctorID)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                _context.Update(doctor);
+                await _context.SaveChangesAsync();
+
+                TempData["Message"] = $"{doctor.LastName}, {doctor.FirstName} was updated successfully!";
+                return RedirectToAction(nameof(Index));
+            }
+            return View(doctor);
+        }
+
     }
 }
