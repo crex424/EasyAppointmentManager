@@ -176,6 +176,15 @@ namespace EasyAppointmentManager.Controllers
             TempData["Message"] = $"This doctor was already deleted!";
             return RedirectToAction(nameof(Index));
         }
+        /// <summary>
+        /// Finds existing Doctor object using the DoctorID
+        /// </summary>
+        /// <param name="id">Doctor's unique identifier</param>
+        /// <returns>The Doctor object that corresponds with the DoctorID used to find it</returns>
+        private bool DoctorExists(int id)
+        {
+            return (_context.Doctor?.Any(e => e.DoctorID == id)).GetValueOrDefault();
+        }
 
     }
 }
