@@ -21,7 +21,7 @@ namespace EasyAppointmentManager.Controllers
         {
             return _context.Doctor != null ?
                         View(await _context.Doctor.ToListAsync()) :
-                        Problem("Entity set 'ApplicationDbContext.Customer'  is null.");
+                        Problem("Entity set 'ApplicationDbContext.Doctor'  is null.");
         }
         /// <summary>
         /// Gets details of a Doctor
@@ -148,6 +148,33 @@ namespace EasyAppointmentManager.Controllers
             }
 
             return View(doctor);
+        }
+        /// <summary>
+        /// Deletes a selected Doctor Object if it exists.
+        /// If Doctor does not exist return a error.
+        /// </summary>
+        /// <param name="id">Doctor's unique identifier</param>
+        /// <returns>Returns user to index page with success message</returns>
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            if (_context.Doctor == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.Doctor' is null.");
+            }
+
+            Doctor? doctor = await _context.Doctor.FindAsync(id);
+            if (doctor != null)
+            {
+                _context.Doctor.Remove(doctor);
+                await _context.SaveChangesAsync();
+
+                TempData["Message"] = $"{doctor.LastName}, {doctor.FirstName} was deleted successfully!";
+            }
+
+            TempData["Message"] = $"This doctor was already deleted!";
+            return RedirectToAction(nameof(Index));
         }
 
     }
