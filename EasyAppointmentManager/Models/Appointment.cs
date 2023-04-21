@@ -32,7 +32,7 @@ namespace EasyAppointmentManager.Models
 
         public Customer Customer { get; set; }
 
-        public Location Location { get; set; }
+        public Clinic Clinic { get; set; }
 
         public Service Service { get; set; }
 
