@@ -95,6 +95,14 @@ namespace EasyAppointmentManager.Controllers
             return View(doctor);
         }
 
+        /// <summary>
+        /// Checks whether a selected Doctor exists.
+        /// If not, return a NotFound page. 
+        /// If the doctor exists allow user to edit information
+        /// </summary>
+        /// <param name="id">Doctor's unique identifier</param>
+        /// <param name="doctor">The Doctor Object</param>
+        /// <returns>A edited Doctor Object</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("DoctorID,FirstName,MiddleName,LastName,DateOfBirth" +
