@@ -11,7 +11,7 @@ namespace EasyAppointmentManager.Models
         {
             // CreateRoles(null, "Employee", "Customer");
 
-            RoleManager<IdentityRole>? roleManager = provider.GetService<RoleManager<IdentityRole>>();
+            RoleManager<IdentityRole> roleManager = provider.GetService<RoleManager<IdentityRole>>();
 
             foreach (string role in roles)
             {
