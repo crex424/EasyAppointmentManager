@@ -12,5 +12,6 @@ namespace EasyAppointmentManager.Data
         }
         public DbSet<EasyAppointmentManager.Models.Specialty>? Specialty { get; set; }
         public DbSet<EasyAppointmentManager.Models.Customer>? Customer { get; set; }
+        public DbSet<EasyAppointmentManager.Models.Doctor>? Doctor { get; set; }
     }
 }
