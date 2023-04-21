@@ -28,6 +28,8 @@ namespace EasyAppointmentManager.Models
         /// </summary>
         public int Timeslot { get; set; }
 
+        public bool TimeslotStatus { get; set; }
+
         public AppointmentStatus AppointmentStatus { get; set; }
 
         public Customer Customer { get; set; }
