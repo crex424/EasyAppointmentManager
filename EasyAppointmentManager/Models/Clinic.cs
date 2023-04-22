@@ -51,11 +51,10 @@ namespace EasyAppointmentManager.Models
         [EmailAddress(ErrorMessage = "Invalid email address.")]
         public string? Email { get; set; }
 
-        // Foreign key   
-        [Display(Name = "Location")]
-        public virtual int LocationId { get; set; }
+        public Location? Location { get; set; }
 
-        [ForeignKey("LocationId")]
-        public virtual Location Location { get; set; }
+        public ICollection<Doctor>? Doctors { get; set; }
+
+        public ICollection<Service>? Services { get; set; }
     }
 }

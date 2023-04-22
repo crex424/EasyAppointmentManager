@@ -3,10 +3,10 @@
 @{
     ViewData["Title"] = "Create a new appointment";
 
-    List<SelectListItem> customers = new();
+    List<SelectListItem> allCustomers = new();
     foreach (Customer cus in Model.AllAvailableCustomers)
     {
-        customers.Add(
+        allCustomers.Add(
             new SelectListItem()
                     {
                         Value = cus.CustomerId.ToString(),
@@ -14,8 +14,6 @@
                     }
         );
     }
-    
-
 }
 
 <h1>Create</h1>
@@ -26,23 +24,35 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <!--
             <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" max="@DateTime.Now.AddYears(100).ToString("yyyy-MM-dd")" />
-                <span asp-validation-for="Date" class="text-danger"></span>
+                <label asp-for="AppointmentDate" class="control-label"></label>
+                <input asp-for="AppointmentDate" class="form-control" min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" max="@DateTime.Now.AddYears(100).ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="AppointmentDate" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Timeslot" class="control-label"></label>
-                <input asp-for="Timeslot" class="form-control" />
+                <select asp-for="Timeslot" class="form-control">
+                    @for (int i = 8; i <= 16; i++)
+                    {
+                        <option value="@i">@i:00 - @(i+1):00</option>
+                    }
+                </select>
                 <span asp-validation-for="Timeslot" class="text-danger"></span>
             </div>
+            -->
+
+            <!-- Choose Customer -->
             <div class="form-group">
-                <label>Customers</label>
-                <select asp-for="ChosenCustomer" class="form-control" asp-items="customers">
+                <label asp-for="AllAvailableCustomers" class="control-label"></label>
+                <select asp-for="ChosenCustomer" class="form-control" asp-items="allCustomers">
                 </select>
             </div>
+
+            <!-- Choose Clinic -->
             <div class="form-group">
-                <label>Clinics</label>
+                <label asp-for="AllAvailableClinics" class="control-label"></label>
                 <select asp-for="ChosenClinic" class="form-control">
                     @foreach (Clinic clinic in Model.AllAvailableClinics)
                     {
@@ -50,24 +60,61 @@
                     }
                 </select>
             </div>
-            <div class="form-group">
-                <label>Services</label>
-                <select asp-for="ChosenService" class="form-control">
-                    @foreach (Service service in Model.AllAvailableServices)
+            
+            @if (Model.ChosenClinic != null)
+            {
+                <!-- Choose Service -->
+                <div class="form-group">
+                    <label asp-for="AllAvailableServicesByClinicId" class="control-label"></label>
+                    <select asp-for="ChosenService" class="form-control">
+                        @foreach (Service service in Model.AllAvailableServicesByClinicId)
+                        {
+                            <option value="@service.ServiceId">@service.ServiceName</option>
+                        }
+                    </select>
+                </div>
+
+                @if (Model.ChosenService != null)
+                {
+                    <!-- Choose Doctor -->
+                    <div class="form-group">
+                        <label asp-for="AllAvailableDoctorsByServiceId" class="control-label"></label>
+                        <select asp-for="ChosenDoctor" class="form-control">
+                            @foreach (Doctor doc in Model.AllAvailableDoctorsByServiceId)
+                            {
+                                <option value="@doc.DoctorId">@doc.FullName</option>
+                            }
+                        </select>
+                    </div>
+
+                    @if (Model.ChosenDoctor != null )
                     {
-                        <option value="@service.ServiceId">@service.ServiceName</option>
+                        <!-- Choose Date -->
+                        <div class="form-group">
+                            <label asp-for="AppointmentDate" class="control-label"></label>
+                            <input asp-for="AppointmentDate" class="form-control" min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" max="@DateTime.Now.AddYears(100).ToString("yyyy-MM-dd")" />
+                            <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+                        </div>
+
+                        @if (Model.AppointmentDate != null)
+                        {
+                            <div class="form-group">
+                                <label asp-for="Timeslot" class="control-label"></label>
+                                <select asp-for="Timeslot" class="form-control">
+                                    @for (int i = 8; i <= 16; i++)
+                                    {
+                                        <option value="@i">@i:00 - @(i + 1):00</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="Timeslot" class="text-danger"></span>
+                            </div>
+                        }
                     }
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Doctors</label>
-                <select asp-for="ChosenDoctor" class="form-control">
-                    @foreach (Doctor doc in Model.AllAvailableDoctors)
-                    {
-                        <option value="@doc.DoctorId">@doc.FullName</option>
-                    }
-                </select>
-            </div>
+
+
+                }
+            }
+            
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

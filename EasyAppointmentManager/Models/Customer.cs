@@ -37,11 +37,11 @@ namespace EasyAppointmentManager.Models
         public string LastName { get; set; }
 
         /// <summary>
-        /// Customer's Date of birth
+        /// Customer's AppointmentDate of birth
         /// </summary>
-        [Display(Name = "Date Of Birth")]
+        [Display(Name = "AppointmentDate Of Birth")]
         [Required(ErrorMessage = "{0} is required.")]
-        [DataType(DataType.Date)] // display Date picker
+        [DataType(DataType.Date)] // display AppointmentDate picker
         public DateTime DateOfBirth { get; set; }
 
         /// <summary>

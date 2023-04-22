@@ -45,7 +45,7 @@ namespace EasyAppointmentManager.Models
         /// <summary>
         /// The Doctor's legal date of birth
         /// </summary>
-        [Display(Name = "Date Of Birth")]
+        [Display(Name = "AppointmentDate Of Birth")]
         [Required(ErrorMessage = "{0} is required.")]
         [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
@@ -87,7 +87,10 @@ namespace EasyAppointmentManager.Models
         /// <summary>
         /// The address of the location/building the doctors works for/in
         /// </summary>
-        [Display(Name = "Place Of Work")]
-        public string? PlaceOfWork { get; set; }
+        [Display(Name = "Clinic")]
+        public ICollection<Clinic>? Clinics { get; set; }
+
+        [Display(Name = "Services")]
+        public ICollection<Service>? Services { get; set; }
     }
 }

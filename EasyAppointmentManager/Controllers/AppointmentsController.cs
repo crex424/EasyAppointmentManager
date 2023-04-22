@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EasyAppointmentManager.Data;
 using EasyAppointmentManager.Models;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace EasyAppointmentManager.Controllers
 {
@@ -50,9 +51,21 @@ namespace EasyAppointmentManager.Controllers
         {
             AppointmentCreateViewModel viewModel = new();
             viewModel.AllAvailableCustomers = _context.Customer.OrderBy(i => i.LastName).ToList();
-            viewModel.AllAvailableDoctors = _context.Doctor.OrderBy(i => i.LastName).ToList();
             viewModel.AllAvailableClinics = _context.Clinic.OrderBy(i => i.ClinicName).ToList();
-            viewModel.AllAvailableServices = _context.Service.OrderBy(i => i.ServiceName).ToList();
+            // viewModel.AllAvailableServicesByClinicId = _context.Service.OrderBy(i => i.ServiceName).ToList();
+            // viewModel.AllAvailableDoctorsByServiceId = _context.Doctor.OrderBy(i => i.LastName).ToList();
+
+            viewModel.AllAvailableServicesByClinicId = _context.Clinic
+                                                     .Where(c => c.ClinicId == viewModel.ChosenClinic)
+                                                     .SelectMany(c => c.Services)   
+                                                     .ToList();
+               
+            viewModel.AllAvailableDoctorsByServiceId = _context.Service
+                                                    .Where(s => s.ServiceId == viewModel.ChosenService)
+                                                    .SelectMany(s => s.Doctors)
+                                                    .OrderBy(i => i.LastName)
+                                                    .ToList();
+
             return View(viewModel);
         }
 
@@ -67,14 +80,15 @@ namespace EasyAppointmentManager.Controllers
             {
                 Appointment newAppointment = new()
                 {
-                    Date = appointment.Date,
+                    AppointmentDate = appointment.AppointmentDate,
                     Timeslot = appointment.Timeslot,
-                    
+                    AppointmentStatus = AppointmentStatus.Confirmed,
                     Customer = new Customer()
                     {
-                        CustomerId = appointment.ChosenCustomer.CustomerId
+                        CustomerId = appointment.ChosenCustomer
                     },
-                    
+
+                    /*
                     Clinic = new Clinic()
                     {
                         ClinicId = appointment.ChosenClinic.ClinicId
@@ -89,6 +103,7 @@ namespace EasyAppointmentManager.Controllers
                     {
                         DoctorId = appointment.ChosenDoctor.DoctorId
                     }
+                    */
                 };
 
                 _context.Add(newAppointment);
@@ -96,9 +111,9 @@ namespace EasyAppointmentManager.Controllers
                 return RedirectToAction(nameof(Index));
             }
             appointment.AllAvailableCustomers = _context.Customer.OrderBy(i => i.LastName).ToList();
-            appointment.AllAvailableDoctors = _context.Doctor.OrderBy(i => i.LastName).ToList();
             appointment.AllAvailableClinics = _context.Clinic.OrderBy(i => i.ClinicName).ToList();
-            appointment.AllAvailableServices = _context.Service.OrderBy(i => i.ServiceName).ToList();
+            appointment.AllAvailableDoctorsByServiceId = _context.Doctor.OrderBy(i => i.LastName).ToList();
+            appointment.AllAvailableServicesByClinicId = _context.Service.OrderBy(i => i.ServiceName).ToList();
             return View(appointment);
         }
 
@@ -123,7 +138,7 @@ namespace EasyAppointmentManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AppointmentId,Date,Timeslot")] Appointment appointment)
+        public async Task<IActionResult> Edit(int id, [Bind("AppointmentId,AppointmentDate,Timeslot")] Appointment appointment)
         {
             if (id != appointment.AppointmentId)
             {

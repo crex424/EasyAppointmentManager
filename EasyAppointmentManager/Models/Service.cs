@@ -33,5 +33,7 @@ namespace EasyAppointmentManager.Models
         [Required(ErrorMessage = "{0} is requried.")]
         [DataType(DataType.Time)]
         public string? ServiceTime { get; set; }
+
+        public ICollection<Doctor>? Doctors { get; set; }
     }
 }
