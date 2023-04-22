@@ -11,7 +11,7 @@ namespace EasyAppointmentManager.Models
         /// The Service's unique Identity
         /// </summary>
         [Key]
-        public int ServiceId { get; private set; }
+        public int ServiceId { get; set; }
 
         /// <summary>
         /// The Fee of the Service provided
