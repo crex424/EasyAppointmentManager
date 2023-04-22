@@ -36,11 +36,6 @@ namespace EasyAppointmentManager.Models
         [StringLength(100)]
         public string LastName { get; set; }
 
-        public string FullName
-        {
-            get { return LastName + ", " + FirstName + " " + MiddleName; }
-        }
-
         /// <summary>
         /// Customer's Date of birth
         /// </summary>
@@ -51,9 +46,8 @@ namespace EasyAppointmentManager.Models
 
         /// <summary>
         /// The Customer's gender
-        /// Female is True, of course :)
+        /// Female is True, of course
         /// Male is False
-        /// Null is for Prefer not to answer
         /// </summary>
         public Boolean? Gender { get; set; }
 
@@ -73,5 +67,16 @@ namespace EasyAppointmentManager.Models
         // [DataType(DataType.EmailAddress)]
         [EmailAddress(ErrorMessage = "Invalid email address.")]
         public string? Email { get; set; }
+
+        [Display(Name = "Customer")]
+        public string FullName
+        {
+            get { return LastName + ", " + FirstName + " " + MiddleName; }
+        }
+
+        public string Info
+        {
+            get { return LastName + ", " + FirstName + " " + MiddleName + " (" + DateOfBirth.ToShortDateString() + ")"; }
+        }
     }
 }
