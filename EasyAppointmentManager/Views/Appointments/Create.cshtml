@@ -64,7 +64,7 @@
                 <select asp-for="ChosenDoctor" class="form-control">
                     @foreach (Doctor doc in Model.AllAvailableDoctors)
                     {
-                        <option value="@doc.DoctorID">@doc.FullName</option>
+                        <option value="@doc.DoctorId">@doc.FullName</option>
                     }
                 </select>
             </div>
