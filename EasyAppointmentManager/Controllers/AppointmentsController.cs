@@ -61,14 +61,44 @@ namespace EasyAppointmentManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AppointmentId,Date,Timeslot")] Appointment appointment)
+        public async Task<IActionResult> Create(AppointmentCreateViewModel appointment)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(appointment);
+                Appointment newAppointment = new()
+                {
+                    Date = appointment.Date,
+                    Timeslot = appointment.Timeslot,
+                    
+                    Customer = new Customer()
+                    {
+                        CustomerId = appointment.ChosenCustomer.CustomerId
+                    },
+                    
+                    Clinic = new Clinic()
+                    {
+                        ClinicId = appointment.ChosenClinic.ClinicId
+                    },
+
+                    Service = new Service()
+                    {
+                        ServiceId = appointment.ChosenService.ServiceId
+                    },
+
+                    Doctor = new Doctor()
+                    {
+                        DoctorId = appointment.ChosenDoctor.DoctorId
+                    }
+                };
+
+                _context.Add(newAppointment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            appointment.AllAvailableCustomers = _context.Customer.OrderBy(i => i.LastName).ToList();
+            appointment.AllAvailableDoctors = _context.Doctor.OrderBy(i => i.LastName).ToList();
+            appointment.AllAvailableClinics = _context.Clinic.OrderBy(i => i.ClinicName).ToList();
+            appointment.AllAvailableServices = _context.Service.OrderBy(i => i.ServiceName).ToList();
             return View(appointment);
         }
 

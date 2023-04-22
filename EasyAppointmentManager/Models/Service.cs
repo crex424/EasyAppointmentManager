@@ -24,12 +24,12 @@ namespace EasyAppointmentManager.Models
         /// <summary>
         ///  The Service's Name
         /// </summary>
-        [Display(Name = "The Service's Name")]
+        [Display(Name = "Service")]
         [Required(ErrorMessage = "{0} is requried.")]
         [StringLength(100)]
         public string? ServiceName { get; set; }
 
-        [Display(Name = "The Service's Time to completion")]
+        [Display(Name = "Duration")]
         [Required(ErrorMessage = "{0} is requried.")]
         [DataType(DataType.Time)]
         public string? ServiceTime { get; set; }

@@ -25,7 +25,7 @@ namespace EasyAppointmentManager.Models
         /// <summary>
         /// The Doctor's legal last name
         /// </summary>
-        [Display(Name = "First Name")]
+        [Display(Name = "Last Name")]
         [Required(ErrorMessage = "{0} is required.")]
         [StringLength(100)]
         public string? LastName { get; set; }
