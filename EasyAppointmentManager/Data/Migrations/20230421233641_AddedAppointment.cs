@@ -100,7 +100,7 @@ namespace EasyAppointmentManager.Data.Migrations
                         name: "FK_Clinic_Location_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Location",
-                        principalColumn: "LocationID",
+                        principalColumn: "LocationId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -138,7 +138,7 @@ namespace EasyAppointmentManager.Data.Migrations
                         name: "FK_Appointment_Doctor_DoctorID",
                         column: x => x.DoctorID,
                         principalTable: "Doctor",
-                        principalColumn: "DoctorID",
+                        principalColumn: "DoctorId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Appointment_Service_ServiceID",
@@ -161,7 +161,7 @@ namespace EasyAppointmentManager.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Appointment_DoctorID",
                 table: "Appointment",
-                column: "DoctorID");
+                column: "DoctorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointment_ServiceID",

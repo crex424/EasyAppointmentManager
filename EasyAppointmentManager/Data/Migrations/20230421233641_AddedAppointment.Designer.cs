@@ -44,7 +44,7 @@ namespace EasyAppointmentManager.Data.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DoctorID")
+                    b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
                     b.Property<int>("ServiceID")
@@ -62,7 +62,7 @@ namespace EasyAppointmentManager.Data.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("DoctorID");
+                    b.HasIndex("DoctorId");
 
                     b.HasIndex("ServiceID");
 
@@ -150,11 +150,11 @@ namespace EasyAppointmentManager.Data.Migrations
 
             modelBuilder.Entity("EasyAppointmentManager.Models.Doctor", b =>
                 {
-                    b.Property<int>("DoctorID")
+                    b.Property<int>("DoctorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DoctorID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DoctorId"), 1L, 1);
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
@@ -192,18 +192,18 @@ namespace EasyAppointmentManager.Data.Migrations
                     b.Property<int>("SpecializationID")
                         .HasColumnType("int");
 
-                    b.HasKey("DoctorID");
+                    b.HasKey("DoctorId");
 
                     b.ToTable("Doctor");
                 });
 
             modelBuilder.Entity("EasyAppointmentManager.Models.Location", b =>
                 {
-                    b.Property<int>("LocationID")
+                    b.Property<int>("LocationId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocationID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocationId"), 1L, 1);
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -222,7 +222,7 @@ namespace EasyAppointmentManager.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("LocationID");
+                    b.HasKey("LocationId");
 
                     b.ToTable("Location");
                 });
@@ -495,7 +495,7 @@ namespace EasyAppointmentManager.Data.Migrations
 
                     b.HasOne("EasyAppointmentManager.Models.Doctor", "Doctor")
                         .WithMany()
-                        .HasForeignKey("DoctorID")
+                        .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
