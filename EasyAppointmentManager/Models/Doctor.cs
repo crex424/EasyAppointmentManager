@@ -23,19 +23,19 @@ namespace EasyAppointmentManager.Models
         public string? FirstName { get; set; }
 
         /// <summary>
+        /// The Doctor's legal middle name (Optional) 
+        /// </summary>
+        [Display(Name = "Middle Name")]
+        [StringLength(55)]
+        public string? MiddleName { get; set; }
+
+        /// <summary>
         /// The Doctor's legal last name
         /// </summary>
         [Display(Name = "First Name")]
         [Required(ErrorMessage = "{0} is required.")]
         [StringLength(100)]
         public string? LastName { get; set; }
-
-        /// <summary>
-        /// The Doctor's legal middle name (Optional) 
-        /// </summary>
-        [Display(Name = "Middle Name")]
-        [StringLength(55)]
-        public string? MiddleName { get; set; }
 
         /// <summary>
         /// The Doctor's legal date of birth
