@@ -36,6 +36,11 @@ namespace EasyAppointmentManager.Models
         [StringLength(100)]
         public string LastName { get; set; }
 
+        public string FullName
+        {
+            get { return LastName + ", " + FirstName + " " + MiddleName; }
+        }
+
         /// <summary>
         /// Customer's Date of birth
         /// </summary>
