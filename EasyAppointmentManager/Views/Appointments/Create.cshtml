@@ -23,8 +23,40 @@
                 <span asp-validation-for="Timeslot" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AllAvailableCustomers" class="control-label"></label>
-                <select asp-for="AllAvailableCustomers" class="form-control" />
+                <label>Customers</label>
+                <select>
+                    @foreach(Customer cus in Model.AllAvailableCustomers)
+                    {
+                        <option value="@cus.CustomerId">@cus.FullName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Clinics</label>
+                <select>
+                    @foreach (Clinic clinic in Model.AllAvailableClinics)
+                    {
+                        <option value="@clinic.ClinicId">@clinic.ClinicName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Services</label>
+                <select>
+                    @foreach (Service service in Model.AllAvailableServices)
+                    {
+                        <option value="@service.ServiceId">@service.ServiceName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Doctors</label>
+                <select>
+                    @foreach (Doctor doc in Model.AllAvailableDoctors)
+                    {
+                        <option value="@doc.DoctorID">@doc.FullName</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
