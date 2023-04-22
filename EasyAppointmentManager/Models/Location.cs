@@ -11,7 +11,7 @@ namespace EasyAppointmentManager.Models
         /// The Identity of the Location
         /// </summary>
         [Key]
-        public int LocationID { get; private set; }
+        public int LocationId { get; set; }
 
         /// <summary>
         /// The Location's Address
