@@ -2,6 +2,20 @@
 
 @{
     ViewData["Title"] = "Create a new appointment";
+
+    List<SelectListItem> customers = new();
+    foreach (Customer cus in Model.AllAvailableCustomers)
+    {
+        customers.Add(
+            new SelectListItem()
+                    {
+                        Value = cus.CustomerId.ToString(),
+                        Text = cus.Info
+                    }
+        );
+    }
+    
+
 }
 
 <h1>Create</h1>
@@ -14,7 +28,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
+                <input asp-for="Date" class="form-control" min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" max="@DateTime.Now.AddYears(100).ToString("yyyy-MM-dd")" />
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -24,16 +38,12 @@
             </div>
             <div class="form-group">
                 <label>Customers</label>
-                <select>
-                    @foreach(Customer cus in Model.AllAvailableCustomers)
-                    {
-                        <option value="@cus.CustomerId">@cus.FullName</option>
-                    }
+                <select asp-for="ChosenCustomer" class="form-control" asp-items="customers">
                 </select>
             </div>
             <div class="form-group">
                 <label>Clinics</label>
-                <select>
+                <select asp-for="ChosenClinic" class="form-control">
                     @foreach (Clinic clinic in Model.AllAvailableClinics)
                     {
                         <option value="@clinic.ClinicId">@clinic.ClinicName</option>
@@ -42,7 +52,7 @@
             </div>
             <div class="form-group">
                 <label>Services</label>
-                <select>
+                <select asp-for="ChosenService" class="form-control">
                     @foreach (Service service in Model.AllAvailableServices)
                     {
                         <option value="@service.ServiceId">@service.ServiceName</option>
@@ -51,7 +61,7 @@
             </div>
             <div class="form-group">
                 <label>Doctors</label>
-                <select>
+                <select asp-for="ChosenDoctor" class="form-control">
                     @foreach (Doctor doc in Model.AllAvailableDoctors)
                     {
                         <option value="@doc.DoctorID">@doc.FullName</option>
