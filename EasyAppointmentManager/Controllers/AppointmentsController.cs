@@ -48,7 +48,12 @@ namespace EasyAppointmentManager.Controllers
         // GET: Appointments/Create
         public IActionResult Create()
         {
-            return View();
+            AppointmentCreateViewModel viewModel = new();
+            viewModel.AllAvailableCustomers = _context.Customer.OrderBy(i => i.LastName).ToList();
+            viewModel.AllAvailableDoctors = _context.Doctor.OrderBy(i => i.LastName).ToList();
+            viewModel.AllAvailableClinics = _context.Clinic.OrderBy(i => i.ClinicName).ToList();
+            viewModel.AllAvailableServices = _context.Service.OrderBy(i => i.ServiceName).ToList();
+            return View(viewModel);
         }
 
         // POST: Appointments/Create

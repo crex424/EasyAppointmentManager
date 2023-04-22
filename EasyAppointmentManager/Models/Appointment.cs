@@ -43,6 +43,38 @@ namespace EasyAppointmentManager.Models
 
     }
 
+    public class AppointmentCreateViewModel
+    {
+        /// <summary>
+        /// Date of the appointment
+        /// </summary>
+        [Display(Name = "Appointment Date")]
+        [Required(ErrorMessage = "{0} is required.")]
+        [DataType(DataType.Date)] // display Date picker
+        public DateTime Date { get; set; }
+
+        /// <summary>
+        /// Range from 0 to 23
+        /// Timeslot of the appointment
+        /// Assume each visit is 1 hour
+        /// 8 represents 8:00AM - 9:00AM
+        /// </summary>
+        [Range(0, 23)]
+        public int Timeslot { get; set; }
+
+        public bool TimeslotStatus { get; set; }
+
+        public AppointmentStatus AppointmentStatus { get; set; }
+
+        public List<Customer> AllAvailableCustomers { get; set; }
+
+        public List<Clinic> AllAvailableClinics { get; set; }
+
+        public List<Service> AllAvailableServices { get; set; }
+
+        public List<Doctor> AllAvailableDoctors { get; set; }
+    }
+
     public enum AppointmentStatus
     {
         None, 
