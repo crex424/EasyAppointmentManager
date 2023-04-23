@@ -69,7 +69,7 @@ namespace EasyAppointmentManager.Data.Migrations
                 name: "Service",
                 columns: table => new
                 {
-                    ServiceID = table.Column<int>(type: "int", nullable: false)
+                    ServiceId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Fee = table.Column<double>(type: "float", nullable: false),
                     ServiceName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
@@ -77,7 +77,7 @@ namespace EasyAppointmentManager.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Service", x => x.ServiceID);
+                    table.PrimaryKey("PK_Service", x => x.ServiceId);
                 });
 
             migrationBuilder.CreateTable(
@@ -116,7 +116,7 @@ namespace EasyAppointmentManager.Data.Migrations
                     AppointmentStatus = table.Column<int>(type: "int", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     ClinicId = table.Column<int>(type: "int", nullable: false),
-                    ServiceID = table.Column<int>(type: "int", nullable: false),
+                    ServiceId = table.Column<int>(type: "int", nullable: false),
                     DoctorID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -141,8 +141,8 @@ namespace EasyAppointmentManager.Data.Migrations
                         principalColumn: "DoctorId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Appointment_Service_ServiceID",
-                        column: x => x.ServiceID,
+                        name: "FK_Appointment_Service_ServiceId",
+                        column: x => x.ServiceId,
                         principalTable: "Service",
                         principalColumn: "ServiceId",
                         onDelete: ReferentialAction.Cascade);
@@ -164,7 +164,7 @@ namespace EasyAppointmentManager.Data.Migrations
                 column: "DoctorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Appointment_ServiceID",
+                name: "IX_Appointment_ServiceId",
                 table: "Appointment",
                 column: "ServiceId");
 

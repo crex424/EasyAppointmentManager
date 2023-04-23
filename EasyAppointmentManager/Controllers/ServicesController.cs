@@ -36,7 +36,7 @@ namespace EasyAppointmentManager.Controllers
             }
 
             var service = await _context.Service
-                .FirstOrDefaultAsync(m => m.ServiceID == id);
+                .FirstOrDefaultAsync(m => m.ServiceId == id);
             if (service == null)
             {
                 return NotFound();
@@ -56,7 +56,7 @@ namespace EasyAppointmentManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ServiceID,Fee,ServiceName,ServiceTime")] Service service)
+        public async Task<IActionResult> Create([Bind("ServiceId,Fee,ServiceName,ServiceTime")] Service service)
         {
             if (ModelState.IsValid)
             {
@@ -88,9 +88,9 @@ namespace EasyAppointmentManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ServiceID,Fee,ServiceName,ServiceTime")] Service service)
+        public async Task<IActionResult> Edit(int id, [Bind("ServiceId,Fee,ServiceName,ServiceTime")] Service service)
         {
-            if (id != service.ServiceID)
+            if (id != service.ServiceId)
             {
                 return NotFound();
             }
@@ -104,7 +104,7 @@ namespace EasyAppointmentManager.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ServiceExists(service.ServiceID))
+                    if (!ServiceExists(service.ServiceId))
                     {
                         return NotFound();
                     }
@@ -127,7 +127,7 @@ namespace EasyAppointmentManager.Controllers
             }
 
             var service = await _context.Service
-                .FirstOrDefaultAsync(m => m.ServiceID == id);
+                .FirstOrDefaultAsync(m => m.ServiceId == id);
             if (service == null)
             {
                 return NotFound();
@@ -157,7 +157,7 @@ namespace EasyAppointmentManager.Controllers
 
         private bool ServiceExists(int id)
         {
-          return (_context.Service?.Any(e => e.ServiceID == id)).GetValueOrDefault();
+          return (_context.Service?.Any(e => e.ServiceId == id)).GetValueOrDefault();
         }
     }
 }
