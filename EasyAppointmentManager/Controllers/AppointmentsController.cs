@@ -107,7 +107,10 @@ namespace EasyAppointmentManager.Controllers
                 {
                     Date = appointment.Date,
                     Timeslot = appointment.Timeslot,
+
+                    // If the ModelState is valid, Set the status to confirmed
                     AppointmentStatus = AppointmentStatus.Confirmed,
+
                     Customer = new Customer()
                     {
                         CustomerId = appointment.ChosenCustomer
