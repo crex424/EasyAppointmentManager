@@ -31,7 +31,7 @@ namespace EasyAppointmentManager.Models
 
         [Display(Name = "Duration")]
         [Required(ErrorMessage = "{0} is requried.")]
-        [DataType(DataType.Time)]
+        //[DataType(DataType.Time)]
         public string? ServiceTime { get; set; }
 
         public ICollection<Doctor>? Doctors { get; set; }
