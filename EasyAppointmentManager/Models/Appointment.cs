@@ -91,17 +91,17 @@ namespace EasyAppointmentManager.Models
         [Display(Name = "Clinic")]
         public List<Clinic>? AllAvailableClinics { get; set; }
 
-        public int? ChosenClinic { get; set; }
+        public int ChosenClinic { get; set; }
 
         [Display(Name = "Service")]
         public List<Service>? AllAvailableServicesByClinicId { get; set; }
 
-        public int? ChosenService { get; set; }
+        public int ChosenService { get; set; }
 
         [Display(Name = "Doctor")]
         public List<Doctor>? AllAvailableDoctorsByServiceId { get; set; }
 
-        public int? ChosenDoctor { get; set; }
+        public int ChosenDoctor { get; set; }
     }
 
     public enum AppointmentStatus

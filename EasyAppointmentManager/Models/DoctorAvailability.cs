@@ -48,4 +48,5 @@ namespace EasyAppointmentManager.Models
         Available,
         Booked
     }
+
 }

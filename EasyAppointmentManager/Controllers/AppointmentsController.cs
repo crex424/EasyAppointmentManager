@@ -55,17 +55,30 @@ namespace EasyAppointmentManager.Controllers
             // viewModel.AllAvailableServicesByClinicId = _context.Service.OrderBy(i => i.ServiceName).ToList();
             // viewModel.AllAvailableDoctorsByServiceId = _context.Doctor.OrderBy(i => i.LastName).ToList();
 
-            viewModel.AllAvailableServicesByClinicId = _context.Clinic
+            if (viewModel.ChosenClinic != null)
+            {
+                viewModel.AllAvailableServicesByClinicId = _context.Clinic
                                                      .Where(c => c.ClinicId == viewModel.ChosenClinic)
-                                                     .SelectMany(c => c.Services)   
+                                                     .SelectMany(c => c.Services)
                                                      .ToList();
-               
-            viewModel.AllAvailableDoctorsByServiceId = _context.Service
+                if (viewModel.ChosenService != null)
+                {
+                    viewModel.AllAvailableDoctorsByServiceId = _context.Service
                                                     .Where(s => s.ServiceId == viewModel.ChosenService)
                                                     .SelectMany(s => s.Doctors)
                                                     .OrderBy(i => i.LastName)
                                                     .ToList();
+                    if (viewModel.ChosenDoctor != null && viewModel.Date != null)
+                    {
+                        // Get the available timeslots for the doctor and date
+                        List<Timeslot> availableTimeslots = GetAvailableTimeslots(viewModel.ChosenDoctor, viewModel.Date);
 
+                        // Pass the available timeslots to the view
+                        ViewData["AvailableTimeslots"] = availableTimeslots;
+                    }
+                }
+            }
+            
             return View(viewModel);
         }
 
@@ -88,22 +101,20 @@ namespace EasyAppointmentManager.Controllers
                         CustomerId = appointment.ChosenCustomer
                     },
 
-                    /*
                     Clinic = new Clinic()
                     {
-                        ClinicId = appointment.ChosenClinic.ClinicId
+                        ClinicId = appointment.ChosenClinic
                     },
 
                     Service = new Service()
                     {
-                        ServiceId = appointment.ChosenService.ServiceId
+                        ServiceId = appointment.ChosenService
                     },
 
                     Doctor = new Doctor()
                     {
-                        DoctorId = appointment.ChosenDoctor.DoctorId
+                        DoctorId = appointment.ChosenDoctor
                     }
-                    */
                 };
 
                 _context.Add(newAppointment);
@@ -209,5 +220,31 @@ namespace EasyAppointmentManager.Controllers
         {
           return (_context.Appointment?.Any(e => e.AppointmentId == id)).GetValueOrDefault();
         }
+
+        public List<Timeslot> GetAvailableTimeslots(int? doctorId, DateTime date)
+        {
+            var availability = _context.DoctorAvailability
+                                       .FirstOrDefault(a => a.DoctorId == doctorId && a.Date.Date == date.Date);
+
+            if (availability == null)
+            {
+                return new List<Timeslot>();
+            }
+
+            var availableTimeslots = availability.Timeslots
+                                                   .Where(t => t.Status == TimeslotStatus.Available)
+                                                   .Select(t => new Timeslot
+                                                   {
+                                                       TimeslotId = t.TimeslotId,
+                                                       StartTime = t.StartTime,
+                                                       EndTime = t.EndTime,
+                                                       Status = t.Status,
+                                                       DoctorAvailabilityId = t.DoctorAvailabilityId
+                                                   })
+                                                   .ToList();
+
+            return availableTimeslots;
+        }
+
     }
 }

@@ -99,14 +99,16 @@
                         @if (Model.Date != null)
                         {
                             <div class="form-group">
+                                <!-- Display the list of available timeslots -->
+
                                 <label asp-for="Timeslot" class="control-label"></label>
                                 <select asp-for="Timeslot" class="form-control">
-                                    @for (int i = 8; i <= 16; i++)
+                                    @foreach (var timeslot in ViewBag.AvailableTimeslots)
                                     {
-                                        <option value="@i">@i:00 - @(i + 1):00</option>
+                                        <option value="@timeslot.TimeslotId">@timeslot.StartTime.ToShortTimeString() - @timeslot.EndTime.ToShortTimeString()</option>
                                     }
                                 </select>
-                                <span asp-validation-for="Timeslot" class="text-danger"></span>
+
                             </div>
                         }
                     }
