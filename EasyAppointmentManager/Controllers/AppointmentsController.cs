@@ -50,27 +50,39 @@ namespace EasyAppointmentManager.Controllers
         public IActionResult Create()
         {
             AppointmentCreateViewModel viewModel = new();
+            // Get list of all customers
             viewModel.AllAvailableCustomers = _context.Customer.OrderBy(i => i.LastName).ToList();
+
+            // Get list of all clinics
             viewModel.AllAvailableClinics = _context.Clinic.OrderBy(i => i.ClinicName).ToList();
+
+
             // viewModel.AllAvailableServicesByClinicId = _context.Service.OrderBy(i => i.ServiceName).ToList();
             // viewModel.AllAvailableDoctorsByServiceId = _context.Doctor.OrderBy(i => i.LastName).ToList();
 
+            // if a clinic selected
             if (viewModel.ChosenClinic != null)
             {
+                // Get the services for the clinic
                 viewModel.AllAvailableServicesByClinicId = _context.Clinic
                                                      .Where(c => c.ClinicId == viewModel.ChosenClinic)
                                                      .SelectMany(c => c.Services)
                                                      .ToList();
+
+                // if a service selected
                 if (viewModel.ChosenService != null)
                 {
+                    // Get the doctors for the service
                     viewModel.AllAvailableDoctorsByServiceId = _context.Service
                                                     .Where(s => s.ServiceId == viewModel.ChosenService)
                                                     .SelectMany(s => s.Doctors)
                                                     .OrderBy(i => i.LastName)
                                                     .ToList();
+
+                    // if a doctor and date selected
                     if (viewModel.ChosenDoctor != null && viewModel.Date != null)
                     {
-                        // Get the available timeslots for the doctor and date
+                        // Get the available timeslots for the doctor and date from DoctorAvailability table
                         List<Timeslot> availableTimeslots = GetAvailableTimeslots(viewModel.ChosenDoctor, viewModel.Date);
 
                         // Pass the available timeslots to the view

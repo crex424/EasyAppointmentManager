@@ -61,6 +61,7 @@
                 </select>
             </div>
             
+            <!-- if a clinic selected -->
             @if (Model.ChosenClinic != null)
             {
                 <!-- Choose Service -->
@@ -74,6 +75,7 @@
                     </select>
                 </div>
 
+                <!-- if a service selected -->
                 @if (Model.ChosenService != null)
                 {
                     <!-- Choose Doctor -->
@@ -87,6 +89,7 @@
                         </select>
                     </div>
 
+                    <!-- if a doctor selected -->
                     @if (Model.ChosenDoctor != null )
                     {
                         <!-- Choose Date -->
@@ -96,10 +99,11 @@
                             <span asp-validation-for="Date" class="text-danger"></span>
                         </div>
 
+                        <!-- if a date selected -->
                         @if (Model.Date != null)
                         {
                             <div class="form-group">
-                                <!-- Display the list of available timeslots -->
+                                <!-- Display the list of available timeslots from DoctorAvailability table -->
 
                                 <label asp-for="Timeslot" class="control-label"></label>
                                 <select asp-for="Timeslot" class="form-control">
