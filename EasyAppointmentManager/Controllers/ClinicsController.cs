@@ -23,8 +23,9 @@ namespace EasyAppointmentManager.Controllers
         // GET: Clinics
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Clinic.Include(c => c.Location);
-            return View(await applicationDbContext.ToListAsync());
+            return _context.Clinic != null ?
+                          View(await _context.Clinic.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.Clinic'  is null.");
         }
 
         // GET: Clinics/Details/5
@@ -49,7 +50,6 @@ namespace EasyAppointmentManager.Controllers
         // GET: Clinics/Create
         public IActionResult Create()
         {
-            ViewData["LocationId"] = new SelectList(_context.Set<Models.Location>(), "LocationID", "Address");
             return View();
         }
 
@@ -66,11 +66,11 @@ namespace EasyAppointmentManager.Controllers
                 await _context.SaveChangesAsync();
 
                 // Show success message on page
-                ViewData["Message"] = $"{clinic.Name} was added successfully!";
+                ViewData["Message"] = $"{clinic.ClinicName} was added successfully!";
 
                 return View();
             }
-            ViewData["LocationId"] = new SelectList(_context.Set<Models.Location>(), "LocationID", "Address", clinic.LocationId);
+            //ViewData["LocationId"] = new SelectList(_context.Set<Models.Location>(), "LocationID", "Address", clinic.LocationId);
             return View(clinic);
         }
 
@@ -87,7 +87,7 @@ namespace EasyAppointmentManager.Controllers
             {
                 return NotFound();
             }
-            ViewData["LocationId"] = new SelectList(_context.Set<Models.Location>(), "LocationID", "Address", clinic.LocationId);
+            //ViewData["LocationId"] = new SelectList(_context.Set<Models.Location>(), "LocationID", "Address", clinic.LocationId);
             return View(clinic);
         }
 
@@ -108,10 +108,10 @@ namespace EasyAppointmentManager.Controllers
                 _context.Update(clinic);
                 await _context.SaveChangesAsync();
 
-                TempData["Message"] = $"{clinic.Name} was updated successfully!";
+                TempData["Message"] = $"{clinic.ClinicName} was updated successfully!";
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LocationId"] = new SelectList(_context.Set<Models.Location>(), "LocationID", "Address", clinic.LocationId);
+            //ViewData["LocationId"] = new SelectList(_context.Set<Models.Location>(), "LocationID", "Address", clinic.LocationId);
             return View(clinic);
         }
 
@@ -143,13 +143,15 @@ namespace EasyAppointmentManager.Controllers
             {
                 return Problem("Entity set 'ApplicationDbContext.Clinic'  is null.");
             }
+
             Clinic? clinic = await _context.Clinic.FindAsync(id);
+
             if (clinic != null)
             {
                 _context.Clinic.Remove(clinic);
                 await _context.SaveChangesAsync();
 
-                TempData["Message"] = $"{clinic.Name} was deleted successfully!";
+                TempData["Message"] = $"{clinic.ClinicName} was deleted successfully!";
             }
             
             return RedirectToAction(nameof(Index));
