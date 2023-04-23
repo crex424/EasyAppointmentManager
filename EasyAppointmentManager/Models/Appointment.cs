@@ -15,13 +15,13 @@ namespace EasyAppointmentManager.Models
         public int AppointmentId { get; set; }
 
         /// <summary>
-        /// AppointmentDate of the appointment
+        /// Date of the appointment
         /// </summary>
-        [Display(Name = "Appointment AppointmentDate")]
+        [Display(Name = "Appointment Date")]
         [Required(ErrorMessage = "{0} is required.")]
-        [DataType(DataType.Date)] // display AppointmentDate picker
+        [DataType(DataType.Date)] // display Date picker
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
-        public DateTime? AppointmentDate { get; set; }
+        public DateTime? Date { get; set; }
 
         /// <summary>
         /// Range from 0 to 23
@@ -54,13 +54,13 @@ namespace EasyAppointmentManager.Models
     public class AppointmentCreateViewModel
     {
         /// <summary>
-        /// AppointmentDate of the appointment
+        /// Date of the appointment
         /// </summary>
-        [Display(Name = "Appointment AppointmentDate")]
+        [Display(Name = "Appointment Date")]
         [Required(ErrorMessage = "{0} is required.")]
-        [DataType(DataType.Date)] // display AppointmentDate picker
+        [DataType(DataType.Date)] // display Date picker
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
-        public DateTime AppointmentDate { get; set; }
+        public DateTime Date { get; set; }
 
         /// <summary>
         /// Range from 0 to 23
@@ -112,7 +112,7 @@ namespace EasyAppointmentManager.Models
         Missed,
         Rescheduled
     }
-
+    /*
     public enum Timeslot
     {
         /*
@@ -133,6 +133,8 @@ namespace EasyAppointmentManager.Models
         [Display(Name = "7:00AM - 8:00AM")]
         Slot7 = 7,
         */
+        
+        /*
         [Display(Name = "8:00AM - 9:00AM")]
         Slot8 = 8,
         [Display(Name = "9:00AM - 10:00AM")]
@@ -150,7 +152,10 @@ namespace EasyAppointmentManager.Models
         [Display(Name = "3:00PM - 4:00PM")]
         Slot15 = 15,
         [Display(Name = "4:00PM - 5:00PM")]
-        Slot16 = 16 /*,
+        Slot16 = 16 
+        */
+        
+        /*,
         [Display(Name = "5:00PM - 6:00PM")]
         Slot17 = 17,
         [Display(Name = "6:00PM - 7:00PM")]
@@ -165,5 +170,5 @@ namespace EasyAppointmentManager.Models
         Slot22 = 22,
         [Display(Name = "11:00PM - 12:00AM")]
         Slot23 = 23*/
-    }
+
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using static EasyAppointmentManager.Models.Appointment;
 
 namespace EasyAppointmentManager.Models
 {
@@ -10,11 +10,14 @@ namespace EasyAppointmentManager.Models
     /// </summary>
     public class DoctorAvailability
     {
+        [Key]
+        public int DoctorAvailabilityId { get; set; }
+
         /// <summary>
         /// The ID of the doctor
         /// </summary>
-        [Key]
         public int DoctorId { get; set; }
+        public Doctor Doctor { get; set; }
 
         /// <summary>
         /// The date for which the availability is being set
@@ -22,15 +25,22 @@ namespace EasyAppointmentManager.Models
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
-        /// <summary>
-        /// The list of available timeslots for the day
-        /// </summary>
-        public List<TimeSpan> AvailableTimeslots { get; set; }
+        public List<Timeslot> Timeslots { get; set; }
+    }
 
-        /// <summary>
-        /// The status of each timeslot (Available/Booked)
-        /// </summary>
-        public List<TimeslotStatus> TimeslotStatuses { get; set; }
+    public class Timeslot
+    {
+        [Key]
+        public int TimeslotId { get; set; }
+
+        public DateTime StartTime { get; set; }
+
+        public DateTime EndTime { get; set; }
+
+        public TimeslotStatus Status { get; set; }
+
+        public int DoctorAvailabilityId { get; set; }
+        public DoctorAvailability DoctorAvailability { get; set; }
     }
 
     public enum TimeslotStatus

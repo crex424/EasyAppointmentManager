@@ -144,7 +144,7 @@ namespace EasyAppointmentManager.Data.Migrations
                         name: "FK_Appointment_Service_ServiceID",
                         column: x => x.ServiceID,
                         principalTable: "Service",
-                        principalColumn: "ServiceID",
+                        principalColumn: "ServiceId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -166,7 +166,7 @@ namespace EasyAppointmentManager.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Appointment_ServiceID",
                 table: "Appointment",
-                column: "ServiceID");
+                column: "ServiceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clinic_LocationId",

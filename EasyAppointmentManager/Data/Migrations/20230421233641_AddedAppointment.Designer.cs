@@ -41,13 +41,13 @@ namespace EasyAppointmentManager.Data.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("AppointmentDate")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ServiceID")
+                    b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
                     b.Property<int>("Timeslot")
@@ -64,7 +64,7 @@ namespace EasyAppointmentManager.Data.Migrations
 
                     b.HasIndex("DoctorId");
 
-                    b.HasIndex("ServiceID");
+                    b.HasIndex("ServiceId");
 
                     b.ToTable("Appointment");
                 });
@@ -229,11 +229,11 @@ namespace EasyAppointmentManager.Data.Migrations
 
             modelBuilder.Entity("EasyAppointmentManager.Models.Service", b =>
                 {
-                    b.Property<int>("ServiceID")
+                    b.Property<int>("ServiceId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceId"), 1L, 1);
 
                     b.Property<double>("Fee")
                         .HasColumnType("float");
@@ -247,7 +247,7 @@ namespace EasyAppointmentManager.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ServiceID");
+                    b.HasKey("ServiceId");
 
                     b.ToTable("Service");
                 });
@@ -501,7 +501,7 @@ namespace EasyAppointmentManager.Data.Migrations
 
                     b.HasOne("EasyAppointmentManager.Models.Service", "Service")
                         .WithMany()
-                        .HasForeignKey("ServiceID")
+                        .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

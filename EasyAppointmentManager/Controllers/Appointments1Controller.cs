@@ -56,7 +56,7 @@ namespace EasyAppointmentManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AppointmentId,AppointmentDate,Timeslot,TimeslotStatus,AppointmentStatus")] Appointment appointment)
+        public async Task<IActionResult> Create([Bind("AppointmentId,Date,Timeslot,TimeslotStatus,AppointmentStatus")] Appointment appointment)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace EasyAppointmentManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AppointmentId,AppointmentDate,Timeslot,TimeslotStatus,AppointmentStatus")] Appointment appointment)
+        public async Task<IActionResult> Edit(int id, [Bind("AppointmentId,Date,Timeslot,TimeslotStatus,AppointmentStatus")] Appointment appointment)
         {
             if (id != appointment.AppointmentId)
             {

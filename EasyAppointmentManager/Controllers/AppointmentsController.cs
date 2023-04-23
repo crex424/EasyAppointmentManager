@@ -80,7 +80,7 @@ namespace EasyAppointmentManager.Controllers
             {
                 Appointment newAppointment = new()
                 {
-                    AppointmentDate = appointment.AppointmentDate,
+                    Date = appointment.Date,
                     Timeslot = appointment.Timeslot,
                     AppointmentStatus = AppointmentStatus.Confirmed,
                     Customer = new Customer()
@@ -138,7 +138,7 @@ namespace EasyAppointmentManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AppointmentId,AppointmentDate,Timeslot")] Appointment appointment)
+        public async Task<IActionResult> Edit(int id, [Bind("AppointmentId,Date,Timeslot")] Appointment appointment)
         {
             if (id != appointment.AppointmentId)
             {

@@ -45,7 +45,7 @@ namespace EasyAppointmentManager.Models
         /// <summary>
         /// The Doctor's legal date of birth
         /// </summary>
-        [Display(Name = "AppointmentDate Of Birth")]
+        [Display(Name = "Date Of Birth")]
         [Required(ErrorMessage = "{0} is required.")]
         [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }

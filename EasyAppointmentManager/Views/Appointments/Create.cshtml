@@ -91,12 +91,12 @@
                     {
                         <!-- Choose Date -->
                         <div class="form-group">
-                            <label asp-for="AppointmentDate" class="control-label"></label>
-                            <input asp-for="AppointmentDate" class="form-control" min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" max="@DateTime.Now.AddYears(100).ToString("yyyy-MM-dd")" />
-                            <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+                            <label asp-for="Date" class="control-label"></label>
+                            <input asp-for="Date" class="form-control" min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" max="@DateTime.Now.AddYears(100).ToString("yyyy-MM-dd")" />
+                            <span asp-validation-for="Date" class="text-danger"></span>
                         </div>
 
-                        @if (Model.AppointmentDate != null)
+                        @if (Model.Date != null)
                         {
                             <div class="form-group">
                                 <label asp-for="Timeslot" class="control-label"></label>
