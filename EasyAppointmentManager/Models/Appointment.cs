@@ -34,10 +34,6 @@ namespace EasyAppointmentManager.Models
         [Required(ErrorMessage = "{0} is required.")]
         public Timeslot Timeslot { get; set; }
 
-        [Display(Name = "Timeslot Status")]
-        [Required(ErrorMessage = "{0} is required.")]
-        public bool TimeslotStatus { get; set; }
-
         [Display(Name = "Appointment Status")]
         [Required(ErrorMessage = "{0} is required.")]
         public AppointmentStatus AppointmentStatus { get; set; }
@@ -74,10 +70,6 @@ namespace EasyAppointmentManager.Models
         public Timeslot Timeslot { get; set; }
 
         //public Timeslot ChosenTimeslot { get; set; }
-
-        [Display(Name = "Status")]
-        [Required(ErrorMessage = "{0} is required.")]
-        public bool TimeslotStatus { get; set; }
 
         [Display(Name = "Status")]
         [Required(ErrorMessage = "{0} is required.")]
