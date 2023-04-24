@@ -25,9 +25,9 @@ namespace EasyAppointmentManager.Models
         /// <summary>
         /// The Clinic's code
         /// </summary>
-        [Display(Name = "Code of Specialty")]
+        [Display(Name = "Clinic Code")]
         [StringLength(100)]
-        public string? Code { get; set; }
+        public string? ClinicCode { get; set; }
 
         /// <summary>
         /// The description of the Clinic
@@ -51,11 +51,10 @@ namespace EasyAppointmentManager.Models
         [EmailAddress(ErrorMessage = "Invalid email address.")]
         public string? Email { get; set; }
 
-        // Foreign key   
-        [Display(Name = "Location")]
-        public virtual int LocationId { get; set; }
+        public Location? Location { get; set; }
 
-        [ForeignKey("LocationId")]
-        public virtual Location Location { get; set; }
+        public ICollection<Doctor>? Doctors { get; set; }
+
+        public ICollection<Service>? Services { get; set; }
     }
 }
