@@ -49,21 +49,6 @@ namespace EasyAppointmentManager.Data.Migrations
                     table.PrimaryKey("PK_Doctor", x => x.DoctorID);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Location",
-                columns: table => new
-                {
-                    LocationID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LocationName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Location", x => x.LocationID);
-                });
 
             migrationBuilder.CreateTable(
                 name: "Service",
@@ -80,29 +65,6 @@ namespace EasyAppointmentManager.Data.Migrations
                     table.PrimaryKey("PK_Service", x => x.ServiceId);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Clinic",
-                columns: table => new
-                {
-                    ClinicId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ClinicName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    LocationId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Clinic", x => x.ClinicId);
-                    table.ForeignKey(
-                        name: "FK_Clinic_Location_LocationId",
-                        column: x => x.LocationId,
-                        principalTable: "Location",
-                        principalColumn: "LocationId",
-                        onDelete: ReferentialAction.Cascade);
-                });
 
             migrationBuilder.CreateTable(
                 name: "Appointment",
@@ -168,10 +130,7 @@ namespace EasyAppointmentManager.Data.Migrations
                 table: "Appointment",
                 column: "ServiceId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Clinic_LocationId",
-                table: "Clinic",
-                column: "LocationId");
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -191,8 +150,6 @@ namespace EasyAppointmentManager.Data.Migrations
             migrationBuilder.DropTable(
                 name: "Service");
 
-            migrationBuilder.DropTable(
-                name: "Location");
         }
     }
 }

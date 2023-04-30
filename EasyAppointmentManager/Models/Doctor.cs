@@ -88,9 +88,9 @@ namespace EasyAppointmentManager.Models
         /// The address of the location/building the doctors works for/in
         /// </summary>
         [Display(Name = "Clinic")]
-        public ICollection<Clinic>? Clinics { get; set; }
+        public List<Clinic>? Clinics { get; set; } = new();
 
         [Display(Name = "Services")]
-        public ICollection<Service>? Services { get; set; }
+        public List<Service>? Services { get; set; } = new();
     }
 }

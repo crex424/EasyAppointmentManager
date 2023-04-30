@@ -25,10 +25,6 @@ namespace EasyAppointmentManager.Data.Migrations
                 name: "FK_Appointment_Service_ServiceId",
                 table: "Appointment");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_Clinic_Location_LocationId",
-                table: "Clinic");
-
             migrationBuilder.DropColumn(
                 name: "PlaceOfWork",
                 table: "Doctor");
@@ -43,14 +39,6 @@ namespace EasyAppointmentManager.Data.Migrations
                 table: "Service",
                 type: "int",
                 nullable: true);
-
-            migrationBuilder.AlterColumn<int>(
-                name: "LocationId",
-                table: "Clinic",
-                type: "int",
-                nullable: true,
-                oldClrType: typeof(int),
-                oldType: "int");
 
             migrationBuilder.AlterColumn<int>(
                 name: "ServiceId",
@@ -241,13 +229,6 @@ namespace EasyAppointmentManager.Data.Migrations
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Clinic_Location_LocationId",
-                table: "Clinic",
-                column: "LocationId",
-                principalTable: "Location",
-                principalColumn: "LocationId");
-
-            migrationBuilder.AddForeignKey(
                 name: "FK_Service_Clinic_ClinicId",
                 table: "Service",
                 column: "ClinicId",
@@ -276,10 +257,6 @@ namespace EasyAppointmentManager.Data.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_Appointment_Timeslot_TimeslotId",
                 table: "Appointment");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Clinic_Location_LocationId",
-                table: "Clinic");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Service_Clinic_ClinicId",
@@ -319,16 +296,6 @@ namespace EasyAppointmentManager.Data.Migrations
                 table: "Doctor",
                 type: "nvarchar(max)",
                 nullable: true);
-
-            migrationBuilder.AlterColumn<int>(
-                name: "LocationId",
-                table: "Clinic",
-                type: "int",
-                nullable: false,
-                defaultValue: 0,
-                oldClrType: typeof(int),
-                oldType: "int",
-                oldNullable: true);
 
             migrationBuilder.AlterColumn<int>(
                 name: "ServiceId",
@@ -402,13 +369,6 @@ namespace EasyAppointmentManager.Data.Migrations
                 principalColumn: "ServiceId",
                 onDelete: ReferentialAction.Cascade);
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Clinic_Location_LocationId",
-                table: "Clinic",
-                column: "LocationId",
-                principalTable: "Location",
-                principalColumn: "LocationId",
-                onDelete: ReferentialAction.Cascade);
         }
     }
 }

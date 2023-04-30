@@ -22,43 +22,6 @@ namespace EasyAppointmentManager.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("EasyAppointmentManager.Models.Clinic", b =>
-                {
-                    b.Property<int>("ClinicId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClinicId"), 1L, 1);
-
-                    b.Property<string>("ClinicCode")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("ClinicName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int?>("LocationID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ClinicId");
-
-                    b.HasIndex("LocationID");
-
-                    b.ToTable("Clinic");
-                });
 
             modelBuilder.Entity("EasyAppointmentManager.Models.Customer", b =>
                 {
@@ -153,36 +116,6 @@ namespace EasyAppointmentManager.Data.Migrations
                     b.HasIndex("ClinicId");
 
                     b.ToTable("Doctor");
-                });
-
-            modelBuilder.Entity("EasyAppointmentManager.Models.Location", b =>
-                {
-                    b.Property<int>("LocationID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocationID"), 1L, 1);
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LocationName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("ZipCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("LocationID");
-
-                    b.ToTable("Location");
                 });
 
             modelBuilder.Entity("EasyAppointmentManager.Models.Service", b =>
@@ -293,44 +226,6 @@ namespace EasyAppointmentManager.Data.Migrations
                     b.ToTable("Appointment");
                 });
 
-            modelBuilder.Entity("EasyAppointmentManager.Models.Clinic", b =>
-                {
-                    b.Property<int>("ClinicId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClinicId"), 1L, 1);
-
-                    b.Property<string>("ClinicName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Code")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int?>("LocationId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ClinicId");
-
-                    b.HasIndex("LocationId");
-
-                    b.ToTable("Clinic");
-                });
-
             modelBuilder.Entity("EasyAppointmentManager.Models.Customer", b =>
                 {
                     b.Property<int>("CustomerId")
@@ -437,36 +332,6 @@ namespace EasyAppointmentManager.Data.Migrations
                     b.HasIndex("DoctorId");
 
                     b.ToTable("DoctorAvailability");
-                });
-
-            modelBuilder.Entity("EasyAppointmentManager.Models.Location", b =>
-                {
-                    b.Property<int>("LocationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocationId"), 1L, 1);
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LocationName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("ZipCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("LocationId");
-
-                    b.ToTable("Location");
                 });
 
             modelBuilder.Entity("EasyAppointmentManager.Models.Service", b =>

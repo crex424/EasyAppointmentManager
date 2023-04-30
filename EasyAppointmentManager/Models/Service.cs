@@ -34,6 +34,8 @@ namespace EasyAppointmentManager.Models
         //[DataType(DataType.Time)]
         public string? ServiceTime { get; set; }
 
-        public ICollection<Doctor>? Doctors { get; set; }
+        public List<Doctor>? Doctors { get; set; } = new();
+
+        public List<Clinic>? Clinics { get; set; } = new();
     }
 }
