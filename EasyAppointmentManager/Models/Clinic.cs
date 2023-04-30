@@ -25,9 +25,9 @@ namespace EasyAppointmentManager.Models
         /// <summary>
         /// The Clinic's code
         /// </summary>
-        [Display(Name = "Code of Specialty")]
+        [Display(Name = "Clinic Code")]
         [StringLength(100)]
-        public string? Code { get; set; }
+        public string? ClinicCode { get; set; }
 
         /// <summary>
         /// The description of the Clinic
