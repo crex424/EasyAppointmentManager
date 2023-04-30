@@ -13,6 +13,9 @@ namespace EasyAppointmentManager.Models
         public int DoctorId { get; set; }
         public Doctor Doctor { get; set; }
 
+        /// <summary>
+        /// Time is ignored
+        /// </summary>
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
@@ -21,13 +24,13 @@ namespace EasyAppointmentManager.Models
         public TimeslotStatus TimeslotStatus { get; set; }
     }
 
-    public enum TimeslotStatus
+    public enum TimeslotStatus2
     {
         Available,
         Booked
     }
 
-    public enum Timeslot
+    public enum Timeslot2
     {
         /*
         [Display(Name = "12:00AM - 1:00AM")]
@@ -48,7 +51,7 @@ namespace EasyAppointmentManager.Models
         Slot7 = 7,
         */
 
-        
+
         [Display(Name = "8:00AM - 9:00AM")]
         Slot8 = 8,
         [Display(Name = "9:00AM - 10:00AM")]
@@ -66,8 +69,8 @@ namespace EasyAppointmentManager.Models
         [Display(Name = "3:00PM - 4:00PM")]
         Slot15 = 15,
         [Display(Name = "4:00PM - 5:00PM")]
-        Slot16 = 16 
-        
+        Slot16 = 16
+
 
         /*,
         [Display(Name = "5:00PM - 6:00PM")]
@@ -85,3 +88,4 @@ namespace EasyAppointmentManager.Models
         [Display(Name = "11:00PM - 12:00AM")]
         Slot23 = 23*/
     }
+}
