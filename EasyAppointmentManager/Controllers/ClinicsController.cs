@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EasyAppointmentManager.Data;
 using EasyAppointmentManager.Models;
-using Microsoft.CodeAnalysis;
 
 namespace EasyAppointmentManager.Controllers
 {
@@ -23,7 +22,7 @@ namespace EasyAppointmentManager.Controllers
         // GET: Clinics
         public async Task<IActionResult> Index()
         {
-            return _context.Clinic != null ?
+              return _context.Clinic != null ? 
                           View(await _context.Clinic.ToListAsync()) :
                           Problem("Entity set 'ApplicationDbContext.Clinic'  is null.");
         }
@@ -36,9 +35,8 @@ namespace EasyAppointmentManager.Controllers
                 return NotFound();
             }
 
-            Clinic? clinic = await _context.Clinic
-                                            .Include(c => c.Location)
-                                            .FirstOrDefaultAsync(m => m.ClinicId == id);
+            var clinic = await _context.Clinic
+                .FirstOrDefaultAsync(m => m.ClinicId == id);
             if (clinic == null)
             {
                 return NotFound();
@@ -58,19 +56,14 @@ namespace EasyAppointmentManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ClinicId,Name,Code,Description,PhoneNumber,Email,LocationId")] Clinic clinic)
+        public async Task<IActionResult> Create([Bind("ClinicId,ClinicName,ClinicCode,Description,PhoneNumber,Email,Address,City,ZipCode")] Clinic clinic)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(clinic);
                 await _context.SaveChangesAsync();
-
-                // Show success message on page
-                ViewData["Message"] = $"{clinic.ClinicName} was added successfully!";
-
-                return View();
+                return RedirectToAction(nameof(Index));
             }
-            //ViewData["LocationId"] = new SelectList(_context.Set<Models.Location>(), "LocationID", "Address", clinic.LocationId);
             return View(clinic);
         }
 
@@ -82,12 +75,11 @@ namespace EasyAppointmentManager.Controllers
                 return NotFound();
             }
 
-            Clinic? clinic = await _context.Clinic.FindAsync(id);
+            var clinic = await _context.Clinic.FindAsync(id);
             if (clinic == null)
             {
                 return NotFound();
             }
-            //ViewData["LocationId"] = new SelectList(_context.Set<Models.Location>(), "LocationID", "Address", clinic.LocationId);
             return View(clinic);
         }
 
@@ -96,7 +88,7 @@ namespace EasyAppointmentManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ClinicId,Name,Code,Description,PhoneNumber,Email,LocationId")] Clinic clinic)
+        public async Task<IActionResult> Edit(int id, [Bind("ClinicId,ClinicName,ClinicCode,Description,PhoneNumber,Email,Address,City,ZipCode")] Clinic clinic)
         {
             if (id != clinic.ClinicId)
             {
@@ -105,13 +97,24 @@ namespace EasyAppointmentManager.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Update(clinic);
-                await _context.SaveChangesAsync();
-
-                TempData["Message"] = $"{clinic.ClinicName} was updated successfully!";
+                try
+                {
+                    _context.Update(clinic);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ClinicExists(clinic.ClinicId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
-            //ViewData["LocationId"] = new SelectList(_context.Set<Models.Location>(), "LocationID", "Address", clinic.LocationId);
             return View(clinic);
         }
 
@@ -123,8 +126,7 @@ namespace EasyAppointmentManager.Controllers
                 return NotFound();
             }
 
-            Clinic? clinic = await _context.Clinic
-                .Include(c => c.Location)
+            var clinic = await _context.Clinic
                 .FirstOrDefaultAsync(m => m.ClinicId == id);
             if (clinic == null)
             {
@@ -143,17 +145,13 @@ namespace EasyAppointmentManager.Controllers
             {
                 return Problem("Entity set 'ApplicationDbContext.Clinic'  is null.");
             }
-
-            Clinic? clinic = await _context.Clinic.FindAsync(id);
-
+            var clinic = await _context.Clinic.FindAsync(id);
             if (clinic != null)
             {
                 _context.Clinic.Remove(clinic);
-                await _context.SaveChangesAsync();
-
-                TempData["Message"] = $"{clinic.ClinicName} was deleted successfully!";
             }
             
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
