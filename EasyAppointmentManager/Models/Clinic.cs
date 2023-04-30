@@ -72,8 +72,7 @@ namespace EasyAppointmentManager.Models
         [Required(ErrorMessage = "{0} is requried")]
         public string? ZipCode { get; set; }
 
-        public List<Doctor>? Doctors { get; set; } = new();
-
-        public List<Service>? Services { get; set; } = new();
+        public List<Doctor>? Doctors { get; set; }
+        public List<Service>? Services { get; set; }
     }
 }
