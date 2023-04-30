@@ -68,6 +68,8 @@ namespace EasyAppointmentManager.Models
         [EmailAddress(ErrorMessage = "Invalid email address.")]
         public string? Email { get; set; }
 
+        public List<Appointment>? Appointments { get; set; }
+
         [Display(Name = "Customer")]
         public string FullName
         {

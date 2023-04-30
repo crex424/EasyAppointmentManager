@@ -51,8 +51,8 @@ namespace EasyAppointmentManager.Models
         [EmailAddress(ErrorMessage = "Invalid email address.")]
         public string? Email { get; set; }
 
-        public ICollection<Doctor>? Doctors { get; set; }
+        public List<Doctor>? Doctors { get; set; }
 
-        public ICollection<Service>? Services { get; set; }
+        public List<Service>? Services { get; set; }
     }
 }
