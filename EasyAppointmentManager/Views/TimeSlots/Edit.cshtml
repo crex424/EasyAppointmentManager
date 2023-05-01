@@ -1,0 +1,49 @@
+﻿@model EasyAppointmentManager.Models.TimeSlot
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>TimeSlot</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TimeSlotId" />
+            <div class="form-group">
+                <label asp-for="TimeSlotDate" class="control-label"></label>
+                <input asp-for="TimeSlotDate" class="form-control" />
+                <span asp-validation-for="TimeSlotDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartTime" class="control-label"></label>
+                <input asp-for="StartTime" class="form-control" />
+                <span asp-validation-for="StartTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndTime" class="control-label"></label>
+                <input asp-for="EndTime" class="form-control" />
+                <span asp-validation-for="EndTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TimeSlotStatus" class="control-label"></label>
+                <select asp-for="TimeSlotStatus" class="form-control" asp-items="Html.GetEnumSelectList<TimeslotStatus>()"></select>
+                <span asp-validation-for="TimeSlotStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
