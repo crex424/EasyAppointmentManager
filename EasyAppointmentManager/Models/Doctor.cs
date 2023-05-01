@@ -12,7 +12,7 @@ namespace EasyAppointmentManager.Models
         /// The Doctor's ID
         /// </summary>
         [Key]
-        public int DoctorID { get; private set; }
+        public int DoctorId { get; private set; }
 
         /// <summary>
         /// The Doctor's legal first name
