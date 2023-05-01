@@ -51,10 +51,28 @@ namespace EasyAppointmentManager.Models
         [EmailAddress(ErrorMessage = "Invalid email address.")]
         public string? Email { get; set; }
 
-        public Location? Location { get; set; }
+        /// <summary>
+        /// The Clinic's Address
+        /// </summary>
+        [Display(Name = "Clinic's Address")]
+        [Required(ErrorMessage = "{0} is required.")]
+        public string? Address { get; set; }
 
-        public ICollection<Doctor>? Doctors { get; set; }
+        /// <summary>
+        /// The Clinic's City
+        /// </summary>
+        [Display(Name = "Clinic's City")]
+        [Required(ErrorMessage = "{0} is requried")]
+        public string? City { get; set; }
 
-        public ICollection<Service>? Services { get; set; }
+        /// <summary>
+        /// The Clinic's ZipCode
+        /// </summary>
+        [Display(Name = "Clinic's Zip Code")]
+        [Required(ErrorMessage = "{0} is requried")]
+        public string? ZipCode { get; set; }
+
+        public List<Doctor>? Doctors { get; set; }
+        public List<Service>? Services { get; set; }
     }
 }

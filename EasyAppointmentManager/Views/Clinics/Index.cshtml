@@ -1,22 +1,10 @@
-﻿@model IEnumerable<Clinic>
+﻿@model IEnumerable<EasyAppointmentManager.Models.Clinic>
 
 @{
-    ViewData["Title"] = "Clinic List";
+    ViewData["Title"] = "Index";
 }
 
-<h1>Clinic List</h1>
-
-@if (TempData["Message"] != null)
-{
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        @TempData["Message"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-}
-else
-{
-
-}
+<h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -39,34 +27,51 @@ else
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ZipCode)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ClinicName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ClinicCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PhoneNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
+@foreach (var item in Model) {
+        <tr>
             <td>
-                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.ClinicId">Edit</a>
-                <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.ClinicId">Details</a>
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ClinicId">Delete</a>
+                @Html.DisplayFor(modelItem => item.ClinicName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClinicCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ZipCode)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ClinicId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ClinicId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ClinicId">Delete</a>
             </td>
         </tr>
-        }
+}
     </tbody>
 </table>
