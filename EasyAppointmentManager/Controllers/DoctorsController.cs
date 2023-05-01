@@ -36,7 +36,7 @@ namespace EasyAppointmentManager.Controllers
             }
 
             var doctor = await _context.Doctor
-                .FirstOrDefaultAsync(m => m.DoctorID == id);
+                .FirstOrDefaultAsync(m => m.DoctorId == id);
             if (doctor == null)
             {
                 return NotFound();
@@ -60,7 +60,7 @@ namespace EasyAppointmentManager.Controllers
         /// <returns>The new Doctor object to the Doctor index page</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DoctorID,FirstName,MiddleName,LastName,DateOfBirth" +
+        public async Task<IActionResult> Create([Bind("DoctorId,FirstName,MiddleName,LastName,DateOfBirth" +
                                                       ",Gender,SpecializationID,Email,PhoneNumber,PlaceOfWork")] Doctor doctor)
         {
             if (ModelState.IsValid)
@@ -108,10 +108,10 @@ namespace EasyAppointmentManager.Controllers
         /// <returns> a edited Doctor to the Doctor index page</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DoctorID,FirstName,MiddleName,LastName,DateOfBirth" +
+        public async Task<IActionResult> Edit(int id, [Bind("DoctorId,FirstName,MiddleName,LastName,DateOfBirth" +
                                                       ",Gender,SpecializationID,Email,PhoneNumber,PlaceOfWork")] Doctor doctor)
         {
-            if (id != doctor.DoctorID)
+            if (id != doctor.DoctorId)
             {
                 return NotFound();
             }
@@ -141,7 +141,7 @@ namespace EasyAppointmentManager.Controllers
             }
 
             var doctor = await _context.Doctor
-                .FirstOrDefaultAsync(m => m.DoctorID == id);
+                .FirstOrDefaultAsync(m => m.DoctorId == id);
             if (doctor == null)
             {
                 return NotFound();
@@ -177,13 +177,13 @@ namespace EasyAppointmentManager.Controllers
             return RedirectToAction(nameof(Index));
         }
         /// <summary>
-        /// Finds existing Doctor object using the DoctorID
+        /// Finds existing Doctor object using the DoctorId
         /// </summary>
         /// <param name="id">Doctor's unique identifier</param>
-        /// <returns>The Doctor object that corresponds with the DoctorID used to find it</returns>
+        /// <returns>The Doctor object that corresponds with the DoctorId used to find it</returns>
         private bool DoctorExists(int id)
         {
-            return (_context.Doctor?.Any(e => e.DoctorID == id)).GetValueOrDefault();
+            return (_context.Doctor?.Any(e => e.DoctorId == id)).GetValueOrDefault();
         }
 
     }
