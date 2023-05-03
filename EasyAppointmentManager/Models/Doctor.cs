@@ -92,6 +92,8 @@ namespace EasyAppointmentManager.Models
         [Display(Name = "Place Of Work")]
         public string? PlaceOfWork { get; set; }
 
+        // Foreign keys 
+
         [Display(Name = "Clinic")]
         public List<Clinic>? Clinics { get; set; }
 
