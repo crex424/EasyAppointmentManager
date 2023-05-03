@@ -12,7 +12,7 @@ namespace EasyAppointmentManager.Models
         /// The Doctor's ID
         /// </summary>
         [Key]
-        public int DoctorId { get; private set; }
+        public int DoctorId { get; set; }
 
         /// <summary>
         /// The Doctor's legal first name
@@ -79,10 +79,23 @@ namespace EasyAppointmentManager.Models
         [DataType(DataType.PhoneNumber)]
         public string? PhoneNumber { get; set; }
 
+
+        [Display(Name = "Full Name")]
+        public string FullName
+        {
+            get { return LastName + ", " + FirstName + " " + MiddleName; }
+        } 
+
         /// <summary>
         /// The address of the location/building the doctors works for/in
         /// </summary>
         [Display(Name = "Place Of Work")]
         public string? PlaceOfWork { get; set; }
+
+        [Display(Name = "Clinic")]
+        public List<Clinic>? Clinics { get; set; }
+
+        [Display(Name = "Services")]
+        public List<Service>? Services { get; set; }
     }
 }
