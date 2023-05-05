@@ -27,7 +27,7 @@ namespace EasyAppointmentManager.Data.Migrations
                 {
                     table.PrimaryKey("PK_Customer", x => x.CustomerId);
                 });
-
+            /*
             migrationBuilder.CreateTable(
                 name: "Location",
                 columns: table => new
@@ -66,6 +66,7 @@ namespace EasyAppointmentManager.Data.Migrations
                         principalTable: "Location",
                         principalColumn: "LocationID");
                 });
+            */
 
             migrationBuilder.CreateTable(
                 name: "Doctor",
@@ -114,12 +115,12 @@ namespace EasyAppointmentManager.Data.Migrations
                         principalTable: "Clinic",
                         principalColumn: "ClinicId");
                 });
-
+            /*
             migrationBuilder.CreateIndex(
                 name: "IX_Clinic_LocationID",
                 table: "Clinic",
                 column: "LocationID");
-
+            */
             migrationBuilder.CreateIndex(
                 name: "IX_Doctor_ClinicId",
                 table: "Doctor",
@@ -144,9 +145,10 @@ namespace EasyAppointmentManager.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Clinic");
-
+            /*
             migrationBuilder.DropTable(
                 name: "Location");
+            */
         }
     }
 }

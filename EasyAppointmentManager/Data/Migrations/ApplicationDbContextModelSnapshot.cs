@@ -22,21 +22,6 @@ namespace EasyAppointmentManager.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("ClinicDoctor", b =>
-                {
-                    b.Property<int>("ClinicsClinicId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DoctorsDoctorId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ClinicsClinicId", "DoctorsDoctorId");
-
-                    b.HasIndex("DoctorsDoctorId");
-
-                    b.ToTable("ClinicDoctor");
-                });
-
             modelBuilder.Entity("EasyAppointmentManager.Models.Clinic", b =>
                 {
                     b.Property<int>("ClinicId")
@@ -44,6 +29,14 @@ namespace EasyAppointmentManager.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClinicId"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ClinicCode")
                         .HasMaxLength(100)
@@ -65,9 +58,13 @@ namespace EasyAppointmentManager.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ClinicId");
 
-                    b.ToTable("Clinic");
+                    b.ToTable("Clinic", (string)null);
                 });
 
             modelBuilder.Entity("EasyAppointmentManager.Models.Customer", b =>
@@ -108,7 +105,7 @@ namespace EasyAppointmentManager.Data.Migrations
 
                     b.HasKey("CustomerId");
 
-                    b.ToTable("Customer");
+                    b.ToTable("Customer", (string)null);
                 });
 
             modelBuilder.Entity("EasyAppointmentManager.Models.Doctor", b =>
@@ -162,7 +159,7 @@ namespace EasyAppointmentManager.Data.Migrations
 
                     b.HasIndex("ClinicId");
 
-                    b.ToTable("Doctor");
+                    b.ToTable("Doctor", (string)null);
                 });
 
             modelBuilder.Entity("EasyAppointmentManager.Models.Service", b =>
@@ -174,9 +171,6 @@ namespace EasyAppointmentManager.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceID"), 1L, 1);
 
                     b.Property<int?>("ClinicId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DoctorId")
                         .HasColumnType("int");
 
                     b.Property<double>("Fee")
@@ -195,9 +189,7 @@ namespace EasyAppointmentManager.Data.Migrations
 
                     b.HasIndex("ClinicId");
 
-                    b.HasIndex("DoctorId");
-
-                    b.ToTable("Service");
+                    b.ToTable("Service", (string)null);
                 });
 
             modelBuilder.Entity("EasyAppointmentManager.Models.Specialty", b =>
@@ -222,38 +214,7 @@ namespace EasyAppointmentManager.Data.Migrations
 
                     b.HasKey("SpecialtyId");
 
-                    b.ToTable("Specialty");
-                });
-
-            modelBuilder.Entity("EasyAppointmentManager.Models.TimeSlot", b =>
-                {
-                    b.Property<int>("TimeSlotId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TimeSlotId"), 1L, 1);
-
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<TimeSpan>("EndTime")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("StartTime")
-                        .HasColumnType("time");
-
-                    b.Property<DateTime?>("TimeSlotDate")
-                        .IsRequired()
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TimeSlotStatus")
-                        .HasColumnType("int");
-
-                    b.HasKey("TimeSlotId");
-
-                    b.HasIndex("DoctorId");
-
-                    b.ToTable("TimeSlot");
+                    b.ToTable("Specialty", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -458,19 +419,11 @@ namespace EasyAppointmentManager.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ClinicDoctor", b =>
+            modelBuilder.Entity("EasyAppointmentManager.Models.Doctor", b =>
                 {
                     b.HasOne("EasyAppointmentManager.Models.Clinic", null)
-                        .WithMany()
-                        .HasForeignKey("ClinicsClinicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EasyAppointmentManager.Models.Doctor", null)
-                        .WithMany()
-                        .HasForeignKey("DoctorsDoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Doctors")
+                        .HasForeignKey("ClinicId");
                 });
 
             modelBuilder.Entity("EasyAppointmentManager.Models.Service", b =>
@@ -478,21 +431,6 @@ namespace EasyAppointmentManager.Data.Migrations
                     b.HasOne("EasyAppointmentManager.Models.Clinic", null)
                         .WithMany("Services")
                         .HasForeignKey("ClinicId");
-
-                    b.HasOne("EasyAppointmentManager.Models.Doctor", null)
-                        .WithMany("Services")
-                        .HasForeignKey("DoctorId");
-                });
-
-            modelBuilder.Entity("EasyAppointmentManager.Models.TimeSlot", b =>
-                {
-                    b.HasOne("EasyAppointmentManager.Models.Doctor", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -548,11 +486,8 @@ namespace EasyAppointmentManager.Data.Migrations
 
             modelBuilder.Entity("EasyAppointmentManager.Models.Clinic", b =>
                 {
-                    b.Navigation("Services");
-                });
+                    b.Navigation("Doctors");
 
-            modelBuilder.Entity("EasyAppointmentManager.Models.Doctor", b =>
-                {
                     b.Navigation("Services");
                 });
 #pragma warning restore 612, 618
