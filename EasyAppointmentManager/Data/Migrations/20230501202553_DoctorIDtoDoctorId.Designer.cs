@@ -154,7 +154,7 @@ namespace EasyAppointmentManager.Data.Migrations
                     b.Property<string>("PlaceOfWork")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SpecializationID")
+                    b.Property<int>("Specialty")
                         .HasColumnType("int");
 
                     b.HasKey("DoctorId");

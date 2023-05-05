@@ -61,7 +61,7 @@ namespace EasyAppointmentManager.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DoctorId,FirstName,MiddleName,LastName,DateOfBirth" +
-                                                      ",Gender,SpecializationID,Email,PhoneNumber,PlaceOfWork")] Doctor doctor)
+                                                      ",Gender,Specialty,Email,PhoneNumber,PlaceOfWork")] Doctor doctor)
         {
             if (ModelState.IsValid)
             {
@@ -109,7 +109,7 @@ namespace EasyAppointmentManager.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("DoctorId,FirstName,MiddleName,LastName,DateOfBirth" +
-                                                      ",Gender,SpecializationID,Email,PhoneNumber,PlaceOfWork")] Doctor doctor)
+                                                      ",Gender,Specialty,Email,PhoneNumber,PlaceOfWork")] Doctor doctor)
         {
             if (id != doctor.DoctorId)
             {
