@@ -32,7 +32,5 @@ namespace EasyAppointmentManager.Models
         /// The description of the Specialty
         /// </summary>
         public string? Description { get; set; }
-
-        public Doctor Doctor { get; set; }
     }
 }
