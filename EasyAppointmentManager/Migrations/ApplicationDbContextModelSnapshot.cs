@@ -484,7 +484,7 @@ namespace EasyAppointmentManager.Migrations
             modelBuilder.Entity("EasyAppointmentManager.Models.Specialty", b =>
                 {
                     b.HasOne("EasyAppointmentManager.Models.Doctor", null)
-                        .WithMany("Specialties")
+                        .WithMany("Specialty")
                         .HasForeignKey("DoctorId");
                 });
 
@@ -559,7 +559,7 @@ namespace EasyAppointmentManager.Migrations
                 {
                     b.Navigation("Services");
 
-                    b.Navigation("Specialties");
+                    b.Navigation("Specialty");
                 });
 #pragma warning restore 612, 618
         }

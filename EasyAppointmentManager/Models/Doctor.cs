@@ -58,9 +58,9 @@ namespace EasyAppointmentManager.Models
         /// <summary>
         /// The Doctor's specialization represented by ID
         /// </summary>
-        [Display(Name = "Specialization")]
+        [Display(Name = "Specialty")]
         [Required(ErrorMessage = "{0} is required.")]
-        public List<Specialty> Specialties { get; private set; }
+        public List<Specialty> Specialty { get; private set; }
 
         /// <summary>
         /// The Doctor's email address

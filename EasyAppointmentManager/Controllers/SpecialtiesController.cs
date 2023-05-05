@@ -19,7 +19,7 @@ namespace EasyAppointmentManager.Controllers
             _context = context;
         }
 
-        // GET: Specialties
+        // GET: Specialty
         public async Task<IActionResult> Index()
         {
               return _context.Specialty != null ? 
@@ -27,7 +27,7 @@ namespace EasyAppointmentManager.Controllers
                           Problem("Entity set 'ApplicationDbContext.Specialty' is null.");
         }
 
-        // GET: Specialties/Details/5
+        // GET: Specialty/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Specialty == null)
@@ -44,13 +44,13 @@ namespace EasyAppointmentManager.Controllers
             return View(specialty);
         }
 
-        // GET: Specialties/Create
+        // GET: Specialty/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Specialties/Create
+        // POST: Specialty/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -70,7 +70,7 @@ namespace EasyAppointmentManager.Controllers
             return View(specialty);
         }
 
-        // GET: Specialties/Edit/5
+        // GET: Specialty/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Specialty == null)
@@ -86,7 +86,7 @@ namespace EasyAppointmentManager.Controllers
             return View(specialty);
         }
 
-        // POST: Specialties/Edit/5
+        // POST: Specialty/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -109,7 +109,7 @@ namespace EasyAppointmentManager.Controllers
             return View(specialty);
         }
 
-        // GET: Specialties/Delete/5
+        // GET: Specialty/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Specialty == null)
@@ -126,7 +126,7 @@ namespace EasyAppointmentManager.Controllers
             return View(specialty);
         }
 
-        // POST: Specialties/Delete/5
+        // POST: Specialty/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
