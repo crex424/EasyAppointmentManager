@@ -60,7 +60,7 @@ namespace EasyAppointmentManager.Models
         /// </summary>
         [Display(Name = "Specialty")]
         [Required(ErrorMessage = "{0} is required.")]
-        public List<Specialty> Specialty { get; private set; }
+        public Specialty Specialty { get; private set; }
 
         /// <summary>
         /// The Doctor's email address
