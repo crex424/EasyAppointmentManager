@@ -8,6 +8,7 @@ namespace EasyAppointmentManager.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            /*
             migrationBuilder.DropForeignKey(
                 name: "FK_Clinic_Location_LocationID",
                 table: "Clinic");
@@ -22,6 +23,7 @@ namespace EasyAppointmentManager.Data.Migrations
             migrationBuilder.DropColumn(
                 name: "LocationID",
                 table: "Clinic");
+            */
 
             migrationBuilder.AddColumn<string>(
                 name: "Address",
@@ -58,6 +60,7 @@ namespace EasyAppointmentManager.Data.Migrations
             migrationBuilder.DropColumn(
                 name: "ZipCode",
                 table: "Clinic");
+            /*
 
             migrationBuilder.AddColumn<int>(
                 name: "LocationID",
@@ -92,6 +95,9 @@ namespace EasyAppointmentManager.Data.Migrations
                 column: "LocationID",
                 principalTable: "Location",
                 principalColumn: "LocationID");
+
+            */
         }
+
     }
 }
