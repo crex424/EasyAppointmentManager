@@ -72,22 +72,21 @@ namespace EasyAppointmentManager.Data.Migrations
                 name: "Doctor",
                 columns: table => new
                 {
-                    DoctorID = table.Column<int>(type: "int", nullable: false)
+                    DoctorId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     MiddleName = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Gender = table.Column<bool>(type: "bit", nullable: false),
-                    SpecializationID = table.Column<int>(type: "int", nullable: false),
+                    Specialty = table.Column<int>(type: "int", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PlaceOfWork = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClinicId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Doctor", x => x.DoctorID);
+                    table.PrimaryKey("PK_Doctor", x => x.DoctorId);
                     table.ForeignKey(
                         name: "FK_Doctor_Clinic_ClinicId",
                         column: x => x.ClinicId,
