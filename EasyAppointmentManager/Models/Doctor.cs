@@ -86,11 +86,6 @@ namespace EasyAppointmentManager.Models
             get { return LastName + ", " + FirstName + " " + MiddleName; }
         } 
 
-        /// <summary>
-        /// The address of the location/building the doctors works for/in
-        /// </summary>
-        [Display(Name = "Place Of Work")]
-        public string? PlaceOfWork { get; set; }
 
         [Display(Name = "Clinic")]
         public List<Clinic>? Clinics { get; set; }
