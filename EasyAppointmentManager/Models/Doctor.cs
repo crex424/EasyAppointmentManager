@@ -58,9 +58,9 @@ namespace EasyAppointmentManager.Models
         /// <summary>
         /// The Doctor's specialization represented by ID
         /// </summary>
-        [Display(Name = "Specialization")]
+        [Display(Name = "Specialty")]
         [Required(ErrorMessage = "{0} is required.")]
-        public int SpecializationID { get; private set; }
+        public Specialty Specialty { get; private set; }
 
         /// <summary>
         /// The Doctor's email address
@@ -86,11 +86,6 @@ namespace EasyAppointmentManager.Models
             get { return LastName + ", " + FirstName + " " + MiddleName; }
         } 
 
-        /// <summary>
-        /// The address of the location/building the doctors works for/in
-        /// </summary>
-        [Display(Name = "Place Of Work")]
-        public string? PlaceOfWork { get; set; }
 
         [Display(Name = "Clinic")]
         public List<Clinic>? Clinics { get; set; }
