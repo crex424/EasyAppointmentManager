@@ -1,9 +1,9 @@
 /* Injects Data to Tables */
-USE EasyAppointmentManager
-GO
+
 
 /* Customer Table */
-
+USE EasyAppointmentManager
+GO
 insert into Customer ( FirstName, MiddleName, LastName, DateOfBirth, Gender, PhoneNumber, Email) values ('Maurise', 'Berke', 'Taborre', '10/20/1994', 'True', '(970) 3778982', 'btaborre0@mit.edu');
 insert into Customer ( FirstName, MiddleName, LastName, DateOfBirth, Gender, PhoneNumber, Email) values ('Mitchell', 'Sterne', 'Cardozo', '09/21/1991', 'True', '(347) 2659942', 'scardozo1@people.com.cn');
 insert into Customer ( FirstName, MiddleName, LastName, DateOfBirth, Gender, PhoneNumber, Email) values ('Robinet', 'Burg', 'McMorland', '04/16/1970', 'True', '(424) 5567782', 'bmcmorland2@geocities.com');
@@ -50,4 +50,54 @@ insert into Clinic ( ClinicName, ClinicCode, PhoneNumber, Email) values ('Kohler
 insert into Clinic ( ClinicName, ClinicCode, PhoneNumber, Email) values ('Ryan LLC', '52584-922', '(640) 4098210', 'sskentelberyh@symantec.com');
 insert into Clinic ( ClinicName, ClinicCode, PhoneNumber, Email) values ('Wolf and Sons', '11822-5334', '(996) 5349820', 'magetti@bluehost.com');
 insert into Clinic ( ClinicName, ClinicCode, PhoneNumber, Email) values ('Durgan LLC', '58406-445', '(795) 5170069', 'franklingj@rakuten.co.jp');
+GO
+
+/* Specialty Table */ 
+USE EasyAppointmentManager
+GO
+insert into Specialty ( Name, Code, Description) values ('Family Medicine', 'Family Medicine', 'Family Medicine');
+insert into Specialty ( Name, Code, Description) values ('Internal Medicine', 'Internal Medicine', 'Internal Medicine');
+insert into Specialty ( Name, Code, Description) values ('Neurology', 'Neurology', 'Neurology');
+insert into Specialty ( Name, Code, Description) values ('Pediatrics', 'Pediatrics', 'Pediatrics');
+insert into Specialty ( Name, Code, Description) values ('Pathology', 'Pathology', 'Pathology');
+insert into Specialty ( Name, Code, Description) values ('Psychiatry', 'Psychiatry', 'Psychiatry');
+insert into Specialty ( Name, Code, Description) values ('Radiation oncology', 'Radiation oncology', 'Radiation oncology');
+insert into Specialty ( Name, Code, Description) values ('Surgery', 'Surgery', 'Surgery');
+insert into Specialty ( Name, Code, Description) values ('Urology', 'Urology', 'Urology');
+insert into Specialty ( Name, Code, Description) values ('Preventive medicine', 'Preventive medicine', 'Preventive medicine');
+insert into Specialty ( Name, Code, Description) values ('Physical medicine and rehabilitation', 'Physical medicine and rehabilitation', 'Physical medicine and rehabilitation');
+insert into Specialty ( Name, Code, Description) values ('Obstetrics and gynecology', 'Obstetrics and gynecology', 'Obstetrics and gynecology');
+insert into Specialty ( Name, Code, Description) values ('Nuclear medicine', 'Nuclear medicine', 'Nuclear medicine');
+insert into Specialty ( Name, Code, Description) values ('Ophthalmology', 'Ophthalmology', 'Ophthalmology');
+insert into Specialty ( Name, Code, Description) values ('Medical genetics', 'Medical genetics', 'Medical genetics');
+insert into Specialty ( Name, Code, Description) values ('Diagnostic radiology', 'Diagnostic radiology', 'Diagnostic radiology');
+insert into Specialty ( Name, Code, Description) values ('Dermatology', 'Dermatology', 'Dermatology');
+insert into Specialty ( Name, Code, Description) values ('Allergy and immunology', 'Allergy and immunology', 'Allergy and immunology');
+insert into Specialty ( Name, Code, Description) values ('Anesthesiology', 'Anesthesiology', 'Anesthesiology');
+insert into Specialty ( Name, Code, Description) values ('Cardiology', 'Cardiology', 'Cardiology');
+GO
+
+/* Doctor Table */ 
+USE EasyAppointmentManager
+GO
+insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email, PhoneNumber, ClinicId) values ('Shayne', 'Jope', '5/25/1955', 'False', 1, 'sjope0@stumbleupon.com', '(596) 9888039', 1);
+insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email, PhoneNumber, ClinicId) values ('Sylvia', 'Misken', '1/4/1960', 'False', 2, 'smisken1@ft.com', '(867) 9552411', 2);
+insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email, PhoneNumber, ClinicId) values ('Dyann', 'Brownsett', '1/6/1990', 'False', 3, 'dbrownsett2@oracle.com', '(730) 7857331', 3);
+insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email, PhoneNumber, ClinicId) values ('Kai', 'Lovelace', '1/27/1981', 'True', 4, 'klovelace3@elpais.com', '(408) 4556460', 4);
+insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email, PhoneNumber, ClinicId) values ('Noland', 'Trent', '1/16/1974', 'True', 5, 'ntrent4@naver.com', '(379) 7976984', 5);
+insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email, PhoneNumber, ClinicId) values ('Adina', 'Ivanyushin', '9/23/1956', 'False', 6, 'aivanyushin5@geocities.jp', '(755) 9366663', 6);
+insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email, PhoneNumber, ClinicId) values ('Shelton', 'Ysson', '3/20/1974', 'False', 7, 'sysson6@creativecommons.org', '(863) 2088247', 7);
+insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email, PhoneNumber, ClinicId) values ('Mozes', 'Castell', '11/15/1975', 'True', 8, 'mcastell7@howstuffworks.com', '(312) 5042722', 8);
+insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email, PhoneNumber, ClinicId) values ('Ortensia', 'Fourman', '6/7/1978', 'False', 9, 'ofourman8@jiathis.com', '(181) 3827700', 9);
+insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email, PhoneNumber, ClinicId) values ('Ashlie', 'Heather', '5/6/1981', 'True', 10, 'aheather9@newyorker.com', '(790) 3791249', 10);
+insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email, PhoneNumber, ClinicId) values ('Dynah', 'Wallicker', '5/6/1966', 'True', 11, 'dwallickera@yahoo.co.jp', '(835) 4847051', 11);
+insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email, PhoneNumber, ClinicId) values ('Elizabet', 'Butte', '3/17/1972', 'False', 12, 'ebutteb@xinhuanet.com', '(331) 9761810', 12);
+insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email, PhoneNumber, ClinicId) values ('Kelsey', 'Hincks', '6/6/1977', 'False', 13, 'khincksc@instagram.com', '(358) 9388795', 13);
+insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email, PhoneNumber, ClinicId) values ('Aldin', 'Gergler', '11/7/1970', 'False', 14, 'agerglerd@deviantart.com', '(406) 8787601', 14);
+insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email, PhoneNumber, ClinicId) values ('Jacob', 'Carles', '2/23/1963', 'False', 15, 'jcarlese@japanpost.jp', '(570) 8027132', 15);
+insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email, PhoneNumber, ClinicId) values ('Garret', 'Tolputt', '5/7/1975', 'False', 16, 'gtolputtf@psu.edu', '(906) 9400735', 16);
+insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email, PhoneNumber, ClinicId) values ('Guilbert', 'Hawford', '1/28/1985', 'False', 17, 'ghawfordg@usda.gov', '(762) 1280972', 17);
+insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email, PhoneNumber, ClinicId) values ('Colline', 'Picott', '8/21/1988', 'False', 18, 'cpicotth@independent.co.uk', '(839) 9990030', 18);
+insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email, PhoneNumber, ClinicId) values ('Alon', 'Malin', '11/8/1986', 'False', 19, 'amalini@list-manage.com', '(527) 7887522', 19);
+insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email, PhoneNumber, ClinicId) values ('Red', 'Klejin', '2/10/1966', 'False', 20, 'rklejinj@mapy.cz', '(834) 2392655', 20);
 GO
