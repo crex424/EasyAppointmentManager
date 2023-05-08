@@ -74,4 +74,11 @@ await IdentityHelper.CreateRoles(serviceProvider.ServiceProvider, IdentityHelper
 // Create default employee
 await IdentityHelper.CreateDefaultUser(serviceProvider.ServiceProvider, IdentityHelper.Employee);
 
+// Create a scope to resolve the database context and call the seed method
+using (var scope = serviceProvider.ServiceProvider.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    DatabaseSeeder.SeedData(dbContext);
+}
+
 app.Run();
