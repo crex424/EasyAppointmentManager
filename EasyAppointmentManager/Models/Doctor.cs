@@ -86,11 +86,8 @@ namespace EasyAppointmentManager.Models
             get { return LastName + ", " + FirstName + " " + MiddleName; }
         } 
 
-
         [Display(Name = "Clinic")]
-        public List<Clinic>? Clinics { get; set; }
+        public Clinic Clinic { get; set; }
 
-        [Display(Name = "Services")]
-        public List<Service>? Services { get; set; }
     }
 }

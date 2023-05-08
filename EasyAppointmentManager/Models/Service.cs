@@ -16,7 +16,7 @@ namespace EasyAppointmentManager.Models
         /// <summary>
         /// The Fee of the Service provided
         /// </summary>
-        [Display(Name = "Fee")]
+        [Display(Name = "Service Fee")]
         [Required(ErrorMessage = "{0} is requried.")]
         [DataType(DataType.Currency)]
         public double Fee { get; set; }
@@ -24,14 +24,14 @@ namespace EasyAppointmentManager.Models
         /// <summary>
         ///  The Service's Name
         /// </summary>
-        [Display(Name = "The Service's Name")]
+        [Display(Name = "The Service Name")]
         [Required(ErrorMessage = "{0} is requried.")]
         [StringLength(100)]
         public string? ServiceName { get; set; }
 
-        [Display(Name = "The Service's Time to completion")]
+        [Display(Name = "Duration")]
         [Required(ErrorMessage = "{0} is requried.")]
-        [DataType(DataType.Time)]
-        public string? ServiceTime { get; set; }
+        // [DataType(DataType.Time)]
+        public int? ServiceTime { get; set; }
     }
 }
