@@ -1,4 +1,4 @@
-﻿@model EasyAppointmentManager.Models.Location
+﻿@model EasyAppointmentManager.Models.TimeSlot
 
 @{
     ViewData["Title"] = "Delete";
@@ -8,37 +8,37 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Location</h4>
+    <h4>TimeSlot</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Address)
+            @Html.DisplayNameFor(model => model.TimeSlotDate)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Address)
+            @Html.DisplayFor(model => model.TimeSlotDate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.City)
+            @Html.DisplayNameFor(model => model.StartTime)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.City)
+            @Html.DisplayFor(model => model.StartTime)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ZipCode)
+            @Html.DisplayNameFor(model => model.EndTime)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ZipCode)
+            @Html.DisplayFor(model => model.EndTime)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LocationName)
+            @Html.DisplayNameFor(model => model.TimeSlotStatus)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LocationName)
+            @Html.DisplayFor(model => model.TimeSlotStatus)
         </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="LocationID" />
+        <input type="hidden" asp-for="TimeSlotId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>

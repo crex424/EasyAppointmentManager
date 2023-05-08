@@ -52,7 +52,6 @@ namespace EasyAppointmentManager.Models
         public string? Email { get; set; }
 
         public List<Doctor>? Doctors { get; set; }
-
         public List<Service>? Services { get; set; }
     }
 }

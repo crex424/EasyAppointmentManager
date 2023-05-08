@@ -23,24 +23,19 @@ namespace EasyAppointmentManager.Models
         public string? FirstName { get; set; }
 
         /// <summary>
-        /// The Doctor's legal last name
-        /// </summary>
-        [Display(Name = "Last Name")]
-        [Required(ErrorMessage = "{0} is required.")]
-        [StringLength(100)]
-        public string? LastName { get; set; }
-
-        /// <summary>
         /// The Doctor's legal middle name (Optional) 
         /// </summary>
         [Display(Name = "Middle Name")]
         [StringLength(55)]
         public string? MiddleName { get; set; }
 
-        public string FullName
-        {
-            get { return LastName + ", " + FirstName + " " + MiddleName; }
-        }
+        /// <summary>
+        /// The Doctor's legal last name
+        /// </summary>
+        [Display(Name = "First Name")]
+        [Required(ErrorMessage = "{0} is required.")]
+        [StringLength(100)]
+        public string? LastName { get; set; }
 
         /// <summary>
         /// The Doctor's legal date of birth
@@ -63,9 +58,9 @@ namespace EasyAppointmentManager.Models
         /// <summary>
         /// The Doctor's specialization represented by ID
         /// </summary>
-        [Display(Name = "Specialization")]
+        [Display(Name = "Specialty")]
         [Required(ErrorMessage = "{0} is required.")]
-        public int SpecializationID { get; private set; }
+        public Specialty Specialty { get; private set; }
 
         /// <summary>
         /// The Doctor's email address
@@ -84,9 +79,14 @@ namespace EasyAppointmentManager.Models
         [DataType(DataType.PhoneNumber)]
         public string? PhoneNumber { get; set; }
 
-        /// <summary>
-        /// The address of the location/building the doctors works for/in
-        /// </summary>
+
+        [Display(Name = "Full Name")]
+        public string FullName
+        {
+            get { return LastName + ", " + FirstName + " " + MiddleName; }
+        } 
+
+
         [Display(Name = "Clinic")]
         public List<Clinic>? Clinics { get; set; }
 
