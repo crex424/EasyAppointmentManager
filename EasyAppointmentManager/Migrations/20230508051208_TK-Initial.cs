@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EasyAppointmentManager.Migrations
 {
-    public partial class initial : Migration
+    public partial class TKInitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
