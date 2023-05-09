@@ -90,4 +90,12 @@ namespace EasyAppointmentManager.Models
         public Clinic Clinic { get; set; }
 
     }
+    /// <summary>
+    /// Allows the create doctor page to use information from objects with a relationship with doctor.
+    /// This will be used to create dropdown lists to make creating Doctor objects more user friendly.
+    /// </summary>
+    public class DoctorCreateViewModel
+    {
+
+    }
 }
