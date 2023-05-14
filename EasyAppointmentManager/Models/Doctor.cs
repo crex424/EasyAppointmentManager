@@ -161,6 +161,12 @@ namespace EasyAppointmentManager.Models
         public string? PhoneNumber { get; set; }
 
         /// <summary>
+        /// Grabs a list of all Clinics to choose from
+        /// </summary>
+        [Display(Name = "Clinic")]
+        public List<Clinic>? Clinics { get; set; }
+
+        /// <summary>
         /// Identifier of selected specialty
         /// </summary>
         public int ChosenSpecialty { get; set; }
