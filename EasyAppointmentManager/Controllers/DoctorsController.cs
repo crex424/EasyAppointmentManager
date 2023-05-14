@@ -62,7 +62,7 @@ namespace EasyAppointmentManager.Controllers
         /// <returns>The new Doctor object to the Doctor index page</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(DoctorCreateViewModel doctor)
+        public async Task<IActionResult> Create(Doctor doctor)
         {
             if (ModelState.IsValid)
             {
@@ -72,9 +72,8 @@ namespace EasyAppointmentManager.Controllers
                 // Show success message on page
                 ViewData["Message"] = $"{doctor.LastName}, {doctor.FirstName} was added successfully!";
 
-                return View(doctor);
+                return View();
             }
-            doctor.Specialties = _context.Specialty.OrderBy(i => i.Name).ToList();
             return View(doctor);
         }
 
