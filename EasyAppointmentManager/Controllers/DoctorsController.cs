@@ -50,7 +50,9 @@ namespace EasyAppointmentManager.Controllers
         /// <returns>User to Create page</returns>
         public IActionResult Create()
         {
-            return View();
+            DoctorCreateViewModel viewModel = new();
+            viewModel.Specialties = _context.Specialty.OrderBy(i => i.Name).ToList();
+            return View(viewModel);
         }
 
         /// <summary>
