@@ -141,8 +141,7 @@ namespace EasyAppointmentManager.Models
         /// Grabs a list of all specialties to choose from
         /// </summary>
         [Display(Name = "Specialty")]
-        [Required(ErrorMessage = "{0} is required.")]
-        public List<Specialty> Specialties { get; set; }
+        public List<Specialty>? Specialties { get; set; }
 
         /// <summary>
         /// The Doctor's email address
@@ -161,6 +160,9 @@ namespace EasyAppointmentManager.Models
         [DataType(DataType.PhoneNumber)]
         public string? PhoneNumber { get; set; }
 
-        public Specialty ChosenSpecialty { get; set; }
+        /// <summary>
+        /// Identifier of selected specialty
+        /// </summary>
+        public int ChosenSpecialty { get; set; }
     }
 }
