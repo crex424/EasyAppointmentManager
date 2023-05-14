@@ -1,7 +1,19 @@
-﻿@model EasyAppointmentManager.Models.Doctor
+﻿@model DoctorCreateViewModel
 
 @{
     ViewData["Title"] = "Create";
+
+    List<SelectListItem> specialtiesSelectList = new();
+    foreach(Specialty specialty in Model.Specialties)
+    {
+        specialtiesSelectList.Add(
+            new SelectListItem()
+            {
+                Value = specialty.SpecialtyId.ToString(),
+                Text = specialty.Name
+            }
+        );
+    }
 }
 
 <h1>Create</h1>
@@ -38,9 +50,9 @@
                 <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Specialty" class="control-label"></label>
-                <input asp-for="Specialty" class="form-control" />
-                <span asp-validation-for="Specialty" class="text-danger"></span>
+                <select asp-for="ChosenSpecialty" asp-items="specialtiesSelectList">
+                </select>
+                <span asp-validation-for="Specialties" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
