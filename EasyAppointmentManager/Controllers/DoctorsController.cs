@@ -50,7 +50,10 @@ namespace EasyAppointmentManager.Controllers
         /// <returns>User to Create page</returns>
         public IActionResult Create()
         {
-            return View();
+            DoctorCreateViewModel viewModel = new();
+            viewModel.Specialties = _context.Specialty.OrderBy(i => i.Name).ToList();
+            viewModel.Clinics = _context.Clinic.OrderBy(i => i.ClinicName).ToList();
+            return View(viewModel);
         }
 
         /// <summary>
@@ -60,18 +63,46 @@ namespace EasyAppointmentManager.Controllers
         /// <returns>The new Doctor object to the Doctor index page</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Doctor doctor)
+        public async Task<IActionResult> Create(DoctorCreateViewModel doctor)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(doctor);
+                // Converting new Doctor data from DoctorCreateViewModel to Doctor
+                Doctor newDoctor = new()
+                {
+                    FirstName = doctor.FirstName,
+                    MiddleName = doctor.MiddleName,
+                    LastName = doctor.LastName,
+                    DateOfBirth = doctor.DateOfBirth,
+                    Gender = doctor.Gender,
+                    Specialty = new Specialty()
+                    {
+                        SpecialtyId = doctor.ChosenSpecialty
+                    },
+                    Email = doctor.Email,
+                    PhoneNumber = doctor.PhoneNumber,
+                    Clinic = new Clinic()
+                    {
+                        ClinicId = doctor.ChosenClinic
+                    }
+
+                };
+
+                // Tell EF that we have not modified the existing Specialties
+                _context.Entry(newDoctor.Specialty).State = EntityState.Unchanged;
+                // Tell EF that we have not modified the existing Clinics
+                _context.Entry(newDoctor.Clinic).State = EntityState.Unchanged;
+
+                _context.Add(newDoctor);
                 await _context.SaveChangesAsync();
 
                 // Show success message on page
                 ViewData["Message"] = $"{doctor.LastName}, {doctor.FirstName} was added successfully!";
 
-                return View();
+                return RedirectToAction(nameof(Index));
             }
+            doctor.Specialties = _context.Specialty.OrderBy(i => i.Name).ToList();
+            doctor.Clinics = _context.Clinic.OrderBy(i => i.ClinicName).ToList();
             return View(doctor);
         }
 
