@@ -167,8 +167,14 @@ namespace EasyAppointmentManager.Models
         public List<Clinic>? Clinics { get; set; }
 
         /// <summary>
-        /// Identifier of selected specialty
+        /// Identifier for selected specialty
         /// </summary>
         public int ChosenSpecialty { get; set; }
+
+        /// <summary>
+        /// Identifier for selected clinic
+        /// </summary>
+
+        public int ChosenClinic { get; set; }
     }
 }
