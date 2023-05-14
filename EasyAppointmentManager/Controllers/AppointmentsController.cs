@@ -83,7 +83,7 @@ namespace EasyAppointmentManager.Controllers
                     if (viewModel.ChosenDoctor != null && viewModel.Date != null)
                     {
                         // Get the available timeslots for the doctor and date from DoctorAvailability table
-                        List<Timeslot> availableTimeslots = GetAvailableTimeslots(viewModel.ChosenDoctor, viewModel.Date);
+                        List<TimeSlot> availableTimeslots = GetAvailableTimeslots(viewModel.ChosenDoctor, viewModel.Date);
 
                         // Pass the available timeslots to the view
                         ViewData["AvailableTimeslots"] = availableTimeslots;
@@ -106,7 +106,7 @@ namespace EasyAppointmentManager.Controllers
                 Appointment newAppointment = new()
                 {
                     Date = appointment.Date,
-                    Timeslot = appointment.Timeslot,
+                    TimeSlot = appointment.TimeSlot,
 
                     // If the ModelState is valid, Set the status to confirmed
                     AppointmentStatus = AppointmentStatus.Confirmed,
@@ -236,30 +236,31 @@ namespace EasyAppointmentManager.Controllers
           return (_context.Appointment?.Any(e => e.AppointmentId == id)).GetValueOrDefault();
         }
 
-        public List<Timeslot> GetAvailableTimeslots(int? doctorId, DateTime date)
+        /*
+        public List<TimeSlot> GetAvailableTimeslots(int? doctorId, DateTime date)
         {
-            var availability = _context.DoctorAvailability
-                                       .FirstOrDefault(a => a.DoctorId == doctorId && a.Date.Date == date.Date);
+            var availability = _context.TimeSlot
+                                       .FirstOrDefault(a => a.DoctorId == doctorId && a.TimeSlotDate == date.Date);
 
             if (availability == null)
             {
-                return new List<Timeslot>();
+                return new List<TimeSlot>();
             }
-
-            var availableTimeslots = availability.Timeslots
+            
+            var availableTimeslots = availability.TimeSlot.ToList();
                                                    .Where(t => t.Status == TimeslotStatus.Available)
-                                                   .Select(t => new Timeslot
+                                                   .Select(t => new TimeSlot
                                                    {
-                                                       TimeslotId = t.TimeslotId,
+                                                       TimeSlotId = t.TimeslotId,
                                                        StartTime = t.StartTime,
                                                        EndTime = t.EndTime,
-                                                       Status = t.Status,
-                                                       DoctorAvailabilityId = t.DoctorAvailabilityId
+                                                       TimeSlotStatus = t.Status,
+                                                       DoctorId = t.DoctorAvailabilityId
                                                    })
                                                    .ToList();
-
+            
             return availableTimeslots;
         }
-
+        */
     }
 }

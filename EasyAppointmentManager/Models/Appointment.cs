@@ -32,7 +32,7 @@ namespace EasyAppointmentManager.Models
         [Range(8, 16, ErrorMessage = "{0} should be from 8:00 to 16:00.")]
         [Display(Name = "Time")]
         [Required(ErrorMessage = "{0} is required.")]
-        public Timeslot Timeslot { get; set; }
+        public TimeSlot TimeSlot { get; set; }
 
         [Display(Name = "Appointment Status")]
         [Required(ErrorMessage = "{0} is required.")]
@@ -67,7 +67,7 @@ namespace EasyAppointmentManager.Models
         [Range(8, 16, ErrorMessage = "{0} should be from 8:00 to 16:00.")]
         [Display(Name = "Time")]
         [Required(ErrorMessage = "{0} is required.")]
-        public Timeslot Timeslot { get; set; }
+        public TimeSlot TimeSlot { get; set; }
 
         //public Timeslot ChosenTimeslot { get; set; }
 
