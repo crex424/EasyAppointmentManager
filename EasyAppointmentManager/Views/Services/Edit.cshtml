@@ -14,6 +14,16 @@
                     }
         );
     }
+
+    List<SelectListItem> serviceTimeOptions = new List<SelectListItem>
+    {
+        new SelectListItem { Value = "1", Text = "1 hour" },
+        new SelectListItem { Value = "2", Text = "2 hours" },
+        new SelectListItem { Value = "3", Text = "3 hours" },
+        new SelectListItem { Value = "4", Text = "4 hours" },
+        new SelectListItem { Value = "5", Text = "5 hours" },
+        new SelectListItem { Value = "6", Text = "6 hours" }
+    };
 }
 
 <h1>Edit @Model.ServiceName</h1>
@@ -33,7 +43,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="ServiceTime" class="control-label"></label>
-                <input asp-for="ServiceTime" class="form-control" />
+                <select asp-for="ServiceTime" asp-items="serviceTimeOptions" class="form-control">
+                </select>
                 <span asp-validation-for="ServiceTime" class="text-danger"></span>
             </div>
             <div class="form-group">

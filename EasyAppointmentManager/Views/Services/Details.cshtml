@@ -1,10 +1,10 @@
 ﻿@model ServiceIndexViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Details of " + Model.ServiceName;
 }
 
-<h1>Details</h1>
+<h1>Details of @Model.ServiceName</h1>
 
 <div>
     <h4>Service</h4>

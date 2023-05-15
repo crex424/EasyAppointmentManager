@@ -1,41 +1,80 @@
-﻿@model EasyAppointmentManager.Models.Service
+﻿@model ServiceCreateViewModel
 
 @{
     ViewData["Title"] = "Create";
+
+    List<SelectListItem> clinicsSelectList = new();
+    foreach (Clinic clinic in Model.Clinics)
+    {
+        clinicsSelectList.Add(
+            new SelectListItem()
+                    {
+                        Value = clinic.ClinicId.ToString(),
+                        Text = clinic.ClinicName
+                    }
+        );
+    }
+
+    List<SelectListItem> serviceTimeOptions = new List<SelectListItem>
+    {
+        new SelectListItem { Value = "1", Text = "1 hour" },
+        new SelectListItem { Value = "2", Text = "2 hours" },
+        new SelectListItem { Value = "3", Text = "3 hours" },
+        new SelectListItem { Value = "4", Text = "4 hours" },
+        new SelectListItem { Value = "5", Text = "5 hours" },
+        new SelectListItem { Value = "6", Text = "6 hours" }
+    };
 }
 
-<h1>Create</h1>
-
-<h4>Service</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Fee" class="control-label"></label>
-                <input asp-for="Fee" class="form-control" />
-                <span asp-validation-for="Fee" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ServiceName" class="control-label"></label>
-                <input asp-for="ServiceName" class="form-control" />
-                <span asp-validation-for="ServiceName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ServiceTime" class="control-label"></label>
-                <input asp-for="ServiceTime" class="form-control" />
-                <span asp-validation-for="ServiceTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+@if (ViewData["Message"] != null)
+{
+    <div class="alert alert-success">
+        <h4>@ViewData["Message"]</h4>
     </div>
-</div>
 
+}
+else
+{
+    <h1>Create</h1>
+
+    <h4>Service</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+                <div class="form-group">
+                    <label asp-for="ServiceName" class="control-label"></label>
+                    <input asp-for="ServiceName" class="form-control" />
+                    <span asp-validation-for="ServiceName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ServiceTime" class="control-label"></label>
+                    <select asp-for="ServiceTime" asp-items="serviceTimeOptions" class="form-control">
+                    </select>
+                    <span asp-validation-for="ServiceTime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Fee" class="control-label"></label>
+                    <input asp-for="Fee" class="form-control" />
+                    <span asp-validation-for="Fee" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Clinics" class="control-label"></label>
+                    <select asp-for="ChosenClinic" asp-items="clinicsSelectList" class="form-control">
+                    </select>
+                    <span asp-validation-for="Clinics" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-outline-success" />
+                </div>
+            </form>
+        </div>
+    </div>
+}
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-outline-primary asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
