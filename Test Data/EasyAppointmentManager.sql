@@ -127,6 +127,7 @@ insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 352.34, '
 insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 445.14, 'Woman Wellness', 3, 20);
 
 /* Service Table - Inject ClinicId to old data */ 
+/*
 USE EasyAppointmentManager
 GO
 DECLARE @ClinicId INT
@@ -152,3 +153,4 @@ END
 
 CLOSE myCursor
 DEALLOCATE myCursor
+*/
