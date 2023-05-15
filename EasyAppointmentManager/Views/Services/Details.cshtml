@@ -1,4 +1,4 @@
-﻿@model EasyAppointmentManager.Models.Service
+﻿@model ServiceIndexViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -26,11 +26,22 @@
             @Html.DisplayNameFor(model => model.ServiceTime)
         </dt>
         <dd class = "col-sm-10">
+            @{ // Add hour/hours following ServiceTime
+                int serviceTime = Model.ServiceTime ?? 0;
+                string timeText = serviceTime == 1 ? "hour" : "hours";
+            }
             @Html.DisplayFor(model => model.ServiceTime)
+            @timeText
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClinicName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClinicName)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.ServiceID">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.ServiceId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
