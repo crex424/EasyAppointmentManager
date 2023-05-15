@@ -157,7 +157,7 @@ namespace EasyAppointmentManager.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceID"), 1L, 1);
 
-                    b.Property<int?>("ClinicId")
+                    b.Property<int>("ClinicId")
                         .HasColumnType("int");
 
                     b.Property<double>("Fee")
@@ -458,9 +458,13 @@ namespace EasyAppointmentManager.Migrations
 
             modelBuilder.Entity("EasyAppointmentManager.Models.Service", b =>
                 {
-                    b.HasOne("EasyAppointmentManager.Models.Clinic", null)
+                    b.HasOne("EasyAppointmentManager.Models.Clinic", "Clinic")
                         .WithMany("Services")
-                        .HasForeignKey("ClinicId");
+                        .HasForeignKey("ClinicId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Clinic");
                 });
 
             modelBuilder.Entity("EasyAppointmentManager.Models.TimeSlot", b =>
