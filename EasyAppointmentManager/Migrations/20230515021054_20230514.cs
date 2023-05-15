@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EasyAppointmentManager.Migrations
 {
-    public partial class initial : Migration
+    public partial class _20230514 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -206,6 +206,28 @@ namespace EasyAppointmentManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Service",
+                columns: table => new
+                {
+                    ServiceID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ServiceName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    ServiceTime = table.Column<int>(type: "int", nullable: false),
+                    Fee = table.Column<double>(type: "float", nullable: false),
+                    ClinicId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Service", x => x.ServiceID);
+                    table.ForeignKey(
+                        name: "FK_Service_Clinic_ClinicId",
+                        column: x => x.ClinicId,
+                        principalTable: "Clinic",
+                        principalColumn: "ClinicId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Doctor",
                 columns: table => new
                 {
@@ -218,68 +240,24 @@ namespace EasyAppointmentManager.Migrations
                     Gender = table.Column<bool>(type: "bit", nullable: false),
                     SpecialtyId = table.Column<int>(type: "int", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClinicId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Doctor", x => x.DoctorId);
+                    table.ForeignKey(
+                        name: "FK_Doctor_Clinic_ClinicId",
+                        column: x => x.ClinicId,
+                        principalTable: "Clinic",
+                        principalColumn: "ClinicId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Doctor_Specialty_SpecialtyId",
                         column: x => x.SpecialtyId,
                         principalTable: "Specialty",
                         principalColumn: "SpecialtyId",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ClinicDoctor",
-                columns: table => new
-                {
-                    ClinicsClinicId = table.Column<int>(type: "int", nullable: false),
-                    DoctorsDoctorId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ClinicDoctor", x => new { x.ClinicsClinicId, x.DoctorsDoctorId });
-                    table.ForeignKey(
-                        name: "FK_ClinicDoctor_Clinic_ClinicsClinicId",
-                        column: x => x.ClinicsClinicId,
-                        principalTable: "Clinic",
-                        principalColumn: "ClinicId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ClinicDoctor_Doctor_DoctorsDoctorId",
-                        column: x => x.DoctorsDoctorId,
-                        principalTable: "Doctor",
-                        principalColumn: "DoctorId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Service",
-                columns: table => new
-                {
-                    ServiceID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Fee = table.Column<double>(type: "float", nullable: false),
-                    ServiceName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    ServiceTime = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClinicId = table.Column<int>(type: "int", nullable: true),
-                    DoctorId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Service", x => x.ServiceID);
-                    table.ForeignKey(
-                        name: "FK_Service_Clinic_ClinicId",
-                        column: x => x.ClinicId,
-                        principalTable: "Clinic",
-                        principalColumn: "ClinicId");
-                    table.ForeignKey(
-                        name: "FK_Service_Doctor_DoctorId",
-                        column: x => x.DoctorId,
-                        principalTable: "Doctor",
-                        principalColumn: "DoctorId");
                 });
 
             migrationBuilder.CreateTable(
@@ -345,9 +323,9 @@ namespace EasyAppointmentManager.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClinicDoctor_DoctorsDoctorId",
-                table: "ClinicDoctor",
-                column: "DoctorsDoctorId");
+                name: "IX_Doctor_ClinicId",
+                table: "Doctor",
+                column: "ClinicId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Doctor_SpecialtyId",
@@ -358,11 +336,6 @@ namespace EasyAppointmentManager.Migrations
                 name: "IX_Service_ClinicId",
                 table: "Service",
                 column: "ClinicId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Service_DoctorId",
-                table: "Service",
-                column: "DoctorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TimeSlot_DoctorId",
@@ -388,9 +361,6 @@ namespace EasyAppointmentManager.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "ClinicDoctor");
-
-            migrationBuilder.DropTable(
                 name: "Customer");
 
             migrationBuilder.DropTable(
@@ -406,10 +376,10 @@ namespace EasyAppointmentManager.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Clinic");
+                name: "Doctor");
 
             migrationBuilder.DropTable(
-                name: "Doctor");
+                name: "Clinic");
 
             migrationBuilder.DropTable(
                 name: "Specialty");
