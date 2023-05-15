@@ -1,10 +1,22 @@
-﻿@model EasyAppointmentManager.Models.Service
+﻿@model ServiceEditViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit " + Model.ServiceName;
+
+    List<SelectListItem> clinicsSelectList = new();
+    foreach (Clinic clinic in Model.Clinics)
+    {
+        clinicsSelectList.Add(
+            new SelectListItem()
+                    {
+                        Value = clinic.ClinicId.ToString(),
+                        Text = clinic.ClinicName
+                    }
+        );
+    }
 }
 
-<h1>Edit</h1>
+<h1>Edit @Model.ServiceName</h1>
 
 <h4>Service</h4>
 <hr />
@@ -12,12 +24,8 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ServiceID" />
-            <div class="form-group">
-                <label asp-for="Fee" class="control-label"></label>
-                <input asp-for="Fee" class="form-control" />
-                <span asp-validation-for="Fee" class="text-danger"></span>
-            </div>
+            <input type="hidden" asp-for="ServiceId" />
+            
             <div class="form-group">
                 <label asp-for="ServiceName" class="control-label"></label>
                 <input asp-for="ServiceName" class="form-control" />
@@ -29,14 +37,27 @@
                 <span asp-validation-for="ServiceTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label asp-for="Fee" class="control-label"></label>
+                <input asp-for="Fee" class="form-control" />
+                <span asp-validation-for="Fee" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clinics" class="control-label"></label>
+                <select asp-for="ClinicId" asp-items="clinicsSelectList" class="form-control">
+                </select>
+                <span asp-validation-for="Clinics" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-outline-warning" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-outline-primary" asp-action="Index">Back to List</a>
+    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@Model.ServiceId">Delete</a>
 </div>
 
 @section Scripts {
