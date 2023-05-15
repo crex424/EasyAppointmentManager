@@ -151,11 +151,11 @@ namespace EasyAppointmentManager.Migrations
 
             modelBuilder.Entity("EasyAppointmentManager.Models.Service", b =>
                 {
-                    b.Property<int>("ServiceID")
+                    b.Property<int>("ServiceId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceId"), 1L, 1);
 
                     b.Property<int>("ClinicId")
                         .HasColumnType("int");
@@ -172,7 +172,7 @@ namespace EasyAppointmentManager.Migrations
                         .IsRequired()
                         .HasColumnType("int");
 
-                    b.HasKey("ServiceID");
+                    b.HasKey("ServiceId");
 
                     b.HasIndex("ClinicId");
 
