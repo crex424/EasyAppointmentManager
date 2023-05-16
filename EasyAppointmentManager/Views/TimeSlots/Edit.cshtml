@@ -1,4 +1,4 @@
-﻿@model EasyAppointmentManager.Models.TimeSlot
+﻿@model TimeSlotIndexViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -8,6 +8,56 @@
 
 <h4>TimeSlot</h4>
 <hr />
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="TimeSlotId" />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TimeSlotDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TimeSlotDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StartTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StartTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EndTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EndTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DoctorName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DoctorName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TimeSlotStatus)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.RadioButtonFor(model => model.TimeSlotStatus, TimeslotStatus.Available)
+            <span>Available</span>
+
+            <span>&emsp;</span>
+
+            @Html.RadioButtonFor(model => model.TimeSlotStatus, TimeslotStatus.Booked)
+            <span>Booked</span>
+        </dd>
+    </dl>
+
+
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>
+
+
+<!--
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
@@ -30,7 +80,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="TimeSlotStatus" class="control-label"></label>
-                <select asp-for="TimeSlotStatus" class="form-control" asp-items="Html.GetEnumSelectList<TimeslotStatus>()"></select>
+                @Html.RadioButtonFor(model => model.TimeSlotStatus, TimeslotStatus.Available)
+                <span>Available</span>
+
+                <span>&emsp;</span>
+
+                @Html.RadioButtonFor(model => model.TimeSlotStatus, TimeslotStatus.Booked)
+                <span>Booked</span>
                 <span asp-validation-for="TimeSlotStatus" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -39,6 +95,8 @@
         </form>
     </div>
 </div>
+-->
+
 
 <div>
     <a asp-action="Index">Back to List</a>
