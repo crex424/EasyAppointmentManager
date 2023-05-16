@@ -5,11 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EasyAppointmentManager.Migrations
 {
-<<<<<<<< HEAD:EasyAppointmentManager/Migrations/20230508051208_TK-Initial.cs
-    public partial class TKInitial : Migration
-========
-    public partial class _20230514 : Migration
->>>>>>>> master:EasyAppointmentManager/Migrations/20230515021054_20230514.cs
+    public partial class _20230515 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -213,7 +209,7 @@ namespace EasyAppointmentManager.Migrations
                 name: "Service",
                 columns: table => new
                 {
-                    ServiceID = table.Column<int>(type: "int", nullable: false)
+                    ServiceId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ServiceName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     ServiceTime = table.Column<int>(type: "int", nullable: false),
@@ -222,7 +218,7 @@ namespace EasyAppointmentManager.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Service", x => x.ServiceID);
+                    table.PrimaryKey("PK_Service", x => x.ServiceId);
                     table.ForeignKey(
                         name: "FK_Service_Clinic_ClinicId",
                         column: x => x.ClinicId,

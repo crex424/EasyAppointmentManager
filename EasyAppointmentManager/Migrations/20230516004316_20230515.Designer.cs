@@ -12,13 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EasyAppointmentManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-<<<<<<<< HEAD:EasyAppointmentManager/Migrations/20230508051208_TK-Initial.Designer.cs
-    [Migration("20230508051208_TK-Initial")]
-    partial class TKInitial
-========
-    [Migration("20230515021054_20230514")]
-    partial class _20230514
->>>>>>>> master:EasyAppointmentManager/Migrations/20230515021054_20230514.Designer.cs
+    [Migration("20230516004316_20230515")]
+    partial class _20230515
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
