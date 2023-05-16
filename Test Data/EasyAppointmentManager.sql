@@ -30,10 +30,10 @@ GO
 /* Clinic Table */   
 USE EasyAppointmentManager
 GO
-insert into Clinic ( ClinicName, ClinicCode, PhoneNumber, Email) values ('Dooley, Wisoky and Gerlach', '65862-226', '(714) 6691858', 'coldey0@umich.edu');
-insert into Clinic ( ClinicName, ClinicCode, PhoneNumber, Email) values ('Weimann Inc', '45802-141', '(693) 4303184', 'sbrazelton1@etsy.com');
-insert into Clinic ( ClinicName, ClinicCode, PhoneNumber, Email) values ('Hansen-Boyer', '55312-328', '(693) 2004986', 'ycharles2@cdbaby.com');
-insert into Clinic ( ClinicName, ClinicCode, PhoneNumber, Email) values ('Osinski-Torphy', '57844-215', '(212) 6508714', 'btuckwood3@ocn.ne.jp');
+insert into Clinic ( ClinicName, ClinicCode, PhoneNumber, Email) values ('Patients Choice Medical Clinic', '65862-226', '(714) 6691858', 'coldey0@umich.edu');
+insert into Clinic ( ClinicName, ClinicCode, PhoneNumber, Email) values ('Valley Clinic', '45802-141', '(693) 4303184', 'sbrazelton1@etsy.com');
+insert into Clinic ( ClinicName, ClinicCode, PhoneNumber, Email) values ('Miracle Clinic', '55312-328', '(693) 2004986', 'ycharles2@cdbaby.com');
+insert into Clinic ( ClinicName, ClinicCode, PhoneNumber, Email) values ('The Hope Clinic', '57844-215', '(212) 6508714', 'btuckwood3@ocn.ne.jp');
 insert into Clinic ( ClinicName, ClinicCode, PhoneNumber, Email) values ('Gutkowski, Goodwin and Fahey', '51285-131', '(125) 8963990', 'aneicho4@theguardian.com');
 insert into Clinic ( ClinicName, ClinicCode, PhoneNumber, Email) values ('Schultz Group', '68745-1065', '(839) 6555020', 'fvivyan5@gmpg.org');
 insert into Clinic ( ClinicName, ClinicCode, PhoneNumber, Email) values ('Hand-Christiansen', '75974-100', '(642) 4381950', 'storbet6@sitemeter.com');
@@ -102,26 +102,55 @@ insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email
 insert into Doctor (FirstName, LastName, DateOfBirth, Gender, SpecialtyId, Email, PhoneNumber, ClinicId) values ('Red', 'Klejin', '2/10/1966', 'False', 20, 'rklejinj@mapy.cz', '(834) 2392655', 20);
 GO
 
-/* Service Table */ 
+/* Service Table - New data with ClinicId */ 
 USE EasyAppointmentManager
 GO
-insert into Service (Fee, ServiceName, ServiceTime) values ( 981.10, 'Physical Exam', 3);
-insert into Service (Fee, ServiceName, ServiceTime) values ( 159.96, 'Eye Exam', 1);
-insert into Service (Fee, ServiceName, ServiceTime) values ( 563.29, 'Dental Exam', 2);
-insert into Service (Fee, ServiceName, ServiceTime) values ( 681.88, 'X-ray', 2);
-insert into Service (Fee, ServiceName, ServiceTime) values ( 67.90, 'Colonoscopy', 1);
-insert into Service (Fee, ServiceName, ServiceTime) values ( 339.36, 'Mammogram', 3);
-insert into Service (Fee, ServiceName, ServiceTime) values ( 228.57, 'OG-GYN', 2);
-insert into Service (Fee, ServiceName, ServiceTime) values ( 404.97, 'Pediatrics', 1);
-insert into Service (Fee, ServiceName, ServiceTime) values ( 225.48, 'Wellness', 1);
-insert into Service (Fee, ServiceName, ServiceTime) values ( 264.65, 'Diabetic Consultation', 1);
-insert into Service (Fee, ServiceName, ServiceTime) values ( 781.91, 'Austism Evaluation', 1);
-insert into Service (Fee, ServiceName, ServiceTime) values ( 341.38, 'Primary Care', 3);
-insert into Service (Fee, ServiceName, ServiceTime) values ( 459.57, 'Follow-up', 2);
-insert into Service (Fee, ServiceName, ServiceTime) values ( 730.51, 'Lab-work', 1);
-insert into Service (Fee, ServiceName, ServiceTime) values ( 37.33, 'Surgery', 2);
-insert into Service (Fee, ServiceName, ServiceTime) values ( 290.29, 'Procedure', 1);
-insert into Service (Fee, ServiceName, ServiceTime) values ( 228.45, 'Birth', 2);
-insert into Service (Fee, ServiceName, ServiceTime) values ( 115.10, 'TeleHealth', 3);
-insert into Service (Fee, ServiceName, ServiceTime) values ( 352.34, 'Skin Care', 3);
-insert into Service (Fee, ServiceName, ServiceTime) values ( 445.14, 'Woman Wellness', 3);
+insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 981.10, 'Physical Exam', 3, 1);
+insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 159.96, 'Eye Exam', 1, 2);
+insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 563.29, 'Dental Exam', 2, 3);
+insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 681.88, 'X-ray', 2, 4);
+insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 67.90, 'Colonoscopy', 1, 5);
+insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 339.36, 'Mammogram', 3, 6);
+insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 228.57, 'OG-GYN', 2, 7);
+insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 404.97, 'Pediatrics', 1, 8);
+insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 225.48, 'Wellness', 1, 9);
+insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 264.65, 'Diabetic Consultation', 1, 10);
+insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 781.91, 'Austism Evaluation', 1, 11);
+insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 341.38, 'Primary Care', 3, 12);
+insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 459.57, 'Follow-up', 2, 13);
+insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 730.51, 'Lab-work', 1, 14);
+insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 37.33, 'Surgery', 2, 15);
+insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 290.29, 'Procedure', 1, 16);
+insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 228.45, 'Birth', 2, 17);
+insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 115.10, 'TeleHealth', 3, 18);
+insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 352.34, 'Skin Care', 3, 19);
+insert into Service (Fee, ServiceName, ServiceTime, ClinicId) values ( 445.14, 'Woman Wellness', 3, 20);
+
+/* Service Table - Inject ClinicId to old data */ 
+/*
+USE EasyAppointmentManager
+GO
+DECLARE @ClinicId INT
+DECLARE @Counter INT
+
+SET @Counter = 1
+
+DECLARE myCursor CURSOR FOR
+SELECT ClinicId FROM Service
+
+OPEN myCursor
+
+FETCH NEXT FROM myCursor INTO @ClinicId
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    UPDATE Service SET ClinicId = @Counter WHERE CURRENT OF myCursor
+
+    SET @Counter = @Counter + 1
+
+    FETCH NEXT FROM myCursor INTO @ClinicId
+END
+
+CLOSE myCursor
+DEALLOCATE myCursor
+*/
