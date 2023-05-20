@@ -177,4 +177,9 @@ namespace EasyAppointmentManager.Models
 
         public int ChosenClinic { get; set; }
     }
+
+    public class DoctorIndexViewModel
+    {
+
+    }
 }
