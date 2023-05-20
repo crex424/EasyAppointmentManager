@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.Contracts;
 
 namespace EasyAppointmentManager.Models
 {
@@ -178,8 +179,80 @@ namespace EasyAppointmentManager.Models
         public int ChosenClinic { get; set; }
     }
 
+    /// <summary>
+    /// Contains functionality for Doctor index page which allows the use of 
+    /// data from seperate tables with relationships with Doctor
+    /// </summary>
     public class DoctorIndexViewModel
     {
+        /// <summary>
+        /// Represents Specialty's unique identifier
+        /// </summary>
+        public int SpecialtyId { get; set; }
 
+        /// <summary>
+        /// Represents Clinic's uniqe identifier
+        /// </summary>
+        public int ClinicId { get; set; }
+
+        /// <summary>
+        /// Represents the Specialy's name
+        /// </summary>
+        [Display(Name = "Specialty")]
+        public string? SpecialtyName { get; set; }
+
+        /// <summary>
+        /// Represents the Clinic's name
+        /// </summary>
+        public string? ClinicName { get; set; }
+
+        /// <summary>
+        /// The Doctor's legal first name
+        /// </summary>
+        [Display(Name = "First Name")]
+        public string? FirstName { get; set; }
+
+        /// <summary>
+        /// The Doctor's legal middle name
+        /// </summary>
+        [Display(Name = "Middle Name")]
+        public string? MiddleName { get; set; }
+
+        /// <summary>
+        /// The Doctor's legal last name
+        /// </summary>
+        [Display(Name = "Last Name")]
+        public string? LastName { get; set;}
+
+        /// <summary>
+        /// The Doctor's legal date of birth
+        /// </summary>
+        [Display(Name = "Date Of Birth")]
+        [DataType(DataType.Date)]
+        public DateTime DateOfBirth { get; set; }
+
+        /// <summary>
+        /// The legal gender of the Doctor
+        /// Female = true
+        /// Male = false
+        /// Other/Prefer not to answer = null
+        /// </summary>
+        [Display(Name = "Gender")]
+        public bool? Gender { get; set; }
+
+        /// <summary>
+        /// The Doctor's email address
+        /// </summary>
+        [Display(Name = "Email")]
+        [StringLength(100)]
+        [EmailAddress(ErrorMessage = "Invalid email address.")]
+        public string? Email { get; set; }
+
+        /// <summary>
+        /// The Doctors Phone Number
+        /// </summary>
+        [Display(Name = "Phone Number")]
+        [DataType(DataType.PhoneNumber)]
+        public string? PhoneNumber { get; set; }
     }
 }
