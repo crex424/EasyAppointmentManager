@@ -12,9 +12,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.SpecialtyName)
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.FirstName)
             </th>
@@ -28,6 +26,9 @@
                 @Html.DisplayNameFor(model => model.Gender)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.SpecialtyName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.ClinicName)
             </th>
             <th></th>
@@ -36,9 +37,7 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.SpecialtyName)
-            </td>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
@@ -49,7 +48,10 @@
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Gender)
+                @Html.Encode(item.Gender==true?"Male":"Female")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpecialtyName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ClinicName)
