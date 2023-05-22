@@ -19,9 +19,30 @@ namespace EasyAppointmentManager.Controllers
         /// <returns>Docotrs</returns>
         public async Task<IActionResult> Index()
         {
-            return _context.Doctor != null ?
-                        View(await _context.Doctor.ToListAsync()) :
-                        Problem("Entity set 'ApplicationDbContext.Doctor'  is null.");
+            // Doctor information with their specialty and clinic
+            List<DoctorIndexViewModel> doctorData = await (from d in _context.Doctor
+                             join s in _context.Specialty
+                                on d.Specialty.SpecialtyId equals s.SpecialtyId
+                             join c in _context.Clinic
+                                on d.Clinic.ClinicId equals c.ClinicId
+                             orderby d.FirstName
+                             select new DoctorIndexViewModel
+                             {
+                                 DoctorId = d.DoctorId,
+                                 SpecialtyId = s.SpecialtyId,
+                                 ClinicId = c.ClinicId,
+                                 SpecialtyName = s.Name,
+                                 ClinicName = c.ClinicName,
+                                 FirstName = d.FirstName,
+                                 MiddleName = d.MiddleName,
+                                 LastName = d.LastName,
+                                 //DateOfBirth = c.DateOfBirth,
+                                 Gender = d.Gender
+                                 //Email = c.Email,
+                                 //PhoneNumber = c.PhoneNumber
+                             }).ToListAsync();
+
+            return View(doctorData);
         }
         /// <summary>
         /// Gets details of a Doctor
