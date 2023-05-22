@@ -233,9 +233,9 @@ namespace EasyAppointmentManager.Models
         /// <summary>
         /// The Doctor's legal date of birth
         /// </summary>
-        //[Display(Name = "Date Of Birth")]
-        //[DataType(DataType.Date)]
-        //public DateTime DateOfBirth { get; set; }
+        [Display(Name = "Date Of Birth")]
+        [DataType(DataType.Date)]
+        public DateTime DateOfBirth { get; set; }
 
         /// <summary>
         /// The legal gender of the Doctor
@@ -249,16 +249,16 @@ namespace EasyAppointmentManager.Models
         /// <summary>
         /// The Doctor's email address
         /// </summary>
-        //[Display(Name = "Email")]
-        //[StringLength(100)]
-        //[EmailAddress(ErrorMessage = "Invalid email address.")]
-        //public string? Email { get; set; }
+        [Display(Name = "Email")]
+        [StringLength(100)]
+        [EmailAddress(ErrorMessage = "Invalid email address.")]
+        public string? Email { get; set; }
 
         /// <summary>
         /// The Doctors Phone Number
         /// </summary>
-        //[Display(Name = "Phone Number")]
-        //[DataType(DataType.PhoneNumber)]
-        //public string? PhoneNumber { get; set; }
+        [Display(Name = "Phone Number")]
+        [DataType(DataType.PhoneNumber)]
+        public string? PhoneNumber { get; set; }
     }
 }
