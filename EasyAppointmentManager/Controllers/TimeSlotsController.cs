@@ -22,20 +22,21 @@ namespace EasyAppointmentManager.Controllers
         // GET: TimeSlots
         public async Task<IActionResult> Index()
         {
-            List<TimeSlotIndexViewModel> timeSlotData = await (from ts in _context.TimeSlot
+            List<TimeSlotIndexViewModel> timeSlotList = await (from ts in _context.TimeSlot
                                                                join doctor in _context.Doctor
                                                                 on ts.DoctorId equals doctor.DoctorId
-                                                               orderby ts.TimeSlotDate
+                                                               orderby ts.TimeSlotDate, ts.Doctor.LastName
                                                                select new TimeSlotIndexViewModel
                                                                {
                                                                    TimeSlotId = ts.TimeSlotId,
-                                                                   TimeSlotDate = ts.TimeSlotDate,
+                                                                   TimeSlotDate = ts.TimeSlotDate,                                                                   
                                                                    StartTime = ts.StartTime,
                                                                    EndTime = ts.EndTime,
+                                                                   TimeSlotStatus = ts.TimeSlotStatus,
                                                                    DoctorName = doctor.FullName
                                                                }).ToListAsync();
 
-            return View(timeSlotData);
+            return View(timeSlotList);
         }
 
         // GET: TimeSlots/Details/5
@@ -46,8 +47,22 @@ namespace EasyAppointmentManager.Controllers
                 return NotFound();
             }
 
-            var timeSlot = await _context.TimeSlot
-                .FirstOrDefaultAsync(m => m.TimeSlotId == id);
+            TimeSlotIndexViewModel? timeSlot = await (from ts in _context.TimeSlot
+                                                      join doctor in _context.Doctor
+                                                      on ts.DoctorId equals doctor.DoctorId
+                                                      where ts.TimeSlotId == id
+                                                      select new TimeSlotIndexViewModel
+                                                      {
+                                                          TimeSlotId = ts.TimeSlotId,
+                                                          TimeSlotDate = ts.TimeSlotDate,
+                                                          StartTime = ts.StartTime,
+                                                          EndTime = ts.EndTime,
+                                                          TimeSlotStatus = ts.TimeSlotStatus,
+                                                          DoctorName = doctor.FullName
+                                                      }).FirstOrDefaultAsync();
+
+            //var timeSlotToUpdate = await _context.TimeSlot.FirstOrDefaultAsync(m => m.TimeSlotId == id);
+
             if (timeSlot == null)
             {
                 return NotFound();
@@ -62,7 +77,7 @@ namespace EasyAppointmentManager.Controllers
             TimeSlotCreateViewModel viewModel = new();
 
             // Get list of all doctors
-            viewModel.AllAvailableDoctors = _context.Doctor.OrderBy(d => d.LastName).ToList();
+            viewModel.Doctors = _context.Doctor.OrderBy(d => d.LastName).ToList();
 
             return View(viewModel);
         }
@@ -105,7 +120,23 @@ namespace EasyAppointmentManager.Controllers
                 return NotFound();
             }
 
-            var timeSlot = await _context.TimeSlot.FindAsync(id);
+            // var timeSlotToUpdate = await _context.TimeSlot.FindAsync(id);
+
+            TimeSlotIndexViewModel? timeSlot = await (from ts in _context.TimeSlot
+                                                      join doctor in _context.Doctor
+                                                      on ts.DoctorId equals doctor.DoctorId
+                                                      where ts.TimeSlotId == id
+                                                      select new TimeSlotIndexViewModel
+                                                      {
+                                                          TimeSlotId = ts.TimeSlotId,
+                                                          TimeSlotDate = ts.TimeSlotDate,
+                                                          StartTime = ts.StartTime,
+                                                          EndTime = ts.EndTime,
+                                                          TimeSlotStatus = ts.TimeSlotStatus,
+                                                          DoctorName = ts.Doctor.FullName
+                                                      }).FirstOrDefaultAsync();
+
+            
             if (timeSlot == null)
             {
                 return NotFound();
@@ -118,9 +149,9 @@ namespace EasyAppointmentManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TimeSlotId,TimeSlotDate,StartTime,EndTime,TimeSlotStatus")] TimeSlot timeSlot)
+        public async Task<IActionResult> Edit(int id, TimeSlotIndexViewModel timeSlotToUpdate)
         {
-            if (id != timeSlot.TimeSlotId)
+            if (id != timeSlotToUpdate.TimeSlotId)
             {
                 return NotFound();
             }
@@ -129,14 +160,32 @@ namespace EasyAppointmentManager.Controllers
             {
                 try
                 {
-                    // Tell EF that we have not modified the existing Doctor
-                    _context.Entry(timeSlot.Doctor).State = EntityState.Unchanged;
-                    _context.Update(timeSlot);
+                    TimeSlot? existingTimeSlot = await _context.TimeSlot
+                                                                // .Include(ts => ts.Doctor) // Include the DoctorId
+                                                                .FirstOrDefaultAsync(ts => ts.TimeSlotId == id);
+                    if (existingTimeSlot == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Update the existingTimeSlot properties
+                    /*
+                    existingTimeSlot.TimeSlotId = timeSlotToUpdate.TimeSlotId;
+                    existingTimeSlot.TimeSlotDate = timeSlotToUpdate.TimeSlotDate;
+                    existingTimeSlot.StartTime = timeSlotToUpdate.StartTime;
+                    existingTimeSlot.EndTime = timeSlotToUpdate.EndTime;
+                    existingTimeSlot.DoctorId = timeSlotToUpdate.DoctorId;
+                    */
+                    existingTimeSlot.TimeSlotStatus = timeSlotToUpdate.TimeSlotStatus;
+                    
+
+                    _context.Update(existingTimeSlot);
                     await _context.SaveChangesAsync();
+                    TempData["Message"] = $"TimeSlot was successfully updated to {existingTimeSlot.TimeSlotStatus}!";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TimeSlotExists(timeSlot.TimeSlotId))
+                    if (!TimeSlotExists(timeSlotToUpdate.TimeSlotId))
                     {
                         return NotFound();
                     }
@@ -147,7 +196,18 @@ namespace EasyAppointmentManager.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(timeSlot);
+            else
+            {
+                // There are validation errors, so you can inspect them
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                foreach (var error in errors)
+                {
+                    // You can log or display the error message
+                    var errorMessage = error.ErrorMessage;
+                    // Handle the error as needed
+                }
+            }
+            return View(timeSlotToUpdate);
         }
 
         // GET: TimeSlots/Delete/5
@@ -158,8 +218,23 @@ namespace EasyAppointmentManager.Controllers
                 return NotFound();
             }
 
-            var timeSlot = await _context.TimeSlot
-                .FirstOrDefaultAsync(m => m.TimeSlotId == id);
+
+            //var timeSlotToUpdate = await _context.TimeSlot.FirstOrDefaultAsync(m => m.TimeSlotId == id);
+
+            TimeSlotIndexViewModel? timeSlot = await (from ts in _context.TimeSlot
+                                                      join doctor in _context.Doctor
+                                                      on ts.DoctorId equals doctor.DoctorId
+                                                      where ts.TimeSlotId == id
+                                                      select new TimeSlotIndexViewModel
+                                                      {
+                                                          TimeSlotId = ts.TimeSlotId,
+                                                          TimeSlotDate = ts.TimeSlotDate,
+                                                          StartTime = ts.StartTime,
+                                                          EndTime = ts.EndTime,
+                                                          TimeSlotStatus = ts.TimeSlotStatus,
+                                                          DoctorName = doctor.FullName
+                                                      }).FirstOrDefaultAsync();
+
             if (timeSlot == null)
             {
                 return NotFound();
