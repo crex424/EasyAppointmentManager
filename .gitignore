@@ -361,3 +361,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/EasyAppointmentManager/Properties/ServiceDependencies/EasyAppointmentManager - Web Deploy/profile.arm.json
