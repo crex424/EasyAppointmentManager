@@ -1,7 +1,31 @@
-﻿@model EasyAppointmentManager.Models.Doctor
+﻿@model DoctorEditViewModel
 
 @{
     ViewData["Title"] = "Edit";
+
+    List<SelectListItem> clinicsSelectList = new();
+    foreach (Clinic clinic in Model.Clinics)
+    {
+        clinicsSelectList.Add(
+            new SelectListItem()
+                    {
+                        Value = clinic.ClinicId.ToString(),
+                        Text = clinic.ClinicName
+                    }
+        );
+    }
+
+    List<SelectListItem> specialtiesSelectList = new();
+    foreach (Specialty specialty in Model.Specialties)
+    {
+        specialtiesSelectList.Add(
+            new SelectListItem()
+                    {
+                        Value = specialty.SpecialtyId.ToString(),
+                        Text = specialty.Name
+                    }
+        );
+    }
 }
 
 <h1>Edit</h1>
@@ -35,13 +59,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Gender" class="control-label"></label>
-                <input asp-for="Gender" class="form-control" />
-                <span asp-validation-for="Gender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Specialty" class="control-label"></label>
-                <input asp-for="Specialty" class="form-control" />
-                <span asp-validation-for="Specialty" class="text-danger"></span>
+                @Html.RadioButtonFor(model => model.Gender, true)
+                <span>Male</span>
+
+                <span>&emsp;</span>
+                @Html.RadioButtonFor(model => model.Gender, false)
+                <span>Female</span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
@@ -52,6 +75,18 @@
                 <label asp-for="PhoneNumber" class="control-label"></label>
                 <input asp-for="PhoneNumber" class="form-control" />
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Specialties" class="control-label"></label>
+                <select asp-for="SpecialtyId" asp-items="specialtiesSelectList" class="form-control">
+                </select>
+                <span asp-validation-for="Specialties" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clinics" class="control-label"></label>
+                <select asp-for="ClinicId" asp-items="clinicsSelectList" class="form-control">
+                </select>
+                <span asp-validation-for="Clinics" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

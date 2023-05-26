@@ -265,6 +265,11 @@ namespace EasyAppointmentManager.Models
     public class DoctorEditViewModel
     {
         /// <summary>
+        /// The Doctor's ID
+        /// </summary>
+        public int DoctorId { get; set; }
+
+        /// <summary>
         /// The Doctor's legal first name
         /// </summary>
         [Display(Name = "First Name")]
@@ -336,10 +341,10 @@ namespace EasyAppointmentManager.Models
 
         public int SpecialtyId { get; set; }
 
-        public Specialty Specialty { get; set; }
+        public Specialty? Specialty { get; set; }
 
         public int ClinicId { get; set; }
 
-        public Clinic Clinic { get; set;}
+        public Clinic? Clinic { get; set;}
     }
 }
