@@ -56,14 +56,34 @@ namespace EasyAppointmentManager.Controllers
                 return NotFound();
             }
 
-            var doctor = await _context.Doctor
-                .FirstOrDefaultAsync(m => m.DoctorId == id);
-            if (doctor == null)
+            DoctorIndexViewModel? doctorData = await (from d in _context.Doctor
+                                                      join s in _context.Specialty
+                                                        on d.Specialty.SpecialtyId equals s.SpecialtyId
+                                                      where d.DoctorId == id
+                                                      join c in _context.Clinic
+                                                        on d.Clinic.ClinicId equals c.ClinicId
+                                                      orderby d.FirstName
+                                                      select new DoctorIndexViewModel
+                                                      {
+                                                          DoctorId = d.DoctorId,
+                                                          SpecialtyId = s.SpecialtyId,
+                                                          ClinicId = c.ClinicId,
+                                                          SpecialtyName = s.Name,
+                                                          ClinicName = c.ClinicName,
+                                                          FirstName = d.FirstName,
+                                                          MiddleName = d.MiddleName,
+                                                          LastName = d.LastName,
+                                                          DateOfBirth = d.DateOfBirth,
+                                                          Gender = d.Gender,
+                                                          Email = d.Email,
+                                                          PhoneNumber = d.PhoneNumber
+                                                      }).FirstOrDefaultAsync();
+            if (doctorData == null)
             {
                 return NotFound();
             }
 
-            return View(doctor);
+            return View(doctorData);
         }
         /// <summary>
         /// Takes user to create page for Doctor Object
