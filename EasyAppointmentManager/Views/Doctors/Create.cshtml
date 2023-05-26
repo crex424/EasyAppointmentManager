@@ -64,6 +64,7 @@
                 <span>&emsp;</span>
                 @Html.RadioButtonFor(model => model.Gender, false)
                 <span>Female</span>
+                <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
