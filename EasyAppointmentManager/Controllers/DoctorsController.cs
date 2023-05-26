@@ -139,7 +139,7 @@ namespace EasyAppointmentManager.Controllers
                 await _context.SaveChangesAsync();
 
                 // Show success message on page
-                ViewData["Message"] = $"{doctor.LastName}, {doctor.FirstName} was added successfully!";
+                TempData["Message"] = $"{doctor.LastName}, {doctor.FirstName} was added successfully!";
 
                 return RedirectToAction(nameof(Index));
             }
@@ -343,6 +343,7 @@ namespace EasyAppointmentManager.Controllers
                 await _context.SaveChangesAsync();
 
                 TempData["Message"] = $"{doctor.LastName}, {doctor.FirstName} was deleted successfully!";
+                return RedirectToAction("Index");
             }
 
             TempData["Message"] = $"This doctor was already deleted!";
