@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EasyAppointmentManager.Models;
+using System.Numerics;
 
 namespace EasyAppointmentManager.Controllers
 {
@@ -56,14 +57,34 @@ namespace EasyAppointmentManager.Controllers
                 return NotFound();
             }
 
-            var doctor = await _context.Doctor
-                .FirstOrDefaultAsync(m => m.DoctorId == id);
-            if (doctor == null)
+            DoctorIndexViewModel? doctorData = await (from d in _context.Doctor
+                                                      join s in _context.Specialty
+                                                        on d.Specialty.SpecialtyId equals s.SpecialtyId
+                                                      join c in _context.Clinic
+                                                        on d.Clinic.ClinicId equals c.ClinicId
+                                                      where d.DoctorId == id
+                                                      orderby d.FirstName
+                                                      select new DoctorIndexViewModel
+                                                      {
+                                                          DoctorId = d.DoctorId,
+                                                          SpecialtyId = s.SpecialtyId,
+                                                          ClinicId = c.ClinicId,
+                                                          SpecialtyName = s.Name,
+                                                          ClinicName = c.ClinicName,
+                                                          FirstName = d.FirstName,
+                                                          MiddleName = d.MiddleName,
+                                                          LastName = d.LastName,
+                                                          DateOfBirth = d.DateOfBirth,
+                                                          Gender = d.Gender,
+                                                          Email = d.Email,
+                                                          PhoneNumber = d.PhoneNumber
+                                                      }).FirstOrDefaultAsync();
+            if (doctorData == null)
             {
                 return NotFound();
             }
 
-            return View(doctor);
+            return View(doctorData);
         }
         /// <summary>
         /// Takes user to create page for Doctor Object
@@ -118,7 +139,7 @@ namespace EasyAppointmentManager.Controllers
                 await _context.SaveChangesAsync();
 
                 // Show success message on page
-                ViewData["Message"] = $"{doctor.LastName}, {doctor.FirstName} was added successfully!";
+                TempData["Message"] = $"{doctor.LastName}, {doctor.FirstName} was added successfully!";
 
                 return RedirectToAction(nameof(Index));
             }
@@ -141,12 +162,35 @@ namespace EasyAppointmentManager.Controllers
                 return NotFound();
             }
 
-            Doctor? doctor = await _context.Doctor.FindAsync(id);
-            if (doctor == null)
+            DoctorEditViewModel? doctorToUpdate = await (from d in _context.Doctor
+                                                      join s in _context.Specialty
+                                                        on d.Specialty.SpecialtyId equals s.SpecialtyId
+                                                      join c in _context.Clinic
+                                                        on d.Clinic.ClinicId equals c.ClinicId
+                                                      where d.DoctorId == id
+                                                      orderby d.FirstName
+                                                      select new DoctorEditViewModel
+                                                      {
+                                                          DoctorId = d.DoctorId,
+                                                          SpecialtyId = s.SpecialtyId,
+                                                          ClinicId = c.ClinicId,
+                                                          FirstName = d.FirstName,
+                                                          MiddleName = d.MiddleName,
+                                                          LastName = d.LastName,
+                                                          DateOfBirth = d.DateOfBirth,
+                                                          Gender = d.Gender,
+                                                          Email = d.Email,
+                                                          PhoneNumber = d.PhoneNumber
+                                                      }).FirstOrDefaultAsync();
+
+            doctorToUpdate.Specialties = _context.Specialty.OrderBy(i => i.Name).ToList();
+            doctorToUpdate.Clinics = _context.Clinic.OrderBy(i => i.ClinicName).ToList();
+
+            if (doctorToUpdate == null)
             {
                 return NotFound();
             }
-            return View(doctor);
+            return View(doctorToUpdate);
         }
 
         /// <summary>
@@ -159,22 +203,79 @@ namespace EasyAppointmentManager.Controllers
         /// <returns> a edited Doctor to the Doctor index page</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Doctor doctor)
+        public async Task<IActionResult> Edit(int id, DoctorEditViewModel doctorToUpdate)
         {
-            if (id != doctor.DoctorId)
+            if (id != doctorToUpdate.DoctorId)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                _context.Update(doctor);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    Doctor? existingDoctor = await _context.Doctor
+                                                            .Include(s => s.Clinic) // Include the Clinic property
+                                                            .Include(s => s.Specialty) // Include the Specialty property
+                                                            .FirstOrDefaultAsync(s => s.DoctorId == id);
+                    if (existingDoctor == null)
+                    {
+                        return NotFound();
+                    }
 
-                TempData["Message"] = $"{doctor.LastName}, {doctor.FirstName} was updated successfully!";
+                    // Update the existingService properties
+                    existingDoctor.FirstName = doctorToUpdate.FirstName;
+                    existingDoctor.MiddleName = doctorToUpdate.MiddleName;
+                    existingDoctor.LastName = doctorToUpdate.LastName;
+                    existingDoctor.DateOfBirth = doctorToUpdate.DateOfBirth;
+                    existingDoctor.Gender = doctorToUpdate.Gender;
+                    existingDoctor.Email = doctorToUpdate.Email;
+                    existingDoctor.PhoneNumber = doctorToUpdate.PhoneNumber;
+
+                    // Update the clinic if it has changed
+                    if (existingDoctor.Clinic.ClinicId != doctorToUpdate.ClinicId)
+                    {
+                        var clinic = await _context.Clinic.FindAsync(doctorToUpdate.ClinicId);
+                        if (clinic == null)
+                        {
+                            return NotFound();
+                        }
+
+                        //existingService.Clinic.ClinicId = clinic.ClinicId;
+                        existingDoctor.Clinic = clinic;
+                    }
+
+                    // Update the Specialty if it has changed
+                    if (existingDoctor.Specialty.SpecialtyId != doctorToUpdate.SpecialtyId)
+                    {
+                        var specialty = await _context.Specialty.FindAsync(doctorToUpdate.SpecialtyId);
+                        if (specialty == null)
+                        {
+                            return NotFound();
+                        }
+
+                        //existingService.Clinic.ClinicId = clinic.ClinicId;
+                        existingDoctor.Specialty = specialty;
+                    }
+
+                    _context.Update(existingDoctor);
+                    await _context.SaveChangesAsync();
+                    TempData["Message"] = $"{existingDoctor.LastName}, {existingDoctor.FirstName} was updated successfully!";
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!DoctorExists(doctorToUpdate.DoctorId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
-            return View(doctor);
+            return View(doctorToUpdate);
         }
 
         /// <summary>
@@ -242,6 +343,7 @@ namespace EasyAppointmentManager.Controllers
                 await _context.SaveChangesAsync();
 
                 TempData["Message"] = $"{doctor.LastName}, {doctor.FirstName} was deleted successfully!";
+                return RedirectToAction("Index");
             }
 
             TempData["Message"] = $"This doctor was already deleted!";

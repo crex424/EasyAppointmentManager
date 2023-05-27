@@ -48,11 +48,11 @@ else
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-            <td>
-                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.SpecialtyId">Edit</a>
-                <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.SpecialtyId">Details</a>
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.SpecialtyId">Delete</a>
-            </td>
+                <td>
+                    <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@item.SpecialtyId">Edit</a>
+                    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.SpecialtyId">Details</a>
+                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.SpecialtyId">Delete</a>
+                </td>
         </tr>
 }
     </tbody>

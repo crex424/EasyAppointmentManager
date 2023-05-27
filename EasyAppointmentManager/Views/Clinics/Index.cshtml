@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-striped table-hover">
     <thead>
         <tr>
             <th>
@@ -49,9 +49,9 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ClinicId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ClinicId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ClinicId">Delete</a>
+                <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@item.ClinicId">Edit</a>
+                <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.ClinicId">Details</a>
+                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.ClinicId">Delete</a>
             </td>
         </tr>
 }
