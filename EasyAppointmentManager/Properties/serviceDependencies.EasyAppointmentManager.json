@@ -1,10 +1,10 @@
 {
   "dependencies": {
-    "mssql1": {
+    "mssql2": {
       "secretStore": "AzureAppSettings",
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/easyappointmentmanagerdbserver/databases/EasyAppointmentManager_db",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/easyappointmentmanagerdbserver/databases/EasyAppointmentManager_db",
       "type": "mssql.azure",
-      "connectionId": "ConnectionStrings:DefaultConnection",
+      "connectionId": "ConnectionStrings:AzureConnection",
       "dynamicId": null
     }
   }
