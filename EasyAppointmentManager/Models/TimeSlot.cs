@@ -9,14 +9,23 @@ namespace EasyAppointmentManager.Models
     /// </summary>
     public class TimeSlot
     {
+        /// <summary>
+        /// The unique identifier for the TimeSlot
+        /// </summary>
         [Key]
         public int TimeSlotId { get; set; }
 
+        /// <summary>
+        /// The TimeSlot's date
+        /// </summary>
         [Display(Name = "Date")]
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "{0} is required.")]
         public DateTime? TimeSlotDate { get; set; }
 
+        /// <summary>
+        /// Start time of the TimeSlot
+        /// </summary>
         [Display(Name = "Start Time")]
         [Required(ErrorMessage = "{0} is required.")]
         [DataType(DataType.Time)]
@@ -24,6 +33,9 @@ namespace EasyAppointmentManager.Models
         // [Range(typeof(TimeSpan), "08:00", "16:00", ErrorMessage = "The {0} must be between {1} and {2}.")]
         public TimeSpan StartTime { get; set; }
 
+        /// <summary>
+        /// End time of the TimeSlot
+        /// </summary>
         [Display(Name = "End Time")]
         [Required(ErrorMessage = "{0} is required.")]
         [DataType(DataType.Time)]
@@ -31,20 +43,32 @@ namespace EasyAppointmentManager.Models
         // [Range(typeof(TimeSpan), "09:00", "17:00", ErrorMessage = "The {0} must be between {1} and {2}.")]
         public TimeSpan EndTime { get; set; }
 
+        /// <summary>
+        /// The status of the TimeSlot
+        /// </summary>
         [Display(Name = "Status")]
         public TimeslotStatus TimeSlotStatus { get; set; }
 
+        /// <summary>
+        /// Foreign Key - DoctorId of the doctor asscociated with the TimeSlot
+        /// </summary>
         [Display(Name = "Doctor")]
         public int DoctorId { get; set; }
         public Doctor? Doctor { get; set; }
     }
 
+    /// <summary>
+    /// The status of the TimeSlot
+    /// </summary>
     public enum TimeslotStatus
     {
         Available,
         Booked
     }
 
+    /// <summary>
+    /// Represents a single TimeSlot for the Create view
+    /// </summary>
     public class TimeSlotCreateViewModel
     {
         [Display(Name = "Date")]
@@ -75,6 +99,9 @@ namespace EasyAppointmentManager.Models
         public int ChosenDoctor { get; set; }
     }
 
+    /// <summary>
+    /// Represents a single TimeSlot for the Index/Details/Edit/Delete views
+    /// </summary>
     public class TimeSlotIndexViewModel
     {
         public int TimeSlotId { get; set; }
@@ -101,8 +128,11 @@ namespace EasyAppointmentManager.Models
 
     }
 
-    // Populate database with TimeSlot records with the TimeSlotStatus set to "Available" in ASP.NET
     // 1. Create a database seed method in application. This method will be responsible for adding initial data to the database.
+    /// <summary>
+    /// Populate database with TimeSlot records with the TimeSlotStatus set to "Available" in ASP.NET
+    /// For testing purpose only
+    /// </summary>
     public static class DatabaseSeeder
     {
         public static void SeedData(ApplicationDbContext context)
