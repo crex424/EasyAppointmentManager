@@ -76,6 +76,9 @@ namespace EasyAppointmentManager.Models
         public int ChosenClinic { get; set; }
     }
 
+    /// <summary>
+    /// Represents a Service in the Index View
+    /// </summary>
     public class ServiceIndexViewModel
     {
         /// <summary>
@@ -104,7 +107,7 @@ namespace EasyAppointmentManager.Models
     }
 
     /// <summary>
-    /// Represents a Service in Create View
+    /// Represents a Service in Edit View
     /// </summary>
     public class ServiceEditViewModel
     {
