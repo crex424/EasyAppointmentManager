@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EasyAppointmentManager.Data;
 using EasyAppointmentManager.Models;
+using System.Numerics;
 
 namespace EasyAppointmentManager.Controllers
 {
@@ -21,10 +22,20 @@ namespace EasyAppointmentManager.Controllers
 
         // GET: Services
         public async Task<IActionResult> Index()
-        {
-              return _context.Service != null ? 
-                          View(await _context.Service.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Service'  is null.");
+        {   
+            List<ServiceIndexViewModel> serviceList = await (from s in _context.Service
+                                                             join c in _context.Clinic 
+                                                                on s.Clinic.ClinicId equals c.ClinicId
+                                                             orderby s.ServiceName
+                                                             select new ServiceIndexViewModel
+                                                             {
+                                                                 ServiceId = s.ServiceId,
+                                                                 ServiceName = s.ServiceName,
+                                                                 ServiceTime = s.ServiceTime,
+                                                                 Fee = s.Fee,
+                                                                 ClinicName = c.ClinicName
+                                                             }).ToListAsync();
+            return View(serviceList);
         }
 
         // GET: Services/Details/5
@@ -35,8 +46,19 @@ namespace EasyAppointmentManager.Controllers
                 return NotFound();
             }
 
-            var service = await _context.Service
-                .FirstOrDefaultAsync(m => m.ServiceId == id);
+            ServiceIndexViewModel? service = await (from s in _context.Service
+                                                            join c in _context.Clinic
+                                                            on s.Clinic.ClinicId equals c.ClinicId
+                                                            where s.ServiceId == id
+                                                            select new ServiceIndexViewModel
+                                                            {
+                                                                ServiceId = s.ServiceId,
+                                                                ServiceName = s.ServiceName,
+                                                                ServiceTime = s.ServiceTime,
+                                                                Fee = s.Fee,
+                                                                ClinicName = c.ClinicName
+                                                            }).FirstOrDefaultAsync();
+            // var serviceToUpdate = await _context.Service.FirstOrDefaultAsync(m => m.ServiceId == id);
             if (service == null)
             {
                 return NotFound();
@@ -48,7 +70,9 @@ namespace EasyAppointmentManager.Controllers
         // GET: Services/Create
         public IActionResult Create()
         {
-            return View();
+            ServiceCreateViewModel viewModel = new();
+            viewModel.Clinics = _context.Clinic.OrderBy(i => i.ClinicName).ToList();
+            return View(viewModel);
         }
 
         // POST: Services/Create
@@ -56,12 +80,28 @@ namespace EasyAppointmentManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ServiceId,Fee,ServiceName,ServiceTime")] Service service)
+        public async Task<IActionResult> Create(ServiceCreateViewModel service)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(service);
+                Service newService = new()
+                {
+                    ServiceName = service.ServiceName,
+                    ServiceTime = service.ServiceTime,
+                    Fee = service.Fee,
+                    Clinic = new Clinic()
+                    {
+                        ClinicId = service.ChosenClinic
+                    }
+                };
+                // Tell EF that we have not modified the existing Clinics
+                _context.Entry(newService.Clinic).State = EntityState.Unchanged;
+
+                _context.Add(newService);
                 await _context.SaveChangesAsync();
+
+                // Show success message on page
+                TempData["Message"] = $"{service.ServiceName} was added successfully!";
                 return RedirectToAction(nameof(Index));
             }
             return View(service);
@@ -75,12 +115,28 @@ namespace EasyAppointmentManager.Controllers
                 return NotFound();
             }
 
-            var service = await _context.Service.FindAsync(id);
-            if (service == null)
+            // var serviceToUpdate = await _context.Service.FindAsync(id);
+            ServiceEditViewModel? serviceToUpdate = await (from s in _context.Service
+                                                             join c in _context.Clinic
+                                                             on s.Clinic.ClinicId equals c.ClinicId
+                                                             where s.ServiceId == id
+                                                             select new ServiceEditViewModel
+                                                             {
+                                                                 ServiceId = s.ServiceId,
+                                                                 ServiceName = s.ServiceName,
+                                                                 ServiceTime = s.ServiceTime,
+                                                                 Fee = s.Fee,
+                                                                 ClinicId = c.ClinicId
+                                                             }).FirstOrDefaultAsync();
+
+
+            serviceToUpdate.Clinics = _context.Clinic.OrderBy(i => i.ClinicName).ToList();
+
+            if (serviceToUpdate == null)
             {
                 return NotFound();
             }
-            return View(service);
+            return View(serviceToUpdate);
         }
 
         // POST: Services/Edit/5
@@ -88,9 +144,9 @@ namespace EasyAppointmentManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ServiceId,Fee,ServiceName,ServiceTime")] Service service)
+        public async Task<IActionResult> Edit(int id, ServiceEditViewModel serviceToUpdate)
         {
-            if (id != service.ServiceId)
+            if (id != serviceToUpdate.ServiceId)
             {
                 return NotFound();
             }
@@ -99,12 +155,54 @@ namespace EasyAppointmentManager.Controllers
             {
                 try
                 {
-                    _context.Update(service);
+                    Service? existingService = await _context.Service
+                                                            .Include(s => s.Clinic) // Include the Clinic property
+                                                            .FirstOrDefaultAsync(s => s.ServiceId == id);
+                    // not working: Service? existingService = await _context.Service.FindAsync(id);
+                    /* not working:
+                    ServiceEditViewModel? existingService = await (from s in _context.Service
+                                                             join c in _context.Clinic
+                                                             on s.Clinic.ClinicId equals c.ClinicId
+                                                             where s.ServiceId == id
+                                                             select new ServiceEditViewModel
+                                                             {
+                                                                 ServiceId = s.ServiceId,
+                                                                 ServiceName = s.ServiceName,
+                                                                 ServiceTime = s.ServiceTime,
+                                                                 Fee = s.Fee,
+                                                                 ClinicId = c.ClinicId
+                                                             }).FirstOrDefaultAsync();
+                    */
+                    if (existingService == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Update the existingService properties
+                    existingService.ServiceName = serviceToUpdate.ServiceName;
+                    existingService.ServiceTime = serviceToUpdate.ServiceTime;
+                    existingService.Fee = serviceToUpdate.Fee;
+
+                    // Update the clinic if it has changed
+                    if (existingService.Clinic.ClinicId != serviceToUpdate.ClinicId)
+                    {
+                        var clinic = await _context.Clinic.FindAsync(serviceToUpdate.ClinicId);
+                        if (clinic == null)
+                        {
+                            return NotFound();
+                        }
+
+                        //existingService.Clinic.ClinicId = clinic.ClinicId;
+                        existingService.Clinic = clinic;
+                    }
+
+                    _context.Update(existingService);
                     await _context.SaveChangesAsync();
+                    TempData["Message"] = $"{existingService.ServiceName} was updated successfully!";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ServiceExists(service.ServiceId))
+                    if (!ServiceExists(serviceToUpdate.ServiceId))
                     {
                         return NotFound();
                     }
@@ -115,7 +213,7 @@ namespace EasyAppointmentManager.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(service);
+            return View(serviceToUpdate);
         }
 
         // GET: Services/Delete/5
@@ -125,9 +223,19 @@ namespace EasyAppointmentManager.Controllers
             {
                 return NotFound();
             }
-
-            var service = await _context.Service
-                .FirstOrDefaultAsync(m => m.ServiceId == id);
+            ServiceIndexViewModel? service = await (from s in _context.Service
+                                                    join c in _context.Clinic
+                                                    on s.Clinic.ClinicId equals c.ClinicId
+                                                    where s.ServiceId == id
+                                                    select new ServiceIndexViewModel
+                                                    {
+                                                        ServiceId = s.ServiceId,
+                                                        ServiceName = s.ServiceName,
+                                                        ServiceTime = s.ServiceTime,
+                                                        Fee = s.Fee,
+                                                        ClinicName = c.ClinicName
+                                                    }).FirstOrDefaultAsync();
+            // var serviceToUpdate = await _context.Service.FirstOrDefaultAsync(m => m.ServiceId == id);
             if (service == null)
             {
                 return NotFound();
@@ -149,8 +257,9 @@ namespace EasyAppointmentManager.Controllers
             if (service != null)
             {
                 _context.Service.Remove(service);
+                TempData["Message"] = $"{service.ServiceName} was deleted successfully!";
             }
-            
+            TempData["Message"] = $"This service was already deleted!";
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

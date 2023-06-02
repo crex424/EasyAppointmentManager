@@ -1,47 +1,71 @@
-﻿@model IEnumerable<EasyAppointmentManager.Models.Service>
+﻿@model IEnumerable<ServiceIndexViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index of Services";
 }
 
-<h1>Index</h1>
+<h1>Index of Services</h1>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+else
+{
 
+}
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New Service</a>
 </p>
-<table class="table">
+<table class="table table-striped table-hover">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Fee)
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.ServiceName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ServiceTime)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClinicName)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fee)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ServiceName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ServiceTime)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ServiceId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ServiceId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ServiceId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model) {
+            <tr>
+            
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceName)
+                </td>
+                <td>
+                    @{
+                        // Add hour/hours following ServiceTime
+                        int serviceTime = item.ServiceTime ?? 0;
+                        string timeText = serviceTime == 1 ? "hour" : "hours";
+                    }
+                    @Html.DisplayFor(model => item.ServiceTime)
+                    @timeText
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fee)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClinicName)
+                </td>
+                <td>
+                    <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@item.ServiceId">Edit</a>
+                    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.ServiceId">Details</a>
+                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.ServiceId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

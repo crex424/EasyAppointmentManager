@@ -1,4 +1,4 @@
-﻿@model EasyAppointmentManager.Models.TimeSlot
+﻿@model TimeSlotIndexViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -34,9 +34,16 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.TimeSlotStatus)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DoctorName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DoctorName)
+        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.TimeSlotId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@Model?.TimeSlotId">Edit</a>
+    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@Model?.TimeSlotId">Delete</a>
+    <a class="btn btn-outline-primary" asp-action="Index">Back to List</a>
 </div>

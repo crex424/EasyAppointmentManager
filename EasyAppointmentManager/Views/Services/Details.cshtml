@@ -1,21 +1,16 @@
-﻿@model EasyAppointmentManager.Models.Service
+﻿@model ServiceIndexViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Details of " + Model.ServiceName;
 }
 
-<h1>Details</h1>
+<h1>Details of @Model.ServiceName</h1>
 
 <div>
     <h4>Service</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Fee)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Fee)
-        </dd>
+        
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ServiceName)
         </dt>
@@ -26,11 +21,29 @@
             @Html.DisplayNameFor(model => model.ServiceTime)
         </dt>
         <dd class = "col-sm-10">
+            @{ // Add hour/hours following ServiceTime
+                int serviceTime = Model.ServiceTime ?? 0;
+                string timeText = serviceTime == 1 ? "hour" : "hours";
+            }
             @Html.DisplayFor(model => model.ServiceTime)
+            @timeText
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Fee)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Fee)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClinicName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClinicName)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.ServiceId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@Model?.ServiceId">Edit</a>
+    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@Model?.ServiceId">Delete</a>
+    <a class="btn btn-outline-primary" asp-action="Index">Back to List</a>
 </div>

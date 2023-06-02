@@ -70,7 +70,7 @@ namespace EasyAppointmentManager.Models
         public TimeslotStatus TimeSlotStatus { get; set; }
 
         [Display(Name = "Doctors")]
-        public List<Doctor>? AllAvailableDoctors { get; set; }
+        public List<Doctor>? Doctors { get; set; }
 
         public int ChosenDoctor { get; set; }
     }
@@ -97,7 +97,8 @@ namespace EasyAppointmentManager.Models
         public TimeslotStatus TimeSlotStatus { get; set; }
 
         [Display(Name = "Doctors")]
-        public string DoctorName { get; set; }
+        public string? DoctorName { get; set; }
+
     }
 
     // Populate database with TimeSlot records with the TimeSlotStatus set to "Available" in ASP.NET
