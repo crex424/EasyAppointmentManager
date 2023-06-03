@@ -14,7 +14,6 @@ namespace EasyAppointmentManager.Models
         [Key]
         public int CustomerAppointmentId { get; set; }
 
-
         public int TimeSlotId { get; set; }
         public TimeSlot? TimeSlot { get; set; }
 
