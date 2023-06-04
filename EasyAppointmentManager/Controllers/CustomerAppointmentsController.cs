@@ -46,10 +46,28 @@ namespace EasyAppointmentManager.Controllers
         }
 
         // GET: CustomerAppointments/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["TimeSlotId"] = new SelectList(_context.TimeSlot, "TimeSlotId", "TimeSlotId");
-            return View();
+            CustomerAppointmentCreateViewModel viewModel = new();
+
+            // Get list of all doctors
+            viewModel.Doctors = await (from ts in _context.TimeSlot
+                                       join doctor in _context.Doctor on ts.DoctorId equals doctor.DoctorId
+                                       orderby doctor
+                                       select doctor).Distinct().ToListAsync();
+
+            viewModel.TimeSlotsByDoctorId = await (from timeSlot in _context.TimeSlot
+                                                   where timeSlot.DoctorId == viewModel.ChosenDoctorId
+                                                   orderby timeSlot.TimeSlotDate
+                                                   select timeSlot).ToListAsync();
+
+
+            //viewModel.TimeSlotsByDoctorId = _context.TimeSlot
+            //.Where(t => t.DoctorId == viewModel.ChosenDoctorId)
+            //                                               .OrderBy(t => t.TimeSlotDate).ToList();
+
+            // ViewData["TimeSlotId"] = new SelectList(_context.TimeSlot, "TimeSlotId", "TimeSlotId");
+            return View(viewModel);
         }
 
         // POST: CustomerAppointments/Create

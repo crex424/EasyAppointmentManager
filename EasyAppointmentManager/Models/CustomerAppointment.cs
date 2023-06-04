@@ -38,11 +38,16 @@ namespace EasyAppointmentManager.Models
         [Display(Name = "Doctors")]
         public List<Doctor>? Doctors { get; set; }
 
-        public int ChosenDoctor { get; set; }
+        public int ChosenDoctorId { get; set; }
+
+        public List<TimeSlot>? TimeSlotsByDoctorId { get; set; }
 
         public int TimeSlotId { get; set; }
 
-        public DateTime? TimeSlotDate { get; set; }
+        [Display(Name = "Date")]
+        [DataType(DataType.Date)]
+        [Required(ErrorMessage = "{0} is required.")]
+        public int? ChosenTimeSlot { get; set; }
 
         public TimeSpan StartTime { get; set; }
 
