@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EasyAppointmentManager.Data;
 using EasyAppointmentManager.Models;
+using Microsoft.CodeAnalysis.VisualBasic;
 
 namespace EasyAppointmentManager.Controllers
 {
@@ -50,16 +51,30 @@ namespace EasyAppointmentManager.Controllers
         {
             CustomerAppointmentCreateViewModel viewModel = new();
 
+            // Get list of all customers
+            viewModel.AllAvailableCustomers = _context.Customer.OrderBy(i => i.LastName).ToList();
+
             // Get list of all doctors
-            viewModel.Doctors = await (from ts in _context.TimeSlot
+            viewModel.AllAvailableDoctors = _context.Doctor.OrderBy(i => i.LastName).ToList();
+            /*
+            viewModel.AllAvailableDoctors = await (from ts in _context.TimeSlot
                                        join doctor in _context.Doctor on ts.DoctorId equals doctor.DoctorId
                                        orderby doctor
                                        select doctor).Distinct().ToListAsync();
-
+            */
+            /*
             viewModel.TimeSlotsByDoctorId = await (from timeSlot in _context.TimeSlot
-                                                   where timeSlot.DoctorId == viewModel.ChosenDoctorId
-                                                   orderby timeSlot.TimeSlotDate
-                                                   select timeSlot).ToListAsync();
+                                                    where timeSlot.DoctorId == viewModel.ChosenDoctorId
+                                                    orderby timeSlot.TimeSlotDate
+                                                    select timeSlot).ToListAsync();
+            */
+
+            viewModel.TimeSlotsByDoctorId = await _context.TimeSlot
+                                                        .Where(ts => ts.DoctorId == viewModel.ChosenDoctorId)
+                                                        .OrderBy(ts => ts.TimeSlotDate)
+                                                        .ToListAsync();
+
+
 
 
             //viewModel.TimeSlotsByDoctorId = _context.TimeSlot

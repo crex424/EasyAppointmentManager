@@ -35,25 +35,24 @@ namespace EasyAppointmentManager.Models
     /// </summary>
     public class CustomerAppointmentCreateViewModel
     {
+        [Display(Name = "Customer")]
+        public List<Customer>? AllAvailableCustomers { get; set; }
+
+        public int ChosenCustomerId { get; set; }
+
         [Display(Name = "Doctors")]
-        public List<Doctor>? Doctors { get; set; }
+        public List<Doctor>? AllAvailableDoctors { get; set; }
 
         public int ChosenDoctorId { get; set; }
 
         public List<TimeSlot>? TimeSlotsByDoctorId { get; set; }
 
-        public int TimeSlotId { get; set; }
-
         [Display(Name = "Date")]
-        [DataType(DataType.Date)]
-        [Required(ErrorMessage = "{0} is required.")]
-        public int? ChosenTimeSlot { get; set; }
+        public int? ChosenTimeSlotId { get; set; }
 
         public TimeSpan StartTime { get; set; }
 
         public TimeSpan EndTime { get; set; }
-
-        public TimeSlot? TimeSlot { get; set; }
 
         public CustomerAppointmentStatus CustomerAppointmentStatus { get; set; }
 
