@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EasyAppointmentManager.Data;
 using EasyAppointmentManager.Models;
+using System.Numerics;
 
 namespace EasyAppointmentManager.Controllers
 {
@@ -62,6 +63,10 @@ namespace EasyAppointmentManager.Controllers
             {
                 _context.Add(clinic);
                 await _context.SaveChangesAsync();
+
+                // Show success message on page
+                TempData["Message"] = $"{clinic.ClinicName} was added successfully!";
+
                 return RedirectToAction(nameof(Index));
             }
             return View(clinic);
@@ -101,6 +106,9 @@ namespace EasyAppointmentManager.Controllers
                 {
                     _context.Update(clinic);
                     await _context.SaveChangesAsync();
+
+                    // Show success message on page
+                    TempData["Message"] = $"{clinic.ClinicName} was updated successfully!";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -152,6 +160,9 @@ namespace EasyAppointmentManager.Controllers
             }
             
             await _context.SaveChangesAsync();
+
+            // Show success message on page
+            TempData["Message"] = $"{clinic.ClinicName} was deleted successfully!";
             return RedirectToAction(nameof(Index));
         }
 
