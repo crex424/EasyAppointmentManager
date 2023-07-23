@@ -52,10 +52,10 @@ namespace EasyAppointmentManager.Controllers
             CustomerAppointmentCreateViewModel viewModel = new();
 
             // Get list of all customers
-            viewModel.AllAvailableCustomers = _context.Customer.OrderBy(i => i.LastName).ToList();
+            viewModel.AllAvailableCustomers = await _context.Customer.OrderBy(i => i.LastName).ToListAsync();
 
             // Get list of all doctors
-            viewModel.AllAvailableDoctors = _context.Doctor.OrderBy(i => i.LastName).ToList();
+            viewModel.AllAvailableDoctors = await _context.Doctor.OrderBy(i => i.LastName).ToListAsync();
             /*
             viewModel.AllAvailableDoctors = await (from ts in _context.TimeSlot
                                        join doctor in _context.Doctor on ts.DoctorId equals doctor.DoctorId
@@ -68,14 +68,13 @@ namespace EasyAppointmentManager.Controllers
                                                     orderby timeSlot.TimeSlotDate
                                                     select timeSlot).ToListAsync();
             */
-
-            viewModel.TimeSlotsByDoctorId = await _context.TimeSlot
-                                                        .Where(ts => ts.DoctorId == viewModel.ChosenDoctorId)
+            if (viewModel.ChosenDoctorId > 0)
+            {
+                viewModel.TimeSlotsByDoctorId = await _context.TimeSlot
+                                                        .Where(ts => ts.DoctorId == viewModel.ChosenDoctorId && ts.TimeSlotStatus == TimeslotStatus.Available)
                                                         .OrderBy(ts => ts.TimeSlotDate)
                                                         .ToListAsync();
-
-
-
+            }
 
             //viewModel.TimeSlotsByDoctorId = _context.TimeSlot
             //.Where(t => t.DoctorId == viewModel.ChosenDoctorId)
@@ -84,6 +83,8 @@ namespace EasyAppointmentManager.Controllers
             // ViewData["TimeSlotId"] = new SelectList(_context.TimeSlot, "TimeSlotId", "TimeSlotId");
             return View(viewModel);
         }
+
+
 
         // POST: CustomerAppointments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.

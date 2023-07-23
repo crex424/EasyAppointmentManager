@@ -32,22 +32,28 @@
                     }
                 </select>
             </div>
+            @if (Model.ChosenDoctorId > 0)
+            {
+                <div class="form-group">
+                    <label asp-for="ChosenTimeSlotId" class="control-label"></label>
+                    <select asp-for="ChosenTimeSlotId" class="form-control">
+                        @foreach (TimeSlot timeSlot in Model.TimeSlotsByDoctorId)
+                        {
+                            <option value="@timeSlot.TimeSlotId">@timeSlot.TimeSlotDate.ToString()</option>
+                        }
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="ChosenTimeSlotId" class="control-label"></label>
-                <select asp-for="ChosenTimeSlotId" class="form-control">
-                    @foreach (TimeSlot timeSlot in Model.TimeSlotsByDoctorId)
-                    {
-                        <option value="@timeSlot.TimeSlotId">@timeSlot.TimeSlotDate.ToString()</option>
-                    }
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="CustomerAppointmentStatus" class="control-label"></label>
-                <select asp-for="CustomerAppointmentStatus" class="form-control"></select>
-                <span asp-validation-for="CustomerAppointmentStatus" class="text-danger"></span>
-            </div>
+                @if (Model.ChosenTimeSlotId > 0)
+                {
+                    <div class="form-group">
+                        <label asp-for="CustomerAppointmentStatus" class="control-label"></label>
+                        <select asp-for="CustomerAppointmentStatus" class="form-control"></select>
+                        <span asp-validation-for="CustomerAppointmentStatus" class="text-danger"></span>
+                    </div>
+                }
+            }
+            
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
