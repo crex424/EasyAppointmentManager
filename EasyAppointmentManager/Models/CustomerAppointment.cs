@@ -49,10 +49,11 @@ namespace EasyAppointmentManager.Models
 
         [Display(Name = "Date")]
         public int? ChosenTimeSlotId { get; set; }
-
+        /*
         public TimeSpan StartTime { get; set; }
 
         public TimeSpan EndTime { get; set; }
+        */
 
         public CustomerAppointmentStatus CustomerAppointmentStatus { get; set; }
 
