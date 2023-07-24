@@ -1,10 +1,10 @@
-﻿@model EasyAppointmentManager.Models.Clinic
+﻿@model Clinic
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Details of " + Model.ClinicName;
 }
 
-<h1>Details</h1>
+<h1>Details of @Model.ClinicName</h1>
 
 <div>
     <h4>Clinic</h4>

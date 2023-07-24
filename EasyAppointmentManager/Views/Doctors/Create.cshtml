@@ -1,7 +1,7 @@
 ﻿@model DoctorCreateViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create a New Doctor";
 
     List<SelectListItem> specialtiesSelectList = new();
     foreach(Specialty specialty in Model.Specialties)
@@ -28,9 +28,8 @@
     }
 }
 
-<h1>Create</h1>
+<h1>Create a New Doctor</h1>
 
-<h4>Doctor</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">

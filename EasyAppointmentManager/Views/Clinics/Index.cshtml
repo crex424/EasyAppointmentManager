@@ -1,7 +1,7 @@
-﻿@model IEnumerable<EasyAppointmentManager.Models.Clinic>
+﻿@model IEnumerable<Clinic>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Clinic Index";
 }
 
 @if (TempData["Message"] != null)
@@ -12,10 +12,10 @@
     </div>
 }
 
-<h1>Index</h1>
+<h1>Clinic Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create A New Clinic</a>
 </p>
 <table class="table table-striped table-hover">
     <thead>

@@ -209,7 +209,7 @@ namespace EasyAppointmentManager.Models
         /// <summary>
         /// Represents the Clinic's name
         /// </summary>
-        [Display(Name = "Place Of Work")]
+        [Display(Name = "Clinic")]
         public string? ClinicName { get; set; }
 
         /// <summary>
