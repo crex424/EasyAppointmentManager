@@ -1,7 +1,7 @@
 ﻿@model ServiceCreateViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create A New Service";
 
     List<SelectListItem> clinicsSelectList = new();
     foreach (Clinic clinic in Model.Clinics)
@@ -35,9 +35,8 @@
 }
 else
 {
-    <h1>Create</h1>
+    <h1>Create A New Service</h1>
 
-    <h4>Service</h4>
     <hr />
     <div class="row">
         <div class="col-md-4">

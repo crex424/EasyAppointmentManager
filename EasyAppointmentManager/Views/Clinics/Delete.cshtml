@@ -1,12 +1,12 @@
-﻿@model EasyAppointmentManager.Models.Clinic
+﻿@model Clinic
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete: " + Model.ClinicName;
 }
 
 <h1>Delete</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to delete @Model.ClinicName?</h3>
 <div>
     <h4>Clinic</h4>
     <hr />
