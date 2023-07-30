@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EasyAppointmentManager.Data;
 using EasyAppointmentManager.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace EasyAppointmentManager.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SpecialtiesController : Controller
     {
         private readonly ApplicationDbContext _context;
