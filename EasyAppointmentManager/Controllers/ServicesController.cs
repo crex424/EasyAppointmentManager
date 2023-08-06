@@ -8,9 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using EasyAppointmentManager.Data;
 using EasyAppointmentManager.Models;
 using System.Numerics;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace EasyAppointmentManager.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ServicesController : Controller
     {
         private readonly ApplicationDbContext _context;
