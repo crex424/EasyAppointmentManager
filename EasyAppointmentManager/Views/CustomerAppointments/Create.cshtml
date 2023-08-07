@@ -1,0 +1,63 @@
+﻿@model CustomerAppointmentCreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>CustomerAppointment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="AllAvailableCustomers" class="control-label"></label>
+                <select asp-for="ChosenCustomerId" class="form-control">
+                    @foreach (Customer customer in Model.AllAvailableCustomers)
+                    {
+                        <option value="@customer.CustomerId">@customer.FullName</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AllAvailableDoctors" class="control-label"></label>
+                <select asp-for="ChosenDoctorId" class="form-control">
+                    @foreach (Doctor doctor in Model.AllAvailableDoctors)
+                    {
+                        <option value="@doctor.DoctorId">@doctor.FullName</option>
+                    }
+                </select>
+            </div>
+            @if (Model.ChosenDoctorId > 0)
+            {
+                <div class="form-group">
+                    <label asp-for="ChosenTimeSlotId" class="control-label"></label>
+                    <select asp-for="ChosenTimeSlotId" class="form-control">
+                        @foreach (TimeSlot timeSlot in Model.TimeSlotsByDoctorId)
+                        {
+                            <option value="@timeSlot.TimeSlotId">@timeSlot.TimeSlotDate.ToString()</option>
+                        }
+                    </select>
+                </div>
+            }
+            
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
