@@ -84,7 +84,12 @@ namespace EasyAppointmentManager.Controllers
             return View(viewModel);
         }
 
-
+        private List<TimeSlot>? GetTimeSlotsByDoctorId(int doctorId)
+        {
+            return _context.TimeSlot
+                .Where(ts => ts.DoctorId == doctorId && ts.TimeSlotStatus == TimeslotStatus.Available)
+                .OrderBy(ts => ts.TimeSlotDate).ToList();
+        }
 
         // POST: CustomerAppointments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
