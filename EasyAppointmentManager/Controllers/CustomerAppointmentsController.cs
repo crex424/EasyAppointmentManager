@@ -67,7 +67,7 @@ namespace EasyAppointmentManager.Controllers
                                                     where timeSlot.DoctorId == viewModel.ChosenDoctorId
                                                     orderby timeSlot.TimeSlotDate
                                                     select timeSlot).ToListAsync();
-            */
+            
             if (viewModel.ChosenDoctorId > 0)
             {
                 viewModel.TimeSlotsByDoctorId = await _context.TimeSlot
@@ -75,6 +75,7 @@ namespace EasyAppointmentManager.Controllers
                                                         .OrderBy(ts => ts.TimeSlotDate)
                                                         .ToListAsync();
             }
+            */
 
             //viewModel.TimeSlotsByDoctorId = _context.TimeSlot
             //.Where(t => t.DoctorId == viewModel.ChosenDoctorId)
@@ -84,12 +85,58 @@ namespace EasyAppointmentManager.Controllers
             return View(viewModel);
         }
 
-        public List<TimeSlot>? GetTimeSlotsByDoctorId(int doctorId)
+        #region Working with Partial View  
+
+        public async Task<ActionResult> Doctor()
         {
-            return _context.TimeSlot
-                .Where(ts => ts.DoctorId == doctorId && ts.TimeSlotStatus == TimeslotStatus.Available)
-                .OrderBy(ts => ts.TimeSlotDate).ToList();
+            CustomerAppointmentCreateViewModel viewModel = new();
+
+            // Get list of all doctors
+            viewModel.AllAvailableDoctors = await _context.Doctor.OrderBy(i => i.LastName).ToListAsync();
+            //Set default Doctor records  
+            viewModel.ChosenDoctorId = viewModel.AllAvailableDoctors.First().DoctorId;
+            
+            return View(viewModel);
         }
+
+        public async Task<ActionResult> TimeSlot()
+        {
+            CustomerAppointmentCreateViewModel viewModel = new();
+            viewModel.AllAvailableTimeSlots = await _context.TimeSlot
+                                                        .Where(ts => ts.TimeSlotStatus == TimeslotStatus.Available)
+                                                        .OrderBy(ts => ts.TimeSlotDate)
+                                                        .ToListAsync();
+            //Set default TimeSlot records  
+            viewModel.ChosenTimeSlotId = viewModel.AllAvailableTimeSlots.First().TimeSlotId;
+            
+            return View(viewModel);
+        }
+        
+        [HttpPost]
+        public async Task<ActionResult> TimeSlot(CustomerAppointmentCreateViewModel tsModel)
+        {
+            CustomerAppointmentCreateViewModel viewModel = new();
+            viewModel.AllAvailableTimeSlots = await _context.TimeSlot
+                                                        .Where(ts => ts.TimeSlotStatus == TimeslotStatus.Available)
+                                                        .OrderBy(ts => ts.TimeSlotDate)
+                                                        .ToListAsync();
+
+            viewModel.TimeSlotsByDoctorId = viewModel.AllAvailableTimeSlots.Where(ts => ts.DoctorId == viewModel.ChosenDoctorId).ToList();
+
+            var timeSlotByDoctorId = viewModel.TimeSlotsByDoctorId.Where(ts => ts.TimeSlotId == viewModel.ChosenTimeSlotId).FirstOrDefault();
+
+            viewModel.ChosenTimeSlotId = timeSlotByDoctorId.TimeSlotId;
+            
+
+            return View(viewModel);
+        }
+
+
+        public PartialViewResult GetTimeSlotsByDoctorId(int doctorId)
+        {
+            
+        }
+        #endregion
 
         // POST: CustomerAppointments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.

@@ -206,7 +206,7 @@ namespace EasyAppointmentManager.Migrations
                     b.ToTable("Specialty");
                 });
 
-            modelBuilder.Entity("EasyAppointmentManager.Models.TimeSlot", b =>
+            modelBuilder.Entity("EasyAppointmentManager.Models.Doctor", b =>
                 {
                     b.Property<int>("TimeSlotId")
                         .ValueGeneratedOnAdd()
@@ -234,7 +234,7 @@ namespace EasyAppointmentManager.Migrations
 
                     b.HasIndex("DoctorId");
 
-                    b.ToTable("TimeSlot");
+                    b.ToTable("Doctor");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -469,7 +469,7 @@ namespace EasyAppointmentManager.Migrations
                     b.Navigation("Clinic");
                 });
 
-            modelBuilder.Entity("EasyAppointmentManager.Models.TimeSlot", b =>
+            modelBuilder.Entity("EasyAppointmentManager.Models.Doctor", b =>
                 {
                     b.HasOne("EasyAppointmentManager.Models.Doctor", "Doctor")
                         .WithMany()

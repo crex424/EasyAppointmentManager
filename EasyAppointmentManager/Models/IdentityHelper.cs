@@ -4,12 +4,12 @@ namespace EasyAppointmentManager.Models
 {
     public static class IdentityHelper
     {
-        public const string Employee = "Employee";
+        public const string Employee = "TimeSlot";
         public const string Customer = "Customer";
 
         public static async Task CreateRoles(IServiceProvider provider, params string[] roles)
         {
-            // CreateRoles(null, "Employee", "Customer");
+            // CreateRoles(null, "TimeSlot", "Customer");
 
             RoleManager<IdentityRole> roleManager = provider.GetService<RoleManager<IdentityRole>>();
 

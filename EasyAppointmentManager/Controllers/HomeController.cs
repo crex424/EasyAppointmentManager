@@ -20,7 +20,7 @@ namespace EasyAppointmentManager.Controllers
         }
 
         // [Authorize]
-        // [Authorize(Roles = IdentityHelper.Employee)]
+        // [Authorize(Roles = IdentityHelper.TimeSlot)]
         // [AllowAnonymous]
         public IActionResult Privacy()
         {

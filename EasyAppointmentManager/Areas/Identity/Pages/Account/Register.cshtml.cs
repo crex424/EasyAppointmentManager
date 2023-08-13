@@ -127,7 +127,7 @@ namespace EasyAppointmentManager.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    // Adds new account to the Employee role
+                    // Adds new account to the TimeSlot role
                     await _userManager.AddToRoleAsync(user, IdentityHelper.Employee);
 
                     var userId = await _userManager.GetUserIdAsync(user);
