@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using EasyAppointmentManager.Controllers;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
 namespace EasyAppointmentManager.Models
@@ -55,7 +57,32 @@ namespace EasyAppointmentManager.Models
         public TimeSpan EndTime { get; set; }
         */
 
+
+        public List<TimeSlot> TimeSlotList
+        {
+            get;
+            set;
+        }
+
+        public IEnumerable<SelectListItem> TimeSlotsListItems
+        {
+            get
+            {
+                return new SelectList(TimeSlotList, "Date", "Time");
+            }
+        }
+
         public CustomerAppointmentStatus CustomerAppointmentStatus { get; set; }
+
+
+        private List<TimeSlot> GetTimeSlotsByDoctorId()
+        {
+            //Here you can write your query to fetch data from db  
+            var timeSlotList = CustomerAppointmentsController.GetTimeSlotsByDoctorId(ChosenDoctorId); 
+
+
+            return timeSlotList;
+        }
 
     }
 }

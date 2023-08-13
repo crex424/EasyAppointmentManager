@@ -84,7 +84,7 @@ namespace EasyAppointmentManager.Controllers
             return View(viewModel);
         }
 
-        private List<TimeSlot>? GetTimeSlotsByDoctorId(int doctorId)
+        public List<TimeSlot>? GetTimeSlotsByDoctorId(int doctorId)
         {
             return _context.TimeSlot
                 .Where(ts => ts.DoctorId == doctorId && ts.TimeSlotStatus == TimeslotStatus.Available)
