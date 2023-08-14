@@ -93,7 +93,16 @@ namespace EasyAppointmentManager.Controllers
             return View(viewModel);
         }
 
+        public async Task<List<TimeSlot>> GetTimeSlotsByDoctorId(int DoctorId)
+        {
+            CustomerAppointmentCreateViewModel viewModel = new();
+            viewModel.TimeSlotsByDoctorId = await _context.TimeSlot
+                                                        .Where(ts => ts.DoctorId == DoctorId && ts.TimeSlotStatus == TimeslotStatus.Available)
+                                                        .OrderBy(ts => ts.TimeSlotDate)
+                                                        .ToListAsync();
 
+            return viewModel.TimeSlotsByDoctorId;
+        }
 
         // POST: CustomerAppointments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.

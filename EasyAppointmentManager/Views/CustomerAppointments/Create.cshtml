@@ -39,14 +39,14 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.AllAvailableCustomers, new { @class = "control-label" })
-                @Html.DropDownList("ChosenCustomerId", new SelectList(Model.AllAvailableCustomers, "CustomerId", "FullName"), "-- Select Customer --" , new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.ChosenCustomerId, new SelectList(Model.AllAvailableCustomers, "CustomerId", "FullName"), "-- Select Customer --" , new { @class = "form-control" })
             </div>
 
             <div class="form-group">
                 @using (Html.BeginForm("Submit", "CustomerAppointments", FormMethod.Post, new { @name = "Form1" }))
                 {
                     @Html.LabelFor(model => model.AllAvailableDoctors, new { @class = "control-label" })
-                    @Html.DropDownList("ChosenDoctorId", new SelectList(Model.AllAvailableDoctors, "DoctorId", "FullName"), "-- Select Doctor --" , new { @class = "form-control", @id = "ddlDoctor" })
+                    @Html.DropDownListFor(m => m.ChosenDoctorId, new SelectList(Model.AllAvailableDoctors, "DoctorId", "FullName"), "-- Select Doctor --" , new { @class = "form-control", @id = "ddlDoctor" })
                     @Html.Hidden("FullName", null, new { @id = "hfFullName" })
 
                     <div class="form-group" id="timeSlotDropdown" style="display: none;">
@@ -76,14 +76,14 @@
 
                 function populateTimeSlots(doctorId) {
                     $.ajax({
-                        url: "/CustomerAppointments/GetTimeSlots", // Replace with actual route
+                        url: "/CustomerAppointments/GetTimeSlotsByDoctorId?DoctorId=" + $(this).attr("value"), 
                         type: "GET",
-                        data: { doctorId: doctorId },
+                        data: "",
                         success: function (data) {
                             var timeSlotDropdown = $("#ChosenTimeSlotId");
                             timeSlotDropdown.empty(); // Clear existing options
                             $.each(data, function (index, timeSlot) {
-                                timeSlotDropdown.append(new Option(timeSlot.TimeSlotDate, timeSlot.TimeSlotId));
+                                timeSlotDropdown.append(new Option(timeSlot.TimeSlotDate, timeSlot.StartTime, timeSlot.EndTime));
                             });
                         }
                     });
