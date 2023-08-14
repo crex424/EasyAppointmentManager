@@ -46,6 +46,7 @@ namespace EasyAppointmentManager.Models
 
         public int ChosenDoctorId { get; set; }
 
+        [Display(Name = "TimeSlots of selected Doctor")]
         public List<TimeSlot>? TimeSlotsByDoctorId { get; set; }
 
         //This property will be used to populate employee dropdownlist  
