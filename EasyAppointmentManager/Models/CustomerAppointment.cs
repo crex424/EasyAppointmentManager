@@ -38,11 +38,13 @@ namespace EasyAppointmentManager.Models
         [Display(Name = "Customer")]
         public List<Customer>? AllAvailableCustomers { get; set; }
 
+        [Display(Name = "Customer")]
         public int ChosenCustomerId { get; set; }
 
-        [Display(Name = "Doctors")]
+        [Display(Name = "Doctor")]
         public List<Doctor>? AllAvailableDoctors { get; set; }
 
+        [Display(Name = "Doctor")]
         public int ChosenDoctorId { get; set; }
 
         public List<TimeSlot>? TimeSlotsByDoctorId { get; set; }

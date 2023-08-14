@@ -46,6 +46,15 @@ namespace EasyAppointmentManager.Controllers
             return View(customerAppointment);
         }
 
+
+        [HttpPost]
+        public ActionResult Submit(FormCollection formcollection)
+        {
+            TempData["Message"] = "Doctor Full Name: " + formcollection["FullName"];
+            TempData["Message"] += "\\nDoctor Id: " + formcollection["DoctorId"]; ;
+            return RedirectToAction("Create");
+        }
+
         // GET: CustomerAppointments/Create
         public async Task<IActionResult> Create()
         {
