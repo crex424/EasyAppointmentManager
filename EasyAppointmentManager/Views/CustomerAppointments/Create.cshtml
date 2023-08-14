@@ -50,7 +50,7 @@
                     @Html.Hidden("FullName", null, new { @id = "hfFullName" })
 
                     <div class="form-group" id="timeSlotDropdown" style="display: none;">
-                        <label asp-for="ChosenTimeSlotId" class="control-label"></label>
+                        <label asp-for="TimeSlotsByDoctorId" class="control-label"></label>
                         <select asp-for="ChosenTimeSlotId" class="form-control">
                             <!-- Time slot options will be populated using JavaScript -->
                         </select>
@@ -67,6 +67,7 @@
                             $("#hfFullName").val($(this).find("option:selected").text());
                             populateTimeSlots(selectedDoctorId); // Call function to populate time slots
                             $("#timeSlotDropdown").show();
+                            console.log(data);
                         } else {
                             $("#hfFullName").val("");
                             $("#timeSlotDropdown").hide();
@@ -76,16 +77,17 @@
 
                 function populateTimeSlots(doctorId) {
                     $.ajax({
-                        url: "/CustomerAppointments/GetTimeSlotsByDoctorId?DoctorId=" + $(this).attr("value"), 
+                        url: "/CustomerAppointments/GetTimeSlotsByDoctorId", // Correct route
                         type: "GET",
-                        data: "",
+                        data: { DoctorId: doctorId }, // Pass the parameter correctly
                         success: function (data) {
                             var timeSlotDropdown = $("#ChosenTimeSlotId");
                             timeSlotDropdown.empty(); // Clear existing options
                             $.each(data, function (index, timeSlot) {
                                 timeSlotDropdown.append(new Option(timeSlot.TimeSlotDate, timeSlot.StartTime, timeSlot.EndTime));
                             });
-                        }
+                        },
+
                     });
                 }
             </script>

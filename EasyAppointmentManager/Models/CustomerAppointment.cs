@@ -47,15 +47,17 @@ namespace EasyAppointmentManager.Models
         [Display(Name = "Doctor")]
         public int ChosenDoctorId { get; set; }
 
+        [Display(Name = "TimeSlots of selected Doctor")]
         public List<TimeSlot>? TimeSlotsByDoctorId { get; set; }
 
         [Display(Name = "Date")]
         public int? ChosenTimeSlotId { get; set; }
         
+        /*
         public TimeSpan StartTime { get; set; }
 
         public TimeSpan EndTime { get; set; }
-        
+        */
 
         public CustomerAppointmentStatus CustomerAppointmentStatus { get; set; }
 
