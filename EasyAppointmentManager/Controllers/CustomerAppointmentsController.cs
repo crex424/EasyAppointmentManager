@@ -84,6 +84,22 @@ namespace EasyAppointmentManager.Controllers
             return View(viewModel);
         }
 
+        public async Task<PartialViewResult> GetTimeSlotsByDoctorId(int DoctorId)
+        {
+            CustomerAppointmentCreateViewModel viewModel = new();
+            viewModel.TimeSlotsByDoctorId = await _context.TimeSlot
+                                                        .Where(ts => ts.DoctorId == DoctorId && ts.TimeSlotStatus == TimeslotStatus.Available)
+                                                        .OrderBy(ts => ts.TimeSlotDate)
+                                                        .ToListAsync();
+            
+            var timeSlot = viewModel.TimeSlotsByDoctorId.Where(ts => ts.DoctorId == DoctorId).FirstOrDefault();
+            //Set default timeslot records  
+            viewModel.ChosenDoctorId = timeSlot.DoctorId;
+            viewModel.ChosenTimeSlotId = timeSlot.TimeSlotId;
+            
+            return PartialView("_EmpTestPartial", viewModel);
+        }
+
 
 
         // POST: CustomerAppointments/Create

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
 namespace EasyAppointmentManager.Models
@@ -47,7 +48,15 @@ namespace EasyAppointmentManager.Models
 
         public List<TimeSlot>? TimeSlotsByDoctorId { get; set; }
 
-        [Display(Name = "Date")]
+        //This property will be used to populate employee dropdownlist  
+        public IEnumerable<SelectListItem> TimeSlotsByDoctorIdListItems
+        {
+            get
+            {
+                return new SelectList(TimeSlotsByDoctorId, "TimeSlot Date", "TimeSlot Start Time");
+            }
+        }
+
         public int? ChosenTimeSlotId { get; set; }
         /*
         public TimeSpan StartTime { get; set; }
