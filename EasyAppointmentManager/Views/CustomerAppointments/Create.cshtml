@@ -39,7 +39,7 @@
                 <select asp-for="ChosenTimeSlotId" class="form-control">
                 @foreach (TimeSlot timeSlot in Model.TimeSlotsByDoctorId)
                 {
-                                <option value="@timeSlot.TimeSlotId">@timeSlot.TimeSlotDate.ToString()</option>
+                    <option value="@timeSlot.TimeSlotId">@timeSlot.TimeSlotDate.ToString()</option>
                 }
                 </select>
             </div>
