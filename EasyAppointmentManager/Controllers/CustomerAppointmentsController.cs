@@ -72,20 +72,20 @@ namespace EasyAppointmentManager.Controllers
                                        select doctor).Distinct().ToListAsync();
             */
             /*
-            viewModel.TimeSlotsByDoctorId = await (from timeSlot in _context.TimeSlot
+            viewModel.AvailableTimeSlotsByDoctorId = await (from timeSlot in _context.TimeSlot
                                                     where timeSlot.DoctorId == viewModel.ChosenDoctorId
                                                     orderby timeSlot.TimeSlotDate
                                                     select timeSlot).ToListAsync();
             */
             if (viewModel.ChosenDoctorId > 0)
             {
-                viewModel.TimeSlotsByDoctorId = await _context.TimeSlot
+                viewModel.AvailableTimeSlotsByDoctorId = await _context.TimeSlot
                                                         .Where(ts => ts.DoctorId == viewModel.ChosenDoctorId && ts.TimeSlotStatus == TimeslotStatus.Available)
                                                         .OrderBy(ts => ts.TimeSlotDate)
                                                         .ToListAsync();
             }
 
-            //viewModel.TimeSlotsByDoctorId = _context.TimeSlot
+            //viewModel.AvailableTimeSlotsByDoctorId = _context.TimeSlot
             //.Where(t => t.DoctorId == viewModel.ChosenDoctorId)
             //                                               .OrderBy(t => t.TimeSlotDate).ToList();
 
@@ -93,15 +93,15 @@ namespace EasyAppointmentManager.Controllers
             return View(viewModel);
         }
 
-        public async Task<List<TimeSlot>> GetTimeSlotsByDoctorId(int DoctorId)
+        public async Task<List<TimeSlot>> GetAvailableTimeSlotsByDoctorId(int DoctorId)
         {
             CustomerAppointmentCreateViewModel viewModel = new();
-            viewModel.TimeSlotsByDoctorId = await _context.TimeSlot
+            viewModel.AvailableTimeSlotsByDoctorId = await _context.TimeSlot
                                                         .Where(ts => ts.DoctorId == DoctorId && ts.TimeSlotStatus == TimeslotStatus.Available)
                                                         .OrderBy(ts => ts.TimeSlotDate)
                                                         .ToListAsync();
 
-            return viewModel.TimeSlotsByDoctorId;
+            return viewModel.AvailableTimeSlotsByDoctorId;
         }
 
         // POST: CustomerAppointments/Create

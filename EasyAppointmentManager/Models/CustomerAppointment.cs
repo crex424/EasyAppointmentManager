@@ -48,7 +48,7 @@ namespace EasyAppointmentManager.Models
         public int ChosenDoctorId { get; set; }
 
         [Display(Name = "TimeSlots of selected Doctor")]
-        public List<TimeSlot>? TimeSlotsByDoctorId { get; set; }
+        public List<TimeSlot>? AvailableTimeSlotsByDoctorId { get; set; }
 
         [Display(Name = "Date")]
         public int? ChosenTimeSlotId { get; set; }
