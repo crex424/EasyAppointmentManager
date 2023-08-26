@@ -12,7 +12,7 @@ using System.Data;
 
 namespace EasyAppointmentManager.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Employee")]
     public class TimeSlotsController : Controller
     {
         private readonly ApplicationDbContext _context;
