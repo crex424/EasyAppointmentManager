@@ -84,7 +84,9 @@
                             var timeSlotDropdown = $("#ChosenTimeSlotId");
                             timeSlotDropdown.empty(); // Clear existing options
                             $.each(data, function (index, timeSlot) {
-                                timeSlotDropdown.append(new Option(timeSlot.TimeSlotDate, timeSlot.StartTime, timeSlot.EndTime));
+                                timeSlotDropdown.append("<option value='" + timeSlot.timeSlotId + "'>" + timeSlot.timeSlotDate + " " + timeSlot.startTime + " " + timeSlot.endTime + "</option>");
+                                //timeSlotDropdown.append("<option value='" + timeSlot.TimeSlotId + "'>" + timeSlot.TimeSlotDate + " " + timeSlot.StartTime + " " + timeSlot.EndTime + "</option>");
+                                // timeSlotDropdown.append(new Option(timeSlot.TimeSlotDate, timeSlot.StartTime, timeSlot.EndTime));
                             });
                         },
 
