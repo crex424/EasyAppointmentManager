@@ -18,7 +18,7 @@ namespace EasyAppointmentManager.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.apiKey = _config["VisualCrossingKey"];
+            ViewBag.apiKey = _config["VisualCrossingPublicKey"];
 
             return View();
         }
