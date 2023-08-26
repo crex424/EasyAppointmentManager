@@ -7,18 +7,18 @@
 <h2>Welcome to the Easy Appointment Manager</h2>
 <br />
 
-<!-- the DIV that will contain the widget -->
+<!-- the DIV that will contain the Weather widget -->
 <div class="weatherWidget"></div>
 <br />
 
-<div class="card w-75 text-white bg-secondary mb-3">
+<div class="card w-100 text-white bg-secondary mb-3">
     <div class="card-header border-dark">
         <h5 class="card-header">Appointments</h5>
     </div>
     <div class="card-body">
         <h5 class="card-title">You currently have no Appointments</h5>
         <p class="card-text">If you need to create a appointment, please press the button below.</p>
-        <a href="#" class="btn btn-light btn-outline-dark">Create Appointment</a>
+        <a class="btn btn-light btn-outline-dark" asp-controller="CustomerAppointments" asp-action="Create">Create an appointment</a>
     </div>
 </div>
 
