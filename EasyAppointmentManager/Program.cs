@@ -2,6 +2,8 @@ using EasyAppointmentManager.Data;
 using EasyAppointmentManager.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SendGrid.Helpers.Mail;
+using SendGrid;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,20 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+// SendGrid Email Test
+var apiKey = builder.Configuration.GetSection("SendGridKey").Value;
+var client = new SendGridClient(apiKey);
+var msg = new SendGridMessage()
+{
+    From = new EmailAddress("kim8629@students.cptc.edu", "EasyAppointmentManager-DevTeam"),
+    Subject = "News from EasyAppointmentManager-DevTeam",
+    PlainTextContent = "with the latest updates from our developers team",
+    HtmlContent = "<strong>with the latest updates from our developers team</strong>"
+};
+msg.AddTo(new EmailAddress("kim8629@students.cptc.edu", "EasyAppointmentManager-DevTeam"));
+var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
+// SendGrid END
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
