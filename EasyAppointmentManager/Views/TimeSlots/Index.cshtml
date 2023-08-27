@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<EasyAppointmentManager.Models.TimeSlotIndexViewModel>
 
 @{
-    ViewData["Title"] = "Index of TimeSlots";
+    ViewData["Title"] = "TimeSlot Index";
 }
 
-<h1>Index of TimeSlots</h1>
+<h1>TimeSlot Index</h1>
 @if (TempData["Message"] != null)
 {
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -17,7 +17,7 @@ else
 
 }
 <p>
-    <a asp-action="Create">Create New TimeSlot</a>
+    <a asp-action="Create">Create A New TimeSlot</a>
 </p>
 <table class="table table-striped table-hover">
     <thead>

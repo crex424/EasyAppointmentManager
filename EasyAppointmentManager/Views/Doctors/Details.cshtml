@@ -1,10 +1,10 @@
 ﻿@model DoctorIndexViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Details of " + Model.LastName + ", " + Model.FirstName;
 }
 
-<h1>Details</h1>
+<h1>Details of @Model.LastName, @Model.FirstName</h1>
 
 <div>
     <h4>Doctor</h4>

@@ -8,9 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using EasyAppointmentManager.Data;
 using EasyAppointmentManager.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace EasyAppointmentManager.Controllers
 {
+    [Authorize(Roles = "Employee")]
     public class CustomersController : Controller
     {
         private readonly ApplicationDbContext _context;

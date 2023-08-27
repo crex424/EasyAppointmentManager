@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EasyAppointmentManager.Models;
 using System.Numerics;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace EasyAppointmentManager.Controllers
 {
+    [Authorize(Roles = "Employee")]
     public class DoctorsController : Controller
     {
         private readonly ApplicationDbContext _context;

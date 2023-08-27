@@ -1,7 +1,7 @@
 ﻿@model DoctorEditViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit: " + Model.LastName + ", " + Model.FirstName;
 
     List<SelectListItem> clinicsSelectList = new();
     foreach (Clinic clinic in Model.Clinics)
@@ -28,7 +28,7 @@
     }
 }
 
-<h1>Edit</h1>
+<h1>Edit: @Model.LastName, @Model.FirstName</h1>
 
 <h4>Doctor</h4>
 <hr />

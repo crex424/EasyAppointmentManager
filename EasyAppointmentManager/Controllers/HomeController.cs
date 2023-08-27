@@ -8,14 +8,20 @@ namespace EasyAppointmentManager.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IConfiguration _config;
+        private readonly IEmailProvider _emailProvider;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IConfiguration config, IEmailProvider emailProvider)
         {
             _logger = logger;
+            _config = config;
+            _emailProvider = emailProvider;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            ViewBag.apiKey = _config["VisualCrossingPublicKey"];
+            await _emailProvider.SendEmailAsync(null, null, null, null, null);
             return View();
         }
 
