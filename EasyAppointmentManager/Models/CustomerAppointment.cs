@@ -45,13 +45,13 @@ namespace EasyAppointmentManager.Models
         public List<Customer>? AllAvailableCustomers { get; set; }
 
         [Display(Name = "Customer")]
-        public int ChosenCustomerId { get; set; }
+        public int? ChosenCustomerId { get; set; }
 
         [Display(Name = "Doctor")]
         public List<Doctor>? AllAvailableDoctors { get; set; }
 
         [Display(Name = "Doctor")]
-        public int ChosenDoctorId { get; set; }
+        public int? ChosenDoctorId { get; set; }
 
         public Doctor? ChosenDoctor { get; set; }
 

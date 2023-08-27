@@ -115,11 +115,11 @@ namespace EasyAppointmentManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                CustomerAppointment newCustomerAppointment = new()
+                CustomerAppointment? newCustomerAppointment = new()
                 {
                     TimeSlot = new TimeSlot
                     {
-                        TimeSlotId = (int)customerAppointment.ChosenTimeSlotId,
+                        TimeSlotId = (int)customerAppointment.ChosenTimeSlotId
                     },
                     CustomerAppointmentStatus = CustomerAppointmentStatus.Booked,
                     Customer = new Customer()
@@ -131,7 +131,8 @@ namespace EasyAppointmentManager.Controllers
                 // Tell EF that we have not modified the existing Customers
                 _context.Entry(newCustomerAppointment.Customer).State = EntityState.Unchanged;
 
-                /* Needs to change the TimeslotStatus of the chosen TimeSlot from Available to Booked */
+
+                // Needs to change the TimeslotStatus of the chosen TimeSlot from Available to Booked
 
                 // Get chosen time slot  
                 TimeSlot? timeSlot = _context.TimeSlot.Find(customerAppointment.ChosenTimeSlotId);
@@ -139,8 +140,10 @@ namespace EasyAppointmentManager.Controllers
                 // Update status of the chosen TimeSlot
                 timeSlot.TimeSlotStatus = TimeslotStatus.Booked;
 
-                // Tell EF that we have not modified the existing TimeSlots
-                _context.Entry(newCustomerAppointment.TimeSlot).State = EntityState.Modified;
+                // Tell EF that we have modified the existing TimeSlots
+                _context.Entry(newCustomerAppointment.TimeSlot).State = EntityState.Modified; 
+                
+                // _context.Entry(newCustomerAppointment.TimeSlot).State = EntityState.Unchanged;
 
                 _context.Add(newCustomerAppointment);
                 await _context.SaveChangesAsync();
