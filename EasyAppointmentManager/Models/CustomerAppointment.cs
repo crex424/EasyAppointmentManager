@@ -15,7 +15,12 @@ namespace EasyAppointmentManager.Models
         public int CustomerAppointmentId { get; set; }
 
         public int TimeSlotId { get; set; }
+
         public TimeSlot? TimeSlot { get; set; }
+
+        public int CustomerId { get; set; }
+
+        public Customer? Customer { get; set; }
 
         public CustomerAppointmentStatus CustomerAppointmentStatus { get; set;}
 
@@ -24,6 +29,7 @@ namespace EasyAppointmentManager.Models
     public enum CustomerAppointmentStatus
     {
         None,
+        Booked,
         Confirmed,
         Cancelled,
         Missed,
@@ -47,7 +53,9 @@ namespace EasyAppointmentManager.Models
         [Display(Name = "Doctor")]
         public int ChosenDoctorId { get; set; }
 
-        [Display(Name = "TimeSlots of selected Doctor")]
+        public Doctor? ChosenDoctor { get; set; }
+
+        [Display(Name = $"Availabilities of selected doctor")]
         public List<TimeSlot>? AvailableTimeSlotsByDoctorId { get; set; }
 
         [Display(Name = "Date")]

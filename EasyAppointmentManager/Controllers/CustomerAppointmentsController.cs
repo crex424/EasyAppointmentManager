@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using EasyAppointmentManager.Data;
 using EasyAppointmentManager.Models;
 using Microsoft.CodeAnalysis.VisualBasic;
+using System.Numerics;
 
 namespace EasyAppointmentManager.Controllers
 {
@@ -76,7 +77,7 @@ namespace EasyAppointmentManager.Controllers
                                                     where timeSlot.DoctorId == viewModel.ChosenDoctorId
                                                     orderby timeSlot.TimeSlotDate
                                                     select timeSlot).ToListAsync();
-            */
+            
             if (viewModel.ChosenDoctorId > 0)
             {
                 viewModel.AvailableTimeSlotsByDoctorId = await _context.TimeSlot
@@ -84,6 +85,7 @@ namespace EasyAppointmentManager.Controllers
                                                         .OrderBy(ts => ts.TimeSlotDate)
                                                         .ToListAsync();
             }
+            */
 
             //viewModel.AvailableTimeSlotsByDoctorId = _context.TimeSlot
             //.Where(t => t.DoctorId == viewModel.ChosenDoctorId)
@@ -109,15 +111,51 @@ namespace EasyAppointmentManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CustomerAppointmentId,TimeSlotId,CustomerAppointmentStatus")] CustomerAppointment customerAppointment)
+        public async Task<IActionResult> Create(CustomerAppointmentCreateViewModel customerAppointment)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customerAppointment);
+                CustomerAppointment newCustomerAppointment = new()
+                {
+                    TimeSlot = new TimeSlot
+                    {
+                        TimeSlotId = (int)customerAppointment.ChosenTimeSlotId,
+                    },
+                    CustomerAppointmentStatus = CustomerAppointmentStatus.Booked,
+                    Customer = new Customer()
+                    {
+                        CustomerId = (int)customerAppointment.ChosenCustomerId
+                    }
+                };
+
+                // Tell EF that we have not modified the existing Customers
+                _context.Entry(newCustomerAppointment.Customer).State = EntityState.Unchanged;
+
+                /* Needs to change the TimeslotStatus of the chosen TimeSlot from Available to Booked */
+
+                // Get chosen time slot  
+                TimeSlot? timeSlot = _context.TimeSlot.Find(customerAppointment.ChosenTimeSlotId);
+
+                // Update status of the chosen TimeSlot
+                timeSlot.TimeSlotStatus = TimeslotStatus.Booked;
+
+                // Tell EF that we have not modified the existing TimeSlots
+                _context.Entry(newCustomerAppointment.TimeSlot).State = EntityState.Modified;
+
+                _context.Add(newCustomerAppointment);
                 await _context.SaveChangesAsync();
+
+                // Show success message on page
+                TempData["Message"] = $"Appointment for {newCustomerAppointment.Customer.FullName} " +
+                                      $"with Dr.{newCustomerAppointment.TimeSlot.Doctor.FullName} " +
+                                      $"on {newCustomerAppointment.TimeSlot.TimeSlotDate} " +
+                                      $"from {newCustomerAppointment.TimeSlot.StartTime} " +
+                                      $"to {newCustomerAppointment.TimeSlot.EndTime} " +
+                                      $"was added successfully!";
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TimeSlotId"] = new SelectList(_context.TimeSlot, "TimeSlotId", "TimeSlotId", customerAppointment.TimeSlotId);
+            
             return View(customerAppointment);
         }
 

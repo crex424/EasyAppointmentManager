@@ -51,6 +51,7 @@
 
                     <div class="form-group" id="timeSlotDropdown" style="display: none;">
                         <label asp-for="AvailableTimeSlotsByDoctorId" class="control-label"></label>
+                        
                         <select asp-for="ChosenTimeSlotId" class="form-control">
                             <!-- Time slot options will be populated using JavaScript -->
                         </select>
@@ -81,6 +82,7 @@
                         type: "GET",
                         data: { DoctorId: doctorId }, // Pass the parameter correctly
                         success: function (data) {
+
                             var timeSlotDropdown = $("#ChosenTimeSlotId");
                             timeSlotDropdown.empty(); // Clear existing options
                             $.each(data, function (index, timeSlot) {
