@@ -1,0 +1,161 @@
+﻿@model CustomerAppointmentCreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+
+    List<SelectListItem> doctorsSelectList = new();
+    foreach (Doctor doctor in Model.AllAvailableDoctors)
+    {
+        doctorsSelectList.Add(
+            new SelectListItem()
+                    {
+                        Value = doctor.DoctorId.ToString(),
+                        Text = doctor.FullName
+                    }
+        );
+    }
+
+    List<SelectListItem> customersSelectList = new();
+    foreach (Customer customer in Model.AllAvailableCustomers)
+    {
+        customersSelectList.Add(
+            new SelectListItem()
+                    {
+                        Value = customer.CustomerId.ToString(),
+                        Text = customer.FullName
+                    }
+        );
+    }
+}
+
+<h1>Create</h1>
+
+<h4>CustomerAppointment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.AllAvailableCustomers, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.ChosenCustomerId, new SelectList(Model.AllAvailableCustomers, "CustomerId", "FullName"), "-- Select Customer --" , new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @using (Html.BeginForm("Submit", "CustomerAppointments", FormMethod.Post, new { @name = "Form1" }))
+                {
+                    @Html.LabelFor(model => model.AllAvailableDoctors, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.ChosenDoctorId, new SelectList(Model.AllAvailableDoctors, "DoctorId", "FullName"), "-- Select Doctor --" , new { @class = "form-control", @id = "ddlDoctor" })
+                    @Html.Hidden("FullName", null, new { @id = "hfFullName" })
+
+                    <div class="form-group" id="timeSlotDropdown" style="display: none;">
+                        <label asp-for="AvailableTimeSlotsByDoctorId" class="control-label"></label>
+                        
+                        <select asp-for="ChosenTimeSlotId" class="form-control">
+                            <!-- Time slot options will be populated using JavaScript -->
+                        </select>
+                    </div>
+                }
+            </div>
+
+            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#ddlDoctor").change(function () {
+                        var selectedDoctorId = $(this).val();
+                        if (selectedDoctorId) {
+                            $("#hfFullName").val($(this).find("option:selected").text());
+                            populateTimeSlots(selectedDoctorId); // Call function to populate time slots
+                            $("#timeSlotDropdown").show();
+                            console.log(data);
+                        } else {
+                            $("#hfFullName").val("");
+                            $("#timeSlotDropdown").hide();
+                        }
+                    });
+                });
+
+                function populateTimeSlots(doctorId) {
+                    $.ajax({
+                        url: "/CustomerAppointments/GetAvailableTimeSlotsByDoctorId", // Correct route
+                        type: "GET",
+                        data: { DoctorId: doctorId }, // Pass the parameter correctly
+                        success: function (data) {
+
+                            var timeSlotDropdown = $("#ChosenTimeSlotId");
+                            timeSlotDropdown.empty(); // Clear existing options
+                            $.each(data, function (index, timeSlot) {
+                                // Create date object 
+                                var date = new Date(timeSlot.timeSlotDate);
+
+                                // Format date as dd/MM/yyyy
+                                var formattedDate = date.toLocaleDateString('en-GB');
+
+                                // Create Time objects
+                                let startTime = new Date(timeSlot.startTime);
+                                let endTime = new Date(timeSlot.endTime);
+
+                                // Extract hours and minutes
+                                let startHoursMins = timeSlot.startTime.match(/^(\d{2}):(\d{2})/);
+                                let startHours = startHoursMins[1];
+                                let startMinutes = startHoursMins[2];
+                                let endHoursMins = timeSlot.endTime.match(/^(\d{2}):(\d{2})/);
+                                let endHours = endHoursMins[1];
+                                let endMinutes = endHoursMins[2];
+
+                                // Format time strings
+                                let formattedStartTime = startHours + ':' + startMinutes;
+                                let formattedEndTime = endHours + ':' + endMinutes;
+
+                                // Append option
+                                timeSlotDropdown.append(
+                                    $('<option>', {
+                                        value: timeSlot.timeSlotId,
+                                        text: formattedDate + ' ' + formattedStartTime + '-' + formattedEndTime
+                                    })
+                                );
+                                /*
+                                // Create date object from timeSlotDate
+                                var date = new Date(timeSlot.timeSlotDate);
+                                       
+                                // Format date as dd/MM/yyyy
+                                var formattedDate = date.toLocaleDateString('en-GB');
+
+                                // Append option with formatted date
+                                timeSlotDropdown.append(
+                                    $('<option>', {
+                                        value: timeSlot.timeSlotId,
+                                        text: formattedDate + ' ' + timeSlot.startTime + ' ' + timeSlot.endTime
+                                    })
+                                );
+                                */
+
+                                // timeSlotDropdown.append("<option value='" + timeSlot.timeSlotId + "'>" + timeSlot.timeSlotDate + " " + timeSlot.startTime + " " + timeSlot.endTime + "</option>");
+                                // timeSlotDropdown.append("<option value='" + timeSlot.TimeSlotId + "'>" + timeSlot.TimeSlotDate + " " + timeSlot.StartTime + " " + timeSlot.EndTime + "</option>");
+                                // timeSlotDropdown.append(new Option(timeSlot.TimeSlotDate, timeSlot.StartTime, timeSlot.EndTime));
+                            });
+                        },
+
+                    });
+                }
+            </script>
+
+
+            
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

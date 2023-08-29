@@ -68,5 +68,11 @@ namespace EasyAppointmentManager.Models
         // [DataType(DataType.EmailAddress)]
         [EmailAddress(ErrorMessage = "Invalid email address.")]
         public string? Email { get; set; }
+
+        [Display(Name = "Full Name")]
+        public string FullName
+        {
+            get { return LastName + ", " + FirstName + " " + MiddleName; }
+        }
     }
 }
