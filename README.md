@@ -31,3 +31,5 @@ Requirements:
 - 
 
 ## Project Screenshots
+![image](https://github.com/crex424/EasyAppointmentManager/assets/110303244/a4077526-8845-4aaa-9d63-a620f3bd9951)
+
