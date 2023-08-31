@@ -2,6 +2,9 @@
 
 namespace EasyAppointmentManager.Models
 {
+    /// <summary>
+    /// Helper class for identity
+    /// </summary>
     public static class IdentityHelper
     {
         public const string Employee = "Employee";
@@ -22,7 +25,12 @@ namespace EasyAppointmentManager.Models
                 }
             }
         }
-
+        /// <summary>
+        /// A method that creates a default user
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <param name="role"></param>
+        /// <returns></returns>
         public static async Task CreateDefaultUser(IServiceProvider provider, string role)
         {
             var userManager = provider.GetService<UserManager<IdentityUser>>();

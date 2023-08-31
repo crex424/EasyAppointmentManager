@@ -14,18 +14,29 @@ namespace EasyAppointmentManager.Models
         [Key]
         public int CustomerAppointmentId { get; set; }
 
+        /// <summary>
+        /// The unique identifier for the selected timeslot
+        /// </summary>
         public int TimeSlotId { get; set; }
 
         public TimeSlot? TimeSlot { get; set; }
 
+        /// <summary>
+        /// The unique identifier of the selected customer
+        /// </summary>
         public int CustomerId { get; set; }
 
         public Customer? Customer { get; set; }
 
+        /// <summary>
+        /// The appointment status of the customer's appointment
+        /// </summary>
         public CustomerAppointmentStatus CustomerAppointmentStatus { get; set;}
 
     }
-
+    /// <summary>
+    /// Enum containing the different statuses a appointment can have
+    /// </summary>
     public enum CustomerAppointmentStatus
     {
         None,
@@ -38,6 +49,7 @@ namespace EasyAppointmentManager.Models
 
     /// <summary>
     /// Represents a single Appointment of a Customer
+    /// and used for displaying the data in the view
     /// </summary>
     public class CustomerAppointmentCreateViewModel
     {

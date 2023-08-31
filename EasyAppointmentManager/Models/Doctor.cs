@@ -80,13 +80,17 @@ namespace EasyAppointmentManager.Models
         [DataType(DataType.PhoneNumber)]
         public string? PhoneNumber { get; set; }
 
-
+        /// <summary>
+        /// Returns a formated string of the Doctor's full name
+        /// </summary>
         [Display(Name = "Full Name")]
         public string FullName
         {
             get { return LastName + ", " + FirstName + " " + MiddleName; }
         } 
-
+        /// <summary>
+        /// The clinic the doctor works at
+        /// </summary>
         [Display(Name = "Clinic")]
         public Clinic Clinic { get; set; }
 
@@ -339,10 +343,16 @@ namespace EasyAppointmentManager.Models
         [Display(Name = "Clinic")]
         public List<Clinic>? Clinics { get; set; }
 
+        /// <summary>
+        /// The selected specialties's unique identifier
+        /// </summary>
         public int SpecialtyId { get; set; }
 
         public Specialty? Specialty { get; set; }
 
+        /// <summary>
+        /// The selected clinic's unique identifier
+        /// </summary>
         public int ClinicId { get; set; }
 
         public Clinic? Clinic { get; set;}

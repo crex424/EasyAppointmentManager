@@ -161,21 +161,7 @@ namespace EasyAppointmentManager.Controllers
                     Service? existingService = await _context.Service
                                                             .Include(s => s.Clinic) // Include the Clinic property
                                                             .FirstOrDefaultAsync(s => s.ServiceId == id);
-                    // not working: Service? existingService = await _context.Service.FindAsync(id);
-                    /* not working:
-                    ServiceEditViewModel? existingService = await (from s in _context.Service
-                                                             join c in _context.Clinic
-                                                             on s.Clinic.ClinicId equals c.ClinicId
-                                                             where s.ServiceId == id
-                                                             select new ServiceEditViewModel
-                                                             {
-                                                                 ServiceId = s.ServiceId,
-                                                                 ServiceName = s.ServiceName,
-                                                                 ServiceTime = s.ServiceTime,
-                                                                 Fee = s.Fee,
-                                                                 ClinicId = c.ClinicId
-                                                             }).FirstOrDefaultAsync();
-                    */
+                   
                     if (existingService == null)
                     {
                         return NotFound();
@@ -238,7 +224,7 @@ namespace EasyAppointmentManager.Controllers
                                                         Fee = s.Fee,
                                                         ClinicName = c.ClinicName
                                                     }).FirstOrDefaultAsync();
-            // var serviceToUpdate = await _context.Service.FirstOrDefaultAsync(m => m.ServiceId == id);
+
             if (service == null)
             {
                 return NotFound();
