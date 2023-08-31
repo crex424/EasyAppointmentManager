@@ -66,35 +66,14 @@ namespace EasyAppointmentManager.Controllers
 
             // Get list of all doctors
             viewModel.AllAvailableDoctors = await _context.Doctor.OrderBy(i => i.LastName).ToListAsync();
-            /*
-            viewModel.AllAvailableDoctors = await (from ts in _context.TimeSlot
-                                       join doctor in _context.Doctor on ts.DoctorId equals doctor.DoctorId
-                                       orderby doctor
-                                       select doctor).Distinct().ToListAsync();
-            */
-            /*
-            viewModel.AvailableTimeSlotsByDoctorId = await (from timeSlot in _context.TimeSlot
-                                                    where timeSlot.DoctorId == viewModel.ChosenDoctorId
-                                                    orderby timeSlot.TimeSlotDate
-                                                    select timeSlot).ToListAsync();
             
-            if (viewModel.ChosenDoctorId > 0)
-            {
-                viewModel.AvailableTimeSlotsByDoctorId = await _context.TimeSlot
-                                                        .Where(ts => ts.DoctorId == viewModel.ChosenDoctorId && ts.TimeSlotStatus == TimeslotStatus.Available)
-                                                        .OrderBy(ts => ts.TimeSlotDate)
-                                                        .ToListAsync();
-            }
-            */
-
-            //viewModel.AvailableTimeSlotsByDoctorId = _context.TimeSlot
-            //.Where(t => t.DoctorId == viewModel.ChosenDoctorId)
-            //                                               .OrderBy(t => t.TimeSlotDate).ToList();
-
-            // ViewData["TimeSlotId"] = new SelectList(_context.TimeSlot, "TimeSlotId", "TimeSlotId");
             return View(viewModel);
         }
-
+        /// <summary>
+        /// Gets the available time slots using the doctor id of the selected doctor
+        /// </summary>
+        /// <param name="DoctorId">The selected doctor's unique identifier</param>
+        /// <returns>A list of available timeslots</returns>
         public async Task<List<TimeSlot>> GetAvailableTimeSlotsByDoctorId(int DoctorId)
         {
             CustomerAppointmentCreateViewModel viewModel = new();
