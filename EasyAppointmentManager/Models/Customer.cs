@@ -69,6 +69,9 @@ namespace EasyAppointmentManager.Models
         [EmailAddress(ErrorMessage = "Invalid email address.")]
         public string? Email { get; set; }
 
+        /// <summary>
+        /// Sends a formated string of the Customers full name when called
+        /// </summary>
         [Display(Name = "Full Name")]
         public string FullName
         {
