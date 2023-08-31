@@ -171,14 +171,6 @@ namespace EasyAppointmentManager.Controllers
                         return NotFound();
                     }
 
-                    // Update the existingTimeSlot properties
-                    /*
-                    existingTimeSlot.TimeSlotId = timeSlotToUpdate.TimeSlotId;
-                    existingTimeSlot.TimeSlotDate = timeSlotToUpdate.TimeSlotDate;
-                    existingTimeSlot.StartTime = timeSlotToUpdate.StartTime;
-                    existingTimeSlot.EndTime = timeSlotToUpdate.EndTime;
-                    existingTimeSlot.DoctorId = timeSlotToUpdate.DoctorId;
-                    */
                     existingTimeSlot.TimeSlotStatus = timeSlotToUpdate.TimeSlotStatus;
                     
 
@@ -222,7 +214,6 @@ namespace EasyAppointmentManager.Controllers
             }
 
 
-            //var timeSlotToUpdate = await _context.TimeSlot.FirstOrDefaultAsync(m => m.TimeSlotId == id);
 
             TimeSlotIndexViewModel? timeSlot = await (from ts in _context.TimeSlot
                                                       join doctor in _context.Doctor
