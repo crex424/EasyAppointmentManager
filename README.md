@@ -36,4 +36,4 @@ Requirements:
 ![image](https://github.com/crex424/EasyAppointmentManager/assets/36382100/21d38882-3a04-4758-a705-2f003985a370)
 ![image](https://github.com/crex424/EasyAppointmentManager/assets/36382100/c3100a7d-7a19-44a4-b841-180a3435f3a3)
 ![image](https://github.com/crex424/EasyAppointmentManager/assets/36382100/30da8a43-5180-47d3-a88b-9121809e1cc5)
-![image](https://github.com/crex424/EasyAppointmentManager/assets/36382100/665e9ade-7645-4649-81fc-91a7a4ca2d5b)
+![image](https://github.com/crex424/EasyAppointmentManager/assets/36382100/7cf9301b-cc3f-4717-be82-17bd68d759f9)
